@@ -28,6 +28,11 @@ nav.breadcrumb a { color: #555; }
 .product-card { border: 1px solid #e0e0e0; padding: 24px; margin-bottom: 16px; border-radius: 3px; }
 .product-card h2 { margin-top: 0; }
 blockquote { border-left: 3px solid #1a1a1a; padding-left: 16px; margin: 16px 0; font-size: 0.85rem; color: #444; }
+.killer { font-size: 0.95rem; font-weight: 700; margin: 16px 0 32px; color: #1a1a1a; line-height: 1.5; border-left: 3px solid #1a1a1a; padding-left: 12px; }
+.btn-primary { display: inline-block; background: #0052ff; color: #fff; padding: 10px 24px; border-radius: 4px; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
+.btn-primary:hover { opacity: 0.9; }
+.cta-row { margin: 32px 0 16px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.demo-box { background: #f0f0f0; border-left: 3px solid #1a1a1a; padding: 16px; margin: 8px 0 16px; }
 </style>
 </head>
 <body>
@@ -36,11 +41,15 @@ blockquote { border-left: 3px solid #1a1a1a; padding-left: 16px; margin: 16px 0;
 
 <h1>HYDRA-CDN — Edge Delivery <span class="audit-badge">TTTPS AUDIT</span></h1>
 <span class="tag">Adaptive CDN Routing · Byzantine-Resistant Delivery · Erasure Coding · TTTPS Sealed</span>
+<p class="killer">P2P delivery with TTTPS audit on every chunk — 45-minute game patches in 45 seconds, even in Ladakh with 30% packet loss.</p>
 
 <h2>Overview</h2>
-<p class="section-note">Adaptive CDN content delivery with per-chunk Byzantine audit trail.<br>
-Every chunk delivered through Hydra-CDN is sealed with a TTTPS temporal token,
-providing cryptographic proof of delivery time and integrity — queryable by any audit organization.</p>
+<p class="section-note">Adaptive CDN content delivery with per-chunk Byzantine audit trail.</p>
+<p class="section-note">Content delivery networks route chunks to edge nodes, but they have no insight into whether delivery was tampered, replayed, or arrived out of order. A player in Jakarta receiving a corrupted game patch has no way to prove which edge node failed — and neither does the distributor.</p>
+<p class="section-note">Hydra-CDN solves this with per-chunk TTTPS sealing — every content chunk carries a cryptographic proof of delivery time and integrity, anchored to a verified timestamp chain. Tampering, replay, and out-of-order delivery are detected in real-time and logged to an immutable audit trail.</p>
+<p class="section-note">GapVec5 selects the optimal edge path in real-time across 5 dimensions: ISP density, latency, packet loss, throughput, and DPI fingerprint. The routing decision updates continuously as network conditions change — no manual configuration required.</p>
+<p class="section-note">Erasure coding means 30% packet loss causes zero retransmission. Missing chunks are reconstructed from redundant coding blocks distributed across peer nodes — the receiving client never notices the drop.</p>
+<p class="section-note">No CDN infrastructure changes required — Hydra-CDN layers on top of existing delivery infrastructure as a sidecar audit and routing layer.</p>
 
 <h2>Key Capabilities</h2>
 <table>
@@ -72,20 +81,74 @@ to a verifiable timestamp and commitment chain.</blockquote>
 <pre>curl "https://api.kenosian.com/audit?ctx_id=cdn-pool-sg1&amp;window=86400" \
   -H "X-API-Key: &lt;your-key&gt;"</pre>
 
-<h2>One-Click Test — Delivery Integrity Check</h2>
-<pre># Check delivery integrity of a chunk
-curl -X POST https://api.kenosian.com/api/demo/pot/generate \
+<p class="section-note">In practice, audit means any chunk delivery can be forensically traced — who received it, when, whether it arrived in the correct order, and whether its content matches the original commitment. For content distributors, this transforms post-incident investigation from guesswork into a deterministic query against a structured log.</p>
+
+<table>
+<thead><tr><th>Attack Type</th><th>Description</th><th>Detection Method</th></tr></thead>
+<tbody>
+<tr><td>REPLAY</td><td>Same chunk delivered twice to the same node</td><td>ctx_id + timestamp window deduplication</td></tr>
+<tr><td>ORDERING</td><td>Chunks arrived out of sequence</td><td>Monotonic sequence counter per stream</td></tr>
+<tr><td>FORGE</td><td>Chunk content tampered in transit</td><td>SHA-256 commitment mismatch vs. TTTPS seal</td></tr>
+<tr><td>FLOOD</td><td>Delivery rate abuse — chunk storm to single node</td><td>Rate envelope check per ctx_id window</td></tr>
+</tbody>
+</table>
+
+<p class="section-note">Audit log retention: 90 days for production accounts · 1 hour for demo endpoints.</p>
+
+<h2>One-Click Benchmark</h2>
+<p class="section-note">Try the TTTPS audit endpoint — no install required.</p>
+<pre>curl -X POST https://api.kenosian.com/api/demo/pot/generate \
   -H "Content-Type: application/json" \
   -d '{"ctx_id":"cdn-demo"}'</pre>
-
-<p class="section-note">Expected: TTTPS seal generated, GPS/BGP/NTP attack detection active</p>
-
-<p class="section-note">Replay attack simulation:</p>
-<pre># Submit same token twice to trigger REPLAY detection
+<p class="section-note">Expected response (real measurement basis):</p>
+<pre>{
+  "status":         "ok",
+  "ctx_id":         "cdn-demo",
+  "timestamp_ms":   1748000000000,
+  "grg_commitment": "a3f9c2...",
+  "chain_digest":   "b7c2e1...",
+  "signature":      "ed25519-base64...",
+  "pubkey":         "acac8eae..."
+}</pre>
+<p class="section-note">Replay attack detection — submit same token twice:</p>
+<pre># Second submission triggers REPLAY detection
 curl -X POST https://api.kenosian.com/api/demo/pot/verify \
   -H "Content-Type: application/json" \
-  -d '{"ctx_id":"cdn-demo","token":"&lt;same-token&gt;"}'
+  -d '{"ctx_id":"cdn-demo","token":"&lt;paste-token&gt;"}'
 # → {"valid":false,"attack_type":"REPLAY"}</pre>
+<div class="cta-row">
+  <a class="btn-primary" href="mailto:peter@kenosian.com?subject=Hydra-CDN%20Early%20Access%20Request">Request Early Access</a>
+  <span style="font-size:0.8rem;color:#666;">Private beta · Integration support included</span>
+</div>
+
+<h2>Hydra-CDN + Audit Integration</h2>
+<p class="section-note">When CDN delivery and TTTPS audit operate together, every layer of the delivery stack becomes accountable. Each delivered content chunk is sealed with a TTTPS temporal token before it leaves the origin — by the time it arrives at an edge node, the seal has already committed the chunk's hash, delivery timestamp, and source identity to an immutable chain.</p>
+<p class="section-note">The audit log captures for each chunk: <strong>chunk_hash</strong> (SHA-256 of content), <strong>delivery node</strong> (edge node ID and region), <strong>timestamp</strong> (millisecond-precision, GPS/NTP anchored), and <strong>attack_type</strong> (null if clean delivery, otherwise REPLAY / ORDERING / FORGE / FLOOD).</p>
+<p class="section-note">For game and content distributors, this provides a regulator-grade delivery record: you can prove to a content owner or compliance auditor exactly when a chunk was delivered, to which node, and that it was not tampered with — without relying on self-reported metrics from the edge provider.</p>
+<div class="demo-box">
+  <p class="section-note"><strong>Example use case:</strong> A Garena game patch is delivered across 50 SEA edge nodes. Hydra-Audit automatically logs every chunk delivery with a TTTPS seal. If a player reports corruption 3 days later, the audit log identifies exactly which edge node (e.g., <code>cdn-pool-sg1</code>) delivered a chunk with a mismatched hash — pinpointing the failure to a specific node, timestamp, and content block without any guesswork.</p>
+</div>
+<p class="section-note">TRAI/CERT-In compliance: the audit log format is JSON-LD exportable for regulatory submission. Audit queries return structured records compatible with India's CERT-In cybersecurity reporting framework and TRAI's Quality of Service monitoring requirements.</p>
+
+<h2>Performance Metrics</h2>
+<div class="metric-row">
+  <div class="metric">
+    <div class="val">30%</div>
+    <div class="lbl">Packet loss tolerance — erasure coding reconstructs missing chunks from peer nodes, zero retransmission</div>
+  </div>
+  <div class="metric">
+    <div class="val">5-dim</div>
+    <div class="lbl">GapVec5 path selection — ISP density, latency, packet loss, throughput, DPI fingerprint</div>
+  </div>
+  <div class="metric">
+    <div class="val">13</div>
+    <div class="lbl">Byzantine attack vectors detected per chunk — TTTPS audit covers GPS/BGP/NTP spoofing and delivery attacks</div>
+  </div>
+  <div class="metric">
+    <div class="val">400GbE</div>
+    <div class="lbl">Equinix Fabric ready — EVPL connections from 1GbE to 400GbE across SE2 / MA1 / FR5 / LD5</div>
+  </div>
+</div>
 
 <h2>Equinix Fabric Integration</h2>
 <table>

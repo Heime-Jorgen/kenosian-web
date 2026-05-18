@@ -27,6 +27,21 @@ nav.breadcrumb a { color: #555; }
 .metric .val { font-size: 1.4rem; font-weight: 700; }
 .metric .lbl { font-size: 0.72rem; color: #666; margin-top: 4px; }
 .demo-box { background: #f0f0f0; border-left: 3px solid #1a1a1a; padding: 16px; margin: 8px 0 16px; }
+.killer { font-size: 0.95rem; font-weight: 700; margin: 16px 0 32px; color: #1a1a1a; line-height: 1.5; border-left: 3px solid #1a1a1a; padding-left: 12px; }
+.btn-primary { display: inline-block; background: #0052ff; color: #fff; padding: 10px 24px; border-radius: 4px; text-decoration: none; font-weight: 600; font-size: 0.85rem; cursor: pointer; border: none; font-family: inherit; }
+.btn-primary:hover { opacity: 0.9; }
+.demo-result { background: #f0f0f0; padding: 14px; border-radius: 3px; font-size: 0.78rem; margin-top: 12px; min-height: 40px; white-space: pre-wrap; }
+.cta-row { margin: 32px 0 16px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.scenario-block { background: #f0f0f0; border-left: 3px solid #1a1a1a; padding: 14px 16px; margin: 8px 0 16px; font-size: 0.82rem; }
+.scenario-block strong { display: block; margin-bottom: 6px; }
+.scenario-block code { background: #e0e0e0; padding: 1px 5px; border-radius: 2px; }
+.use-list { list-style: none; padding: 0; margin: 0 0 16px; }
+.use-list li { padding: 8px 0; border-bottom: 1px solid #e8e8e8; font-size: 0.82rem; }
+.use-list li:last-child { border-bottom: none; }
+.use-list li::before { content: "→ "; font-weight: 700; }
+.deploy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 12px 0 16px; }
+.deploy-item { background: #f0f0f0; padding: 12px 14px; border-radius: 3px; font-size: 0.8rem; }
+.deploy-item .deploy-label { font-weight: 700; margin-bottom: 4px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: #555; }
 </style>
 </head>
 <body>
@@ -37,6 +52,31 @@ nav.breadcrumb a { color: #555; }
 
 <h1>TTTPS — Byzantine Audit API</h1>
 <span class="tag">Proof-of-Time · Byzantine Fault Detection · IETF Draft · Commercial Audit Tool</span>
+<p class="killer">Cryptographic proof for every request — 13 Byzantine attack vectors detected, logged, and auditable in real time.</p>
+
+<h2>The Problem</h2>
+<p class="section-note">
+  Distributed systems — inference clusters, CDN networks, payment processors, telco signaling — depend on timestamps to sequence events, prevent replay attacks, and satisfy regulators.
+  But timestamps are a single point of trust: if your NTP server is compromised, your GPS signal is spoofed, or an attacker injects a false clock update, your entire audit trail is corrupted.
+  Traditional systems detect this only after the fact — or not at all.
+</p>
+<p class="section-note">
+  TTTPS solves this at the protocol level. Every attestation is anchored to <strong>multiple independent time sources simultaneously</strong> — GPS, NIST Roughtime, and network time — and bound into a cryptographic commitment chain.
+  Any single-source manipulation is immediately detectable because the other sources disagree.
+  The commitment chain also makes replay attacks detectable: the same token submitted twice produces a verifiable collision.
+</p>
+
+<!-- OVERVIEW -->
+<h2>Overview</h2>
+<p class="section-note">
+  Most distributed systems rely on a single trusted clock or timestamp server. If that clock is wrong — due to drift — or compromised — via NTP injection or GPS spoofing — the entire audit trail is corrupted. Every downstream record that depends on that timestamp is now unreliable, and the attack is undetectable from inside the system.
+</p>
+<p class="section-note">
+  TTTPS solves this by anchoring every token to multiple independent time sources simultaneously — GPS, NIST Roughtime, and network time — and creating a cryptographic commitment chain across all of them. Any single-source manipulation is detected because the other sources disagree. The multi-source divergence is logged with the specific attack type so the audit trail remains intact even under active attack.
+</p>
+<p class="section-note">
+  The commitment chain also makes replay attacks detectable: the same token submitted twice produces a chain collision on the second verify. The system does not need to trust the submitter or the network — it only needs the commitment to be internally consistent.
+</p>
 
 <!-- SECTION 1: Attack Detection Capability Matrix -->
 <h2>Attack Detection Capability Matrix</h2>
@@ -133,23 +173,94 @@ nav.breadcrumb a { color: #555; }
   </tbody>
 </table>
 
-<!-- SECTION 2: GRG Pipeline -->
-<h2>GRG Pipeline</h2>
+<!-- SECTION 2: GRG Commitment Pipeline -->
+<h2>GRG Commitment Pipeline</h2>
 <p class="section-note">Cryptographic commitment architecture — abstracted for IP protection.</p>
 <div class="demo-box">
-  Multi-source time anchors → cryptographic commitment pipeline → Ed25519 signature.<br>
+  Multi-source time anchors → GRG commitment pipeline (abstracted for IP protection) → Ed25519 signature.<br>
   All manipulation converges to commitment mismatch.
 </div>
 <p class="section-note">
-  The pipeline ingests independent time sources, computes a layered commitment across
-  entropy, ordering, and integrity dimensions, and seals the result with an Ed25519
-  signature over the final chain digest. Any tampering at any stage produces a
-  verifiable mismatch at verification time — regardless of which attack vector is used.
+  The pipeline ingests independent time sources — GPS, NIST Roughtime, network time — and computes a layered commitment across entropy, ordering, and integrity dimensions. The result is sealed with an Ed25519 signature over the final chain digest. Any tampering at any stage produces a verifiable mismatch at verification time, regardless of which attack vector is used. The specifics of the commitment pipeline are proprietary.
+</p>
+<p class="section-note">
+  Note: pipeline architecture is abstracted for IP protection. Contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a> for technical deep-dive.
 </p>
 
-<!-- SECTION 3: Live Demo -->
+<!-- SECTION 3: Real-World Attack Scenarios -->
+<h2>Real-World Attack Scenarios</h2>
+<p class="section-note">How TTTPS catches attacks that traditional audit systems miss entirely.</p>
+<table>
+  <thead><tr><th>Attack</th><th>What Happens</th><th>How TTTPS Catches It</th><th>Log Field</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>NTP Injection</td>
+      <td>Attacker compromises NTP server, advances clock 30s to replay old transactions</td>
+      <td>GPS and Roughtime anchors disagree with the manipulated NTP anchor — multi-source consensus fails</td>
+      <td><code>attack_type: "NTP_INJECT"</code></td>
+    </tr>
+    <tr>
+      <td>Token Replay</td>
+      <td>Same API request submitted twice with identical timestamp token</td>
+      <td>Commitment chain registers a collision on second submission — mathematically impossible for two valid unique tokens</td>
+      <td><code>attack_type: "REPLAY"</code></td>
+    </tr>
+    <tr>
+      <td>Signature Forgery</td>
+      <td>Attacker intercepts and modifies payload, attempts to recompute signature</td>
+      <td>Ed25519 verification fails against published public key — no valid signature possible without the private key</td>
+      <td><code>attack_type: "FORGE"</code></td>
+    </tr>
+    <tr>
+      <td>GPS Spoofing</td>
+      <td>Attacker broadcasts false GPS time signal to ground infrastructure</td>
+      <td>Roughtime and NTP anchors disagree with GPS — cross-source delta exceeds ±10ms threshold</td>
+      <td><code>attack_type: "GPS_SPOOF"</code></td>
+    </tr>
+    <tr>
+      <td>Ordering Attack</td>
+      <td>Attacker reorders a sequence of legitimate tokens to alter apparent event history</td>
+      <td>Chain digest sequence check breaks — out-of-order submission violates chain integrity</td>
+      <td><code>attack_type: "ORDERING"</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 4: Live Demo -->
 <h2>Live Demo <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:0.85rem;color:#555;">· No API key required · Rate-limited</span></h2>
 
+<div class="cta-row">
+  <button class="btn-primary" onclick="runTttpsDemo()">&#9654; Run One-Click Demo</button>
+  <span style="font-size:0.8rem;color:#666;">Calls <code>api.kenosian.com</code> live — shows token + Byzantine audit result</span>
+</div>
+<div class="demo-result" id="demo-out">Click the button to generate a PoT token and verify it in real time.</div>
+
+<script>
+async function runTttpsDemo() {
+  const out = document.getElementById('demo-out');
+  out.textContent = 'Generating token...';
+  try {
+    const gen = await fetch('https://api.kenosian.com/api/demo/pot/generate', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ctx_id: 'demo'})
+    });
+    const token = await gen.json();
+    out.textContent = 'Token generated:\n' + JSON.stringify(token, null, 2) + '\n\nVerifying...';
+    const ver = await fetch('https://api.kenosian.com/api/demo/pot/verify', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(token)
+    });
+    const result = await ver.json();
+    out.textContent = 'Token generated:\n' + JSON.stringify(token, null, 2) +
+      '\n\nVerification result:\n' + JSON.stringify(result, null, 2) +
+      (result.valid ? '\n\n✓ Valid — no Byzantine attack detected.' : '\n\n⚠ Attack detected: ' + result.attack_type);
+  } catch(e) {
+    out.textContent = 'Error: ' + e.message;
+  }
+}
+</script>
+
+<p class="section-note" style="margin-top:16px;"><strong>Or via curl:</strong></p>
 <p class="section-note"><strong>Step 1:</strong> Generate a token</p>
 <pre>curl -X POST https://api.kenosian.com/api/demo/pot/generate \
   -H "Content-Type: application/json" \
@@ -178,7 +289,7 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
   -d '{"ctx_id":"demo","token":"&lt;same token&gt;"}'</pre>
 <pre>{"valid":false,"attack_type":"REPLAY"}</pre>
 
-<!-- SECTION 4: Audit Log -->
+<!-- SECTION 5: Audit Log -->
 <h2>Audit Log</h2>
 <pre>curl "https://api.kenosian.com/audit?ctx_id=demo&amp;window=3600" \
   -H "X-API-Key: &lt;your-key&gt;"</pre>
@@ -199,7 +310,36 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
 tttps_attack_total{type="drift"}    1
 tttps_byzantine_ratio               0.021</pre>
 
-<!-- SECTION 5: Compliance -->
+<!-- SECTION 6: When to Use TTTPS -->
+<h2>When to Use TTTPS</h2>
+<p class="section-note">TTTPS is the right tool when you need to prove <em>when</em> something happened — not just <em>that</em> it happened.</p>
+<table>
+  <thead><tr><th>Use Case</th><th>What TTTPS Provides</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>LLM inference clusters</td>
+      <td>Cryptographic audit trail of every KV cache transfer between prefill and decode nodes — detect replay, ordering, and forgery attacks in real time (Hydra-KV integration)</td>
+    </tr>
+    <tr>
+      <td>CDN / game patch delivery</td>
+      <td>Per-chunk delivery proof — any content owner or regulator can verify exactly when a chunk was delivered, to which node, and that it was unmodified (Hydra-CDN integration)</td>
+    </tr>
+    <tr>
+      <td>Payment processors</td>
+      <td>Timestamp every payment attestation with cryptographic proof resistant to clock manipulation — regulatory-grade tamper evidence</td>
+    </tr>
+    <tr>
+      <td>Telco / ISP signaling</td>
+      <td>TRAI-compliant audit trail for all inter-node signaling — JSON-LD export format ready for submission</td>
+    </tr>
+    <tr>
+      <td>Any distributed API</td>
+      <td>Byzantine attack detection on every request — REPLAY, FLOOD, FORGE, DRIFT detected and logged automatically</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 7: Compliance -->
 <h2>Compliance &amp; Audit Organizations</h2>
 <p class="section-note">
   TTTPS generates a tamper-evident audit trail suitable for submission to regulatory bodies.
@@ -228,7 +368,17 @@ tttps_byzantine_ratio               0.021</pre>
   </tbody>
 </table>
 
-<!-- SECTION 6: API Access -->
+<!-- SECTION 8: Deployment -->
+<h2>Deployment</h2>
+<p class="section-note">Open-source reference implementation. IETF draft in active submission.</p>
+<pre>npm install openttt</pre>
+<p class="section-note">
+  GitHub: <a href="https://github.com/helm-protocol/openttt">github.com/helm-protocol/openttt</a><br>
+  IETF Draft: <a href="https://datatracker.ietf.org/doc/draft-helmprotocol-tttps/">datatracker.ietf.org/doc/draft-helmprotocol-tttps/</a><br>
+  Production API: <a href="mailto:peter@kenosian.com">peter@kenosian.com</a>
+</p>
+
+<!-- SECTION 9: API Access -->
 <h2>API Access</h2>
 <p class="section-note">
   Production API key required.<br>

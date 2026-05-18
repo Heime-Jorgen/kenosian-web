@@ -28,6 +28,12 @@ nav.breadcrumb a { color: #555; }
 .product-card { border: 1px solid #e0e0e0; padding: 24px; margin-bottom: 16px; border-radius: 3px; }
 .product-card h2 { margin-top: 0; }
 blockquote { border-left: 3px solid #1a1a1a; padding-left: 16px; margin: 16px 0; font-size: 0.85rem; color: #444; }
+.killer { font-size: 0.95rem; font-weight: 700; margin: 16px 0 32px; color: #1a1a1a; line-height: 1.5; border-left: 3px solid #1a1a1a; padding-left: 12px; }
+.btn-primary { display: inline-block; background: #0052ff; color: #fff; padding: 10px 24px; border-radius: 4px; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
+.btn-primary:hover { opacity: 0.9; }
+.cta-row { margin: 32px 0 16px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.demo-box { background: #f0f0f0; border-left: 3px solid #1a1a1a; padding: 16px; margin: 8px 0 16px; }
+tr:last-child td { border-bottom: none; }
 </style>
 </head>
 <body>
@@ -36,11 +42,29 @@ blockquote { border-left: 3px solid #1a1a1a; padding-left: 16px; margin: 16px 0;
 
 <h1>HYDRA-AUDIT — Infrastructure Audit</h1>
 <span class="tag">Byzantine Fault Detection · Regulatory Compliance · Tamper-Evident Audit Trail</span>
+<p class="killer">Byzantine audit trail built for regulators — Prometheus, Grafana, and JSON-LD exports ready for TRAI and CERT-In submission.</p>
 
 <h2>Overview</h2>
-<p class="section-note">Hydra-Audit provides a Byzantine-resistant audit layer for distributed infrastructure.
-Built on TTTPS (Temporal Token for TLS Protocol), it generates cryptographically verifiable
-audit trails suitable for submission to regulatory and audit organizations.</p>
+<p class="section-note">Distributed infrastructure — whether an LLM inference cluster, a CDN edge network, or a payment system — generates enormous amounts of inter-node traffic that is difficult to audit in real time. A single compromised node can silently tamper with its own logs, forge timestamps, or replay transactions without detection by conventional monitoring.</p>
+<p class="section-note" style="margin-top:12px;">Hydra-Audit solves this by generating a cryptographic commitment for every operation: timestamps anchored to multiple independent sources (GPS, Roughtime, NTP), sealed with Ed25519. Any counterparty — a regulator, a partner, an auditor — can verify the proof without trusting the issuer's clock or infrastructure. 13 Byzantine attack vectors are detected automatically and logged with tamper-evident cryptographic evidence. Hydra-Audit is built on TTTPS (Temporal Token for TLS Protocol), currently under IETF standardization.</p>
+
+<h2>Why Cryptographic Audit?</h2>
+<p class="section-note">Traditional audit logs can be tampered — a compromised node can modify its own logs, adjust timestamps, or suppress records entirely. Hydra-Audit is designed so that this is structurally impossible to do silently:</p>
+<ul style="font-size:0.82rem; color:#444; margin-left:20px; margin-bottom:16px; line-height:1.8;">
+  <li><strong>Commitment chain integrity:</strong> tampering at any layer produces a detectable mismatch — even if the attacker controls the logging node itself.</li>
+  <li><strong>Multi-source time anchors:</strong> a compromised NTP server cannot falsify timestamps — GPS and Roughtime provide fully independent verification with no shared trust root.</li>
+  <li><strong>Ed25519 sealing:</strong> every event is signed at generation time; post-hoc modification is cryptographically detectable by any verifier without access to the original infrastructure.</li>
+  <li><strong>The result:</strong> an audit trail that is verifiable by any party without trusting any single infrastructure component — suitable for adversarial, cross-jurisdiction, and regulatory review contexts.</li>
+</ul>
+
+<h2>How Hydra-Audit Works</h2>
+<ol style="font-size:0.82rem; color:#444; margin-left:20px; margin-bottom:16px; line-height:2;">
+  <li><strong>Event trigger:</strong> each operation (KV transfer, CDN chunk delivery, API request) triggers a TTTPS token generation at the point of execution.</li>
+  <li><strong>Time anchoring:</strong> the token anchors the event to multiple independent time sources — NIST, Roughtime, GPS — resistant to clock manipulation by any single authority.</li>
+  <li><strong>Cryptographic commitment pipeline:</strong> multi-source time anchors are processed through a proprietary multi-stage lattice commitment pipeline and sealed with an Ed25519 signature, forming an unforgeable cryptographic commitment chain.</li>
+  <li><strong>Tamper detection:</strong> any tampering at any stage — time drift, replay, signature forgery, reordering — produces a verifiable mismatch at verification time, detectable by any party holding the public key.</li>
+  <li><strong>Audit log delivery:</strong> events are stored with 90-day retention and are queryable via REST API or Prometheus, exportable as JSON-LD for compliance tooling and regulatory submission.</li>
+</ol>
 
 <h2>Byzantine Attack Coverage</h2>
 <table>
@@ -62,24 +86,37 @@ audit trails suitable for submission to regulatory and audit organizations.</p>
 </tbody>
 </table>
 
-<h2>Audit Organization Data Delivery</h2>
-<blockquote>Hydra-Audit provides structured audit data in formats accepted by regulatory bodies.</blockquote>
+<h2>Integration with Hydra Products</h2>
+<table>
+<thead><tr><th>Product</th><th>Audit Integration</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td>TTTPS</td><td>Native</td><td>Every PoT token is an audit event. The audit trail IS the protocol — no additional instrumentation required.</td></tr>
+<tr><td>Hydra-KV</td><td>Per-chunk seal</td><td>Every KV cache chunk transfer between prefill and decode nodes generates a TTTPS seal. Audit captures: sending node, receiving node, timestamp, chunk hash, and attack detection result.</td></tr>
+<tr><td>Hydra-CDN</td><td>Per-delivery seal</td><td>Every content chunk delivery generates a TTTPS seal. Full forensic delivery trail per chunk — queryable by content owners and regulators.</td></tr>
+<tr><td>Standalone</td><td>Drop-in layer</td><td>Hydra-Audit can be deployed as a standalone Byzantine audit layer for any distributed system — payment processors, telcos, inference APIs — with no dependency on other Hydra components.</td></tr>
+</tbody>
+</table>
+
+<h2>Compliance &amp; Regulatory Delivery</h2>
+<blockquote>Hydra-Audit provides structured audit data in formats accepted by regulatory bodies and compatible with standard compliance tooling.</blockquote>
 
 <table>
 <thead><tr><th>Format</th><th>Description</th><th>Use Case</th></tr></thead>
 <tbody>
-<tr><td>JSON-LD</td><td>Structured, machine-readable audit log</td><td>Automated compliance reporting</td></tr>
-<tr><td>Prometheus</td><td>Real-time metrics (attack counts, ratios)</td><td>SOC dashboard integration</td></tr>
-<tr><td>Grafana</td><td>Visual dashboard (access on request)</td><td>Audit team review</td></tr>
+<tr><td>JSON-LD</td><td>Structured, machine-readable audit log</td><td>Automated compliance reporting — compatible with any compliance tooling</td></tr>
+<tr><td>Prometheus</td><td>Real-time metrics (attack counts, ratios)</td><td>SOC dashboard integration, live Byzantine fault monitoring</td></tr>
+<tr><td>Grafana</td><td>Visual dashboard (access on request)</td><td>Audit team review — contact peter@kenosian.com for access</td></tr>
 <tr><td>CSV export</td><td>Tabular attack log</td><td>Manual review, spreadsheet import</td></tr>
 </tbody>
 </table>
 
-<p class="section-note">Regulatory compliance:</p>
-<ul style="font-size:0.82rem; color:#444; margin-left:20px; margin-bottom:16px;">
-  <li>TRAI (India) — timestamp integrity for telecom audit</li>
-  <li>CERT-In — incident reporting with cryptographic evidence</li>
-  <li>Equinix audit log format — compatible with Equinix SmartView</li>
+<p class="section-note">Regulatory alignment:</p>
+<ul style="font-size:0.82rem; color:#444; margin-left:20px; margin-bottom:16px; line-height:1.8;">
+  <li><strong>TRAI (India):</strong> timestamp integrity format aligned with TRAI telecom audit requirements.</li>
+  <li><strong>CERT-In:</strong> incident reporting format with cryptographic evidence — admissible audit trail for Indian CERT incident submissions.</li>
+  <li><strong>Equinix SmartView:</strong> audit log format compatible with Equinix SmartView export — no manual reformatting required.</li>
+  <li><strong>JSON-LD:</strong> structured, machine-readable — compatible with any compliance tooling or legal discovery process.</li>
+  <li><strong>Prometheus + Grafana:</strong> live Byzantine fault dashboard — contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a> for access.</li>
 </ul>
 
 <h2>Audit Log API</h2>
@@ -131,16 +168,10 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
   -d '{"ctx_id":"audit-demo","token":"&lt;same token&gt;"}'
 # → {"valid":false,"attack_type":"REPLAY"}</pre>
 
-<h2>Integration with Hydra Products</h2>
-<table>
-<thead><tr><th>Product</th><th>Audit Integration</th></tr></thead>
-<tbody>
-<tr><td>TTTPS</td><td>Native — every PoT token is an audit event</td></tr>
-<tr><td>Hydra-KV</td><td>KV chunk transfer → TTTPS seal + audit log</td></tr>
-<tr><td>Hydra-CDN</td><td>Content chunk delivery → TTTPS seal + audit log</td></tr>
-<tr><td>Hydra-Audit</td><td>Standalone Byzantine audit layer for any system</td></tr>
-</tbody>
-</table>
+<div class="cta-row">
+  <a class="btn-primary" href="mailto:peter@kenosian.com?subject=Hydra-Audit%20API%20Access%20Request">Request API Access</a>
+  <span style="font-size:0.8rem;color:#666;">Production key · 90-day audit log retention · Grafana access included</span>
+</div>
 
 <h2>Grafana Dashboard</h2>
 <p class="section-note">Access on request — contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a><br>

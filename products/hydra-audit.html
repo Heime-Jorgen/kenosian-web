@@ -263,21 +263,56 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
 <p class="section-note">Access on request — <a href="mailto:peter@kenosian.com">peter@kenosian.com</a></p>
 
 <h2>Pricing</h2>
+<p class="section-note">Framework-based coverage — priced against regulatory risk, not event volume. Events are unlimited across all tiers.</p>
 <table>
-<thead><tr><th>Package</th><th>Includes</th><th>Price</th></tr></thead>
+<thead><tr><th>Tier</th><th>Target</th><th>Includes</th><th>Price</th></tr></thead>
 <tbody>
 <tr>
-  <td><strong>Hydra-KV + Audit Bundle</strong></td>
-  <td>KV cache compression · CRDT dedup · TTTPS audit trail · Grafana access · 90-day retention</td>
-  <td><strong>$0.03 / GB processed</strong></td>
+  <td><strong>Inference</strong></td>
+  <td>Inference startups · EU AI Act Art.12</td>
+  <td>Unlimited events · 90-day retention · JSON-LD export · Prometheus · Grafana</td>
+  <td><strong>€2,000/month</strong></td>
 </tr>
 <tr>
-  <td><strong>Hydra-Audit Standalone</strong></td>
-  <td>TTTPS audit for any distributed system (training pipeline, API, CDN) · JSON-LD export · Prometheus metrics · Grafana</td>
-  <td>Enterprise pricing — <a href="mailto:peter@kenosian.com">peter@kenosian.com</a></td>
+  <td><strong>Training</strong></td>
+  <td>GPAI providers · EU AI Act Art.53 + copyright defense</td>
+  <td>Unlimited events · 1-year retention · Training batch PoT sealing · Copyright chain · JSON-LD · Grafana</td>
+  <td><strong>€6,000/month</strong></td>
+</tr>
+<tr>
+  <td><strong>Full</strong></td>
+  <td>Systemic risk model holders · 3-year regulatory cycle</td>
+  <td>All tiers + 3-year retention · Regulatory submission support · Dedicated onboarding</td>
+  <td><strong>€15,000/month</strong></td>
+</tr>
+<tr>
+  <td><strong>Enterprise</strong></td>
+  <td>Financial infrastructure · Medical AI · High-risk systems</td>
+  <td>MiFID II · SOC 2 Type II · SLA 99.9% · On-premise option · Custom integrations</td>
+  <td><strong>Contact — <a href="mailto:peter@kenosian.com">peter@kenosian.com</a></strong></td>
 </tr>
 </tbody>
 </table>
+<p class="section-note">
+  KV + Audit bundle: <strong>$0.03/GB processed</strong> — Audit included.
+  Standalone Audit: tiers above. Two separate buyer paths — engineering team adopts KV, legal team renews Audit.
+</p>
+
+<h2>Infrastructure Economics</h2>
+<p class="section-note">Hydra-Audit operates natively on Equinix Fabric. Fixed infrastructure cost regardless of customer count — margin improves with scale.</p>
+<table>
+<thead><tr><th>Customers</th><th>Events/day</th><th>Infra cost/month</th><th>Revenue/month</th><th>Margin</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>1M</td><td>$50</td><td>€2,000</td><td>97%</td></tr>
+<tr><td>10</td><td>10M</td><td>$150</td><td>€20,000</td><td>99%</td></tr>
+<tr><td>50</td><td>50M</td><td>$500</td><td>€100,000</td><td>99.5%</td></tr>
+<tr><td>200</td><td>200M</td><td>$1,500</td><td>€400,000</td><td>99.6%</td></tr>
+</tbody>
+</table>
+<p class="section-note">
+  Equinix 1GbE EVPL port: ~$400/month fixed. At 1,000 events/second, network utilization is 1.6% of 1GbE — port cost does not scale with customer volume.
+  Every customer Virtual Connection generates Equinix Fabric revenue.
+</p>
 
 <h2>API Access</h2>
 <p class="section-note">Contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a> for API key provisioning and integration support.</p>

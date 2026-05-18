@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TTTPS — Byzantine Audit API · Helm Protocol</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'SF Mono', 'Fira Code', monospace; max-width: 900px; margin: 60px auto; padding: 0 24px; color: #1a1a1a; background: #fafafa; line-height: 1.6; }
+h1 { font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #1a1a1a; padding-bottom: 12px; margin-bottom: 6px; }
+h2 { font-size: 1rem; font-weight: 600; margin-top: 40px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #333; }
+.tag { color: #666; font-size: 0.8rem; margin-bottom: 32px; display: block; }
+pre { background: #f0f0f0; padding: 16px; border-radius: 3px; overflow-x: auto; font-size: 0.8rem; margin: 8px 0 16px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 16px; }
+th { background: #1a1a1a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: #f5f5f5; }
+.section-note { font-size: 0.8rem; color: #555; margin-bottom: 16px; }
+.audit-badge { display: inline-block; background: #1a1a1a; color: #fff; font-size: 0.7rem; padding: 2px 8px; border-radius: 2px; margin-left: 8px; letter-spacing: 0.05em; }
+footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; color: #888; font-size: 0.78rem; display: flex; justify-content: space-between; }
+a { color: #1a1a1a; }
+nav.breadcrumb { font-size: 0.8rem; color: #888; margin-bottom: 40px; }
+nav.breadcrumb a { color: #555; }
+.metric-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 16px 0 24px; }
+.metric { background: #f0f0f0; padding: 16px; border-radius: 3px; }
+.metric .val { font-size: 1.4rem; font-weight: 700; }
+.metric .lbl { font-size: 0.72rem; color: #666; margin-top: 4px; }
+.demo-box { background: #f0f0f0; border-left: 3px solid #1a1a1a; padding: 16px; margin: 8px 0 16px; }
+</style>
+</head>
+<body>
+
+<nav class="breadcrumb">
+  <a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · TTTPS
+</nav>
+
+<h1>TTTPS — Byzantine Audit API</h1>
+<span class="tag">Proof-of-Time · Byzantine Fault Detection · IETF Draft · Commercial Audit Tool</span>
+
+<!-- SECTION 1: Attack Detection Capability Matrix -->
+<h2>Attack Detection Capability Matrix</h2>
+<p class="section-note">13 attack vectors detected via cryptographic commitment chain and temporal verification.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attack Type</th>
+      <th>Detection Mechanism</th>
+      <th>Layer</th>
+      <th>Log Field</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Token Replay</td>
+      <td>Commitment chain collision — same token submitted twice yields mismatch on second verify</td>
+      <td>Application</td>
+      <td><code>attack_type: "REPLAY"</code></td>
+    </tr>
+    <tr>
+      <td>Timestamp Drift</td>
+      <td>Multi-source time anchor cross-check; delta exceeds ±10 ms threshold</td>
+      <td>Protocol</td>
+      <td><code>attack_type: "DRIFT"</code></td>
+    </tr>
+    <tr>
+      <td>Signature Forgery</td>
+      <td>Ed25519 signature verification against published pubkey fails</td>
+      <td>Cryptographic</td>
+      <td><code>attack_type: "FORGE"</code></td>
+    </tr>
+    <tr>
+      <td>Flood DDoS</td>
+      <td>Rate-limit token bucket per ctx_id; excess requests flagged</td>
+      <td>Transport</td>
+      <td><code>attack_type: "FLOOD"</code></td>
+    </tr>
+    <tr>
+      <td>Ordering Attack</td>
+      <td>Chain digest sequence check; out-of-order submission breaks chain integrity</td>
+      <td>Protocol</td>
+      <td><code>attack_type: "ORDERING"</code></td>
+    </tr>
+    <tr>
+      <td>Cross-Pool Replay</td>
+      <td>ctx_id binding in commitment; token from pool A rejected by pool B</td>
+      <td>Application</td>
+      <td><code>attack_type: "CROSS_POOL"</code></td>
+    </tr>
+    <tr>
+      <td>Sybil</td>
+      <td>Identity multiplicity detected via convergent commitment patterns across ctx_ids</td>
+      <td>Application</td>
+      <td><code>attack_type: "SYBIL"</code></td>
+    </tr>
+    <tr>
+      <td>GPS Spoofing</td>
+      <td>Time anchor from GPS cross-referenced with network time; divergence triggers alert</td>
+      <td>Physical</td>
+      <td><code>attack_type: "GPS_SPOOF"</code></td>
+    </tr>
+    <tr>
+      <td>NTP Injection</td>
+      <td>Multiple independent time sources compared; single-source manipulation isolated</td>
+      <td>Network</td>
+      <td><code>attack_type: "NTP_INJECT"</code></td>
+    </tr>
+    <tr>
+      <td>BGP Hijacking</td>
+      <td>Route-origin commitment verified against signed prefix advertisement</td>
+      <td>Network</td>
+      <td><code>attack_type: "BGP_HIJACK"</code></td>
+    </tr>
+    <tr>
+      <td>DNS Poisoning</td>
+      <td>Resolution binding in token; mismatched endpoint detected at verify step</td>
+      <td>Network</td>
+      <td><code>attack_type: "DNS_POISON"</code></td>
+    </tr>
+    <tr>
+      <td>SDN Flow Manipulation</td>
+      <td>Path-fingerprint delta comparison; altered flow topology breaks commitment</td>
+      <td>Network</td>
+      <td><code>attack_type: "SDN_MANIP"</code></td>
+    </tr>
+    <tr>
+      <td>Protocol Violation</td>
+      <td>Schema validation on all fields; malformed token structure rejected at ingress</td>
+      <td>Application</td>
+      <td><code>attack_type: "PROTO_VIOLATION"</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 2: GRG Pipeline -->
+<h2>GRG Pipeline</h2>
+<p class="section-note">Cryptographic commitment architecture — abstracted for IP protection.</p>
+<div class="demo-box">
+  Multi-source time anchors → cryptographic commitment pipeline → Ed25519 signature.<br>
+  All manipulation converges to commitment mismatch.
+</div>
+<p class="section-note">
+  The pipeline ingests independent time sources, computes a layered commitment across
+  entropy, ordering, and integrity dimensions, and seals the result with an Ed25519
+  signature over the final chain digest. Any tampering at any stage produces a
+  verifiable mismatch at verification time — regardless of which attack vector is used.
+</p>
+
+<!-- SECTION 3: Live Demo -->
+<h2>Live Demo <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:0.85rem;color:#555;">· No API key required · Rate-limited</span></h2>
+
+<p class="section-note"><strong>Step 1:</strong> Generate a token</p>
+<pre>curl -X POST https://api.kenosian.com/api/demo/pot/generate \
+  -H "Content-Type: application/json" \
+  -d '{"ctx_id":"demo"}'</pre>
+
+<p class="section-note">Expected response:</p>
+<pre>{
+  "status":         "ok",
+  "ctx_id":         "demo",
+  "timestamp_ms":   1748000000000,
+  "grg_commitment": "a3f9c2...",
+  "chain_digest":   "b7c2e1...",
+  "signature":      "ed25519-base64...",
+  "pubkey":         "acac8eae..."
+}</pre>
+
+<p class="section-note"><strong>Step 2:</strong> Verify (replay attack detection)</p>
+<pre>curl -X POST https://api.kenosian.com/api/demo/pot/verify \
+  -H "Content-Type: application/json" \
+  -d '{"ctx_id":"demo","token":"&lt;paste token from step 1&gt;"}'</pre>
+
+<p class="section-note"><strong>Step 3:</strong> Trigger replay detection</p>
+<pre># Submit same token twice → REPLAY detected
+curl -X POST https://api.kenosian.com/api/demo/pot/verify \
+  -H "Content-Type: application/json" \
+  -d '{"ctx_id":"demo","token":"&lt;same token&gt;"}'</pre>
+<pre>{"valid":false,"attack_type":"REPLAY"}</pre>
+
+<!-- SECTION 4: Audit Log -->
+<h2>Audit Log</h2>
+<pre>curl "https://api.kenosian.com/audit?ctx_id=demo&amp;window=3600" \
+  -H "X-API-Key: &lt;your-key&gt;"</pre>
+
+<p class="section-note">Response (real measurement basis):</p>
+<pre>{
+  "ctx_id": "demo",
+  "window_secs": 3600,
+  "total_requests": 142,
+  "byzantine_total": 3,
+  "byzantine_ratio": 0.021,
+  "attack_breakdown": { "REPLAY": 2, "DRIFT": 1, "FORGE": 0, "FLOOD": 0 }
+}</pre>
+
+<p class="section-note">Prometheus metrics:</p>
+<pre>curl https://api.kenosian.com/metrics</pre>
+<pre>tttps_attack_total{type="replay"}   2
+tttps_attack_total{type="drift"}    1
+tttps_byzantine_ratio               0.021</pre>
+
+<!-- SECTION 5: Compliance -->
+<h2>Compliance &amp; Audit Organizations</h2>
+<p class="section-note">
+  TTTPS generates a tamper-evident audit trail suitable for submission to regulatory bodies.
+</p>
+<table>
+  <thead>
+    <tr><th>Format / Organization</th><th>Details</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>JSON-LD export</td>
+      <td>Structured, machine-readable audit records compatible with standard compliance tooling</td>
+    </tr>
+    <tr>
+      <td>TRAI (India)</td>
+      <td>Compliance-ready audit trail format aligned with TRAI reporting requirements</td>
+    </tr>
+    <tr>
+      <td>CERT-In</td>
+      <td>Incident reporting format compatible with CERT-In submission standards</td>
+    </tr>
+    <tr>
+      <td>Prometheus + Grafana</td>
+      <td>Live metrics dashboard — contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a> for access</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 6: API Access -->
+<h2>API Access</h2>
+<p class="section-note">
+  Production API key required.<br>
+  Contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a> for access and onboarding.
+</p>
+<table>
+  <thead>
+    <tr><th>Tier</th><th>Rate Limit</th><th>Audit Log Retention</th><th>Access</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Demo</td>
+      <td>10 req / min</td>
+      <td>1 hour</td>
+      <td>No key required</td>
+    </tr>
+    <tr>
+      <td>Production</td>
+      <td>Custom</td>
+      <td>90 days</td>
+      <td><a href="mailto:peter@kenosian.com">peter@kenosian.com</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<footer>
+  <span><a href="https://github.com/helm-protocol/openttt">GitHub</a> · <a href="https://datatracker.ietf.org/doc/draft-helmprotocol-tttps/">IETF Draft</a> · <a href="/products.html">All Products</a></span>
+  <span>Helm Protocol · 2026</span>
+</footer>
+
+</body>
+</html>

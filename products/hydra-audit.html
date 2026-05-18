@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYDRA-AUDIT — Infrastructure Audit · kenosian.com</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'SF Mono', 'Fira Code', monospace; max-width: 900px; margin: 60px auto; padding: 0 24px; color: #1a1a1a; background: #fafafa; line-height: 1.6; }
+h1 { font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #1a1a1a; padding-bottom: 12px; margin-bottom: 6px; }
+h2 { font-size: 1rem; font-weight: 600; margin-top: 40px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #333; }
+.tag { color: #666; font-size: 0.8rem; margin-bottom: 32px; display: block; }
+pre { background: #f0f0f0; padding: 16px; border-radius: 3px; overflow-x: auto; font-size: 0.8rem; margin: 8px 0 16px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 16px; }
+th { background: #1a1a1a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+tr:nth-child(even) td { background: #f5f5f5; }
+.section-note { font-size: 0.8rem; color: #555; margin-bottom: 16px; }
+.audit-badge { display: inline-block; background: #1a1a1a; color: #fff; font-size: 0.7rem; padding: 2px 8px; border-radius: 2px; margin-left: 8px; letter-spacing: 0.05em; }
+footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; color: #888; font-size: 0.78rem; display: flex; justify-content: space-between; }
+a { color: #1a1a1a; }
+nav.breadcrumb { font-size: 0.8rem; color: #888; margin-bottom: 40px; }
+nav.breadcrumb a { color: #555; }
+.metric-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 16px 0 24px; }
+.metric { background: #f0f0f0; padding: 16px; border-radius: 3px; }
+.metric .val { font-size: 1.4rem; font-weight: 700; }
+.metric .lbl { font-size: 0.72rem; color: #666; margin-top: 4px; }
+.product-card { border: 1px solid #e0e0e0; padding: 24px; margin-bottom: 16px; border-radius: 3px; }
+.product-card h2 { margin-top: 0; }
+blockquote { border-left: 3px solid #1a1a1a; padding-left: 16px; margin: 16px 0; font-size: 0.85rem; color: #444; }
+</style>
+</head>
+<body>
+
+<nav class="breadcrumb"><a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · HYDRA-AUDIT</nav>
+
+<h1>HYDRA-AUDIT — Infrastructure Audit</h1>
+<span class="tag">Byzantine Fault Detection · Regulatory Compliance · Tamper-Evident Audit Trail</span>
+
+<h2>Overview</h2>
+<p class="section-note">Hydra-Audit provides a Byzantine-resistant audit layer for distributed infrastructure.
+Built on TTTPS (Temporal Token for TLS Protocol), it generates cryptographically verifiable
+audit trails suitable for submission to regulatory and audit organizations.</p>
+
+<h2>Byzantine Attack Coverage</h2>
+<table>
+<thead><tr><th>Attack Type</th><th>Detection Method</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Token Replay</td><td>Commitment chain deduplication</td><td>✓ Active</td></tr>
+<tr><td>Timestamp Drift</td><td>Multi-source time anchor comparison</td><td>✓ Active</td></tr>
+<tr><td>Signature Forgery</td><td>Ed25519 verification</td><td>✓ Active</td></tr>
+<tr><td>Flood DDoS</td><td>Rate-limit + token budget enforcement</td><td>✓ Active</td></tr>
+<tr><td>Ordering Attack</td><td>Sequence integrity check</td><td>✓ Active</td></tr>
+<tr><td>Cross-Pool Replay</td><td>ctx_id scope isolation</td><td>✓ Active</td></tr>
+<tr><td>Sybil</td><td>Node identity binding</td><td>✓ Active</td></tr>
+<tr><td>GPS Spoofing</td><td>KTSat ±10ns anchor cross-check</td><td>✓ Active</td></tr>
+<tr><td>NTP Injection</td><td>Multi-source consensus (GPS/BGP/NTP)</td><td>✓ Active</td></tr>
+<tr><td>BGP Hijacking</td><td>BGP route anomaly detection</td><td>✓ Active</td></tr>
+<tr><td>DNS Poisoning</td><td>DNSSEC + response consistency</td><td>✓ Active</td></tr>
+<tr><td>SDN Flow</td><td>Flow rule integrity audit</td><td>✓ Active</td></tr>
+<tr><td>Protocol Violation</td><td>State machine conformance</td><td>✓ Active</td></tr>
+</tbody>
+</table>
+
+<h2>Audit Organization Data Delivery</h2>
+<blockquote>Hydra-Audit provides structured audit data in formats accepted by regulatory bodies.</blockquote>
+
+<table>
+<thead><tr><th>Format</th><th>Description</th><th>Use Case</th></tr></thead>
+<tbody>
+<tr><td>JSON-LD</td><td>Structured, machine-readable audit log</td><td>Automated compliance reporting</td></tr>
+<tr><td>Prometheus</td><td>Real-time metrics (attack counts, ratios)</td><td>SOC dashboard integration</td></tr>
+<tr><td>Grafana</td><td>Visual dashboard (access on request)</td><td>Audit team review</td></tr>
+<tr><td>CSV export</td><td>Tabular attack log</td><td>Manual review, spreadsheet import</td></tr>
+</tbody>
+</table>
+
+<p class="section-note">Regulatory compliance:</p>
+<ul style="font-size:0.82rem; color:#444; margin-left:20px; margin-bottom:16px;">
+  <li>TRAI (India) — timestamp integrity for telecom audit</li>
+  <li>CERT-In — incident reporting with cryptographic evidence</li>
+  <li>Equinix audit log format — compatible with Equinix SmartView</li>
+</ul>
+
+<h2>Audit Log API</h2>
+<pre># Query audit log (authenticated)
+curl "https://api.kenosian.com/audit?ctx_id=&lt;pool-id&gt;&amp;window=86400" \
+  -H "X-API-Key: &lt;your-key&gt;"</pre>
+
+<p class="section-note">Response (GCP internal measurement):</p>
+<pre>{
+  "ctx_id":          "prod-pool-01",
+  "window_secs":     86400,
+  "total_requests":  14823,
+  "byzantine_total": 31,
+  "byzantine_ratio": 0.0021,
+  "attack_breakdown": {
+    "REPLAY":   18,
+    "DRIFT":     7,
+    "FORGE":     4,
+    "FLOOD":     2,
+    "ORDERING":  0,
+    "INVALID":   0
+  }
+}</pre>
+
+<h2>Prometheus Metrics</h2>
+<pre>curl https://api.kenosian.com/metrics</pre>
+<pre>tttps_attack_total{type="replay"}    18
+tttps_attack_total{type="drift"}      7
+tttps_attack_total{type="forge"}      4
+tttps_byzantine_ratio                 0.0021
+tttps_valid_count                  14792
+tttps_requests_total               14823</pre>
+
+<h2>Live Demo — Byzantine Detection</h2>
+<pre># Step 1: Generate token
+curl -X POST https://api.kenosian.com/api/demo/pot/generate \
+  -H "Content-Type: application/json" \
+  -d '{"ctx_id":"audit-demo"}'
+
+# Step 2: Verify clean token
+curl -X POST https://api.kenosian.com/api/demo/pot/verify \
+  -H "Content-Type: application/json" \
+  -d '{"ctx_id":"audit-demo","token":"&lt;from step 1&gt;"}'
+# → {"valid":true,"attack_type":null}
+
+# Step 3: Replay attack — submit same token again
+curl -X POST https://api.kenosian.com/api/demo/pot/verify \
+  -H "Content-Type: application/json" \
+  -d '{"ctx_id":"audit-demo","token":"&lt;same token&gt;"}'
+# → {"valid":false,"attack_type":"REPLAY"}</pre>
+
+<h2>Integration with Hydra Products</h2>
+<table>
+<thead><tr><th>Product</th><th>Audit Integration</th></tr></thead>
+<tbody>
+<tr><td>TTTPS</td><td>Native — every PoT token is an audit event</td></tr>
+<tr><td>Hydra-KV</td><td>KV chunk transfer → TTTPS seal + audit log</td></tr>
+<tr><td>Hydra-CDN</td><td>Content chunk delivery → TTTPS seal + audit log</td></tr>
+<tr><td>Hydra-Audit</td><td>Standalone Byzantine audit layer for any system</td></tr>
+</tbody>
+</table>
+
+<h2>Grafana Dashboard</h2>
+<p class="section-note">Access on request — contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a><br>
+Live Byzantine fault visualization: attack type breakdown, time-series, per-agent metrics.</p>
+
+<h2>API Access</h2>
+<p class="section-note">Contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a> for API key provisioning and integration support.</p>
+
+<footer>
+  <span>IETF Draft · <a href="https://github.com/helm-protocol/openttt">github.com/helm-protocol/openttt</a></span>
+  <span>peter@kenosian.com · Helm Protocol · 2026</span>
+</footer>
+
+</body>
+</html>

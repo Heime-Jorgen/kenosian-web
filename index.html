@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TTTPS — Byzantine Audit API</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'SF Mono', 'Fira Code', monospace; max-width: 900px; margin: 60px auto; padding: 0 24px; color: #1a1a1a; background: #fafafa; line-height: 1.6; }
+    h1 { font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #1a1a1a; padding-bottom: 12px; margin-bottom: 6px; }
+    h2 { font-size: 1rem; font-weight: 600; margin-top: 40px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #333; }
+    .tag { color: #666; font-size: 0.8rem; margin-bottom: 32px; display: block; }
+    pre { background: #f0f0f0; padding: 16px; border-radius: 3px; overflow-x: auto; font-size: 0.8rem; margin: 8px 0 16px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 16px; }
+    th { background: #1a1a1a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+    td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: #f5f5f5; }
+    .pass { color: #1a1a1a; font-weight: 600; }
+    .layer { color: #555; font-size: 0.78rem; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; color: #888; font-size: 0.78rem; display: flex; justify-content: space-between; }
+    a { color: #1a1a1a; }
+    .section-note { font-size: 0.8rem; color: #555; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+<h1>TTTPS — Byzantine Audit API</h1>
+<span class="tag">Proof-of-Time · Byzantine Detection · GRG Pipeline · Commercial Audit Tool</span>
+
+<!-- ── ATTACK CAPABILITY MATRIX ───────────────────────────── -->
+<h2>Attack Detection Capability Matrix</h2>
+<p class="section-note">All detected attacks are logged with <code>attack_type</code>, <code>agent_id</code>, <code>ctx_id</code>, and timestamp. Query via <code>GET /audit</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Attack</th>
+      <th>Detection Mechanism</th>
+      <th>GRG Layer</th>
+      <th>Log Field</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Token Replay</strong><br><span class="layer">Reuse of a previously valid PoT token</span></td>
+      <td>seen_tokens HashMap — duplicate token hash detected on verify</td>
+      <td>Application</td>
+      <td><code>REPLAY</code></td>
+    </tr>
+    <tr>
+      <td><strong>Timestamp Drift</strong><br><span class="layer">NTP manipulation, clock skew injection</span></td>
+      <td>±60s window check against server time; Roughtime chain_digest bound into GRG commitment — any timestamp deviation causes commitment mismatch</td>
+      <td>chain_digest → FORGE</td>
+      <td><code>DRIFT</code> / <code>FORGE</code></td>
+    </tr>
+    <tr>
+      <td><strong>Signature Forgery</strong><br><span class="layer">Fake issuer, tampered token body</span></td>
+      <td>Ed25519 signature verification against published pubkey — cryptographically unforgeable without issuer private key</td>
+      <td>Ed25519</td>
+      <td><code>FORGE</code></td>
+    </tr>
+    <tr>
+      <td><strong>Flood / DDoS</strong><br><span class="layer">Request rate abuse, resource exhaustion</span></td>
+      <td>Per-IP and per-agent rate limiting (requests/min); excess requests rejected with 429</td>
+      <td>Application</td>
+      <td><code>FLOOD</code></td>
+    </tr>
+    <tr>
+      <td><strong>Ordering Attack</strong><br><span class="layer">Out-of-sequence token submission</span></td>
+      <td>Fleet cross-reference — token sequence validated across agent set</td>
+      <td>Application</td>
+      <td><code>ORDERING</code></td>
+    </tr>
+    <tr>
+      <td><strong>Cross-Pool Replay</strong><br><span class="layer">Token from Pool A submitted to Pool B</span></td>
+      <td>Context-bound cryptographic commitment — cross-pool commitment mismatch is cryptographically certain</td>
+      <td>Commitment</td>
+      <td><code>FORGE</code></td>
+    </tr>
+    <tr>
+      <td><strong>Sybil Attack</strong><br><span class="layer">Multiple fake agent IDs from same node</span></td>
+      <td>Service context commitment binding — each context has a unique cryptographic key; cross-context token reuse fails verification</td>
+      <td>Commitment</td>
+      <td><code>FORGE</code></td>
+    </tr>
+    <tr>
+      <td><strong>GPS Spoofing</strong><br><span class="layer">Falsified satellite time signals</span></td>
+      <td>Roughtime chain spans ≥3 independent time sources; single-source GPS spoof creates chain spread violation → commitment diverges</td>
+      <td>chain_digest → FORGE</td>
+      <td><code>FORGE</code></td>
+    </tr>
+    <tr>
+      <td><strong>NTP Injection</strong><br><span class="layer">Rogue NTP server, synchronized clock bias</span></td>
+      <td>Roughtime chain_digest is GRG-committed alongside payload — manipulated timestamp shifts chain_digest, breaking Ed25519 signature</td>
+      <td>chain_digest → Ed25519</td>
+      <td><code>FORGE</code></td>
+    </tr>
+    <tr>
+      <td><strong>BGP Hijacking</strong><br><span class="layer">Route manipulation, man-in-the-middle</span></td>
+      <td>Intercepted tokens cannot be re-signed without issuer private key — any modification invalidates Ed25519 signature</td>
+      <td>Ed25519</td>
+      <td><code>FORGE</code></td>
+    </tr>
+    <tr>
+      <td><strong>DNS Poisoning</strong><br><span class="layer">Redirected API endpoint, fake issuer</span></td>
+      <td>Issuer pubkey is pinned and published out-of-band; tokens from any other key fail Ed25519 verification</td>
+      <td>Ed25519</td>
+      <td><code>FORGE</code></td>
+    </tr>
+    <tr>
+      <td><strong>SDN Flow Manipulation</strong><br><span class="layer">Packet reordering via SDN controller</span></td>
+      <td>ORDERING cross-reference detects sequence anomalies; GRG integrity layer recovers partial data corruption</td>
+      <td>GRG + ORDERING</td>
+      <td><code>ORDERING</code></td>
+    </tr>
+    <tr>
+      <td><strong>Protocol Violation</strong><br><span class="layer">Malformed token, missing fields</span></td>
+      <td>Schema validation on all fields; multi-layer ECC detects bit-level corruption</td>
+      <td>ECC</td>
+      <td><code>INVALID</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ── GRG PIPELINE ───────────────────────────────────────── -->
+<h2>GRG Pipeline</h2>
+<p class="section-note">All attacks ultimately converge to a commitment mismatch, caught at the Ed25519 layer.</p>
+<pre>Input Payload (P)
+  └─ Compression layer
+      └─ Erasure coding layer
+          └─ Error correction layer
+              └─ Context commitment layer (ctx_id bound)
+                  └─ GRG_Commitment (cryptographic hash over payload + chain_digest)
+                      └─ Ed25519 signature over GRG_Commitment</pre>
+
+<!-- ── AUDIT LOG FORMAT ──────────────────────────────────── -->
+<h2>Audit Log — GET /audit</h2>
+<pre>curl "https://api.kenosian.com/audit?ctx_id=&lt;ctx_id&gt;&amp;window=3600" \
+  -H "X-API-Key: &lt;your-api-key&gt;"</pre>
+
+<pre>{
+  "ctx_id": "dlr-poc",
+  "window_secs": 3600,
+  "total_requests": 142,
+  "byzantine_total": 3,
+  "byzantine_ratio": 0.021,
+  "attack_breakdown": {
+    "REPLAY":   2,
+    "DRIFT":    1,
+    "FORGE":    0,
+    "FLOOD":    0,
+    "ORDERING": 0,
+    "INVALID":  0
+  }
+}</pre>
+
+<!-- ── PROMETHEUS METRICS ─────────────────────────────────── -->
+<h2>Prometheus Metrics — GET /metrics</h2>
+<pre>tttps_attack_total{type="replay"}   2
+tttps_attack_total{type="drift"}    1
+tttps_attack_total{type="forge"}    0
+tttps_byzantine_ratio               0.021
+tttps_valid_count                   139</pre>
+
+<!-- ── QUICK START ────────────────────────────────────────── -->
+<h2>Quick Start</h2>
+<pre># API access by request — contact peter@kenosian.com
+
+# 1. Health check
+curl https://api.kenosian.com/health
+
+# 2. Generate PoT token
+curl -X POST https://api.kenosian.com/pot/generate \
+  -H "X-API-Key: &lt;your-api-key&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{"agent_id":"&lt;agent_id&gt;","ctx_id":"&lt;ctx_id&gt;"}'
+
+# 3. Verify + Byzantine detection
+curl -X POST https://api.kenosian.com/pot/verify \
+  -H "X-API-Key: &lt;your-api-key&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{"token":"&lt;token&gt;","agent_id":"&lt;agent_id&gt;","ctx_id":"&lt;ctx_id&gt;"}'
+
+# 4. Audit report
+curl "https://api.kenosian.com/audit?ctx_id=&lt;ctx_id&gt;&amp;window=3600" \
+  -H "X-API-Key: &lt;your-api-key&gt;"</pre>
+
+<footer>
+  <span><a href="https://github.com/Helm-Protocol/OpenTTT">GitHub</a> · <a href="https://datatracker.ietf.org/doc/draft-helmprotocol-tttps/">IETF Draft</a></span>
+  <span>Helm Protocol · 2026</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYDRA-KV — LLM Inference Accelerator · Helm Protocol</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'SF Mono', 'Fira Code', monospace; max-width: 900px; margin: 60px auto; padding: 0 24px; color: #1a1a1a; background: #fafafa; line-height: 1.6; }
+h1 { font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #1a1a1a; padding-bottom: 12px; margin-bottom: 6px; }
+h2 { font-size: 1rem; font-weight: 600; margin-top: 40px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #333; }
+.tag { color: #666; font-size: 0.8rem; margin-bottom: 32px; display: block; }
+pre { background: #f0f0f0; padding: 16px; border-radius: 3px; overflow-x: auto; font-size: 0.8rem; margin: 8px 0 16px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 16px; }
+th { background: #1a1a1a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: #f5f5f5; }
+.section-note { font-size: 0.8rem; color: #555; margin-bottom: 16px; }
+.audit-badge { display: inline-block; background: #1a1a1a; color: #fff; font-size: 0.7rem; padding: 2px 8px; border-radius: 2px; margin-left: 8px; letter-spacing: 0.05em; }
+footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; color: #888; font-size: 0.78rem; display: flex; justify-content: space-between; }
+a { color: #1a1a1a; }
+nav.breadcrumb { font-size: 0.8rem; color: #888; margin-bottom: 40px; }
+nav.breadcrumb a { color: #555; }
+.metric-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 16px 0 24px; }
+.metric { background: #f0f0f0; padding: 16px; border-radius: 3px; }
+.metric .val { font-size: 1.4rem; font-weight: 700; }
+.metric .lbl { font-size: 0.72rem; color: #666; margin-top: 4px; }
+.demo-box { background: #f0f0f0; border-left: 3px solid #1a1a1a; padding: 16px; margin: 8px 0 16px; }
+</style>
+</head>
+<body>
+
+<nav class="breadcrumb">
+  <a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · HYDRA-KV
+</nav>
+
+<h1>HYDRA-KV — LLM Inference Accelerator <span class="audit-badge">TTTPS AUDIT</span></h1>
+<span class="tag">KV Cache Compression · PD Disaggregation · QUIC Transport · Byzantine-Audited</span>
+
+<!-- SECTION 1: Overview -->
+<h2>Overview</h2>
+<p class="section-note">
+  KV cache compression and transfer acceleration for prefill-decode disaggregated LLM inference.
+  Every KV transfer is sealed with a TTTPS timestamp token — providing a cryptographic audit trail
+  of all inter-node data movement.
+</p>
+
+<!-- SECTION 2: Measured Performance -->
+<h2>Measured Performance</h2>
+<p class="section-note">GCP internal measurement. Conservative vs. InfiniBand environment.</p>
+
+<div class="metric-row">
+  <div class="metric">
+    <div class="val">3.20×</div>
+    <div class="lbl">E8 Compression ratio</div>
+  </div>
+  <div class="metric">
+    <div class="val">40.4ms</div>
+    <div class="lbl">GPU compress / 32MB FP16 (A100, nvCOMP)</div>
+  </div>
+  <div class="metric">
+    <div class="val">95.6%</div>
+    <div class="lbl">KV transfer reduction (CRDT dedup)</div>
+  </div>
+  <div class="metric">
+    <div class="val">95.9ms</div>
+    <div class="lbl">QUIC cross-node avg / 10MB</div>
+  </div>
+  <div class="metric">
+    <div class="val">0.0%</div>
+    <div class="lbl">ECMP load deviation (4-path)</div>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr><th>Metric</th><th>Value</th><th>Condition</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>E8 compression</td>
+      <td>3.20×</td>
+      <td>32MB FP16 → 10MB</td>
+    </tr>
+    <tr>
+      <td>GPU compression (nvCOMP)</td>
+      <td>40.4ms</td>
+      <td>32MB FP16, A100, pinned buffer</td>
+    </tr>
+    <tr>
+      <td>CRDT KV deduplication</td>
+      <td>95.6% transfer reduction</td>
+      <td>Cross-session repeated prefixes</td>
+    </tr>
+    <tr>
+      <td>QUIC transfer avg</td>
+      <td>95.9ms / 10MB</td>
+      <td>GCP internal, n1→A100</td>
+    </tr>
+    <tr>
+      <td>QUIC transfer p95</td>
+      <td>~101ms / 10MB</td>
+      <td>GCP internal</td>
+    </tr>
+    <tr>
+      <td>ECMP balance</td>
+      <td>0.0% deviation</td>
+      <td>4-path, 1000 requests</td>
+    </tr>
+  </tbody>
+</table>
+<p class="section-note">
+  GCP internal measurement. InfiniBand NDR (400Gbps) environment: estimated 40–100× higher throughput.
+</p>
+
+<!-- SECTION 3: Architecture -->
+<h2>Architecture</h2>
+<div class="demo-box">
+  <ul style="list-style:none;line-height:2;">
+    <li>· Prefill node compresses KV cache with E8-lattice algorithm</li>
+    <li>· QUIC transport with TLS 1.3 (no plaintext KV in transit)</li>
+    <li>· Decode node verifies integrity via TTTPS seal on each chunk</li>
+    <li>· GapVec5 selects optimal transfer path (ISP latency, loss rate, throughput)</li>
+    <li>· CRDT deduplication eliminates redundant KV transfer across sessions</li>
+  </ul>
+</div>
+
+<!-- SECTION 4: TTTPS Audit Integration -->
+<h2>TTTPS Audit Integration</h2>
+<p class="section-note">
+  Every KV chunk transfer generates a TTTPS temporal token — cryptographically binding
+  the transfer to a verifiable timestamp and commitment chain.
+</p>
+<table>
+  <thead>
+    <tr><th>Feature</th><th>Details</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Attack types logged</td>
+      <td><code>REPLAY</code> · <code>ORDERING</code> · <code>FORGE</code></td>
+    </tr>
+    <tr>
+      <td>Audit log query</td>
+      <td><code>GET /audit?ctx_id=&lt;pool-id&gt;</code></td>
+    </tr>
+    <tr>
+      <td>Path selection</td>
+      <td>Equinix Fabric latency measurable via GapVec5 probe</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 5: One-Click Benchmark -->
+<h2>One-Click Benchmark</h2>
+<p class="section-note">Local benchmark — no server required.</p>
+
+<pre># Install
+curl -sSL https://kenosian.com/install/hydra-kv.sh | bash
+
+# Run local benchmark
+hydra_bench --local</pre>
+
+<p class="section-note">Expected output (real measurement basis):</p>
+<pre>E8 compression:    3.20× (32MB → 10MB)
+Compress time:     48.1ms (CPU) / 40.4ms (GPU, if available)
+CRDT dedup:        95.6% transfer reduction
+ECMP deviation:    0.0% (4-path simulation)
+Test result:       PASS</pre>
+
+<!-- SECTION 6: Equinix Fabric Integration -->
+<h2>Equinix Fabric Integration</h2>
+<table>
+  <thead>
+    <tr><th>Capability</th><th>Details</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>EVPL connection</td>
+      <td>Ready (1GbE – 400GbE)</td>
+    </tr>
+    <tr>
+      <td>GapVec5 probing</td>
+      <td>Real-time latency probe across Equinix SE2/MA1 metros</td>
+    </tr>
+    <tr>
+      <td>Cross-metro PD</td>
+      <td>Prefill/decode nodes connectable across Equinix metros</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 7: API Access -->
+<h2>API Access</h2>
+<p class="section-note">
+  vLLM connector: <code>docs/hydra_kv_connector.py</code> (50-line drop-in)<br>
+  Production access: <a href="mailto:peter@kenosian.com">peter@kenosian.com</a>
+</p>
+<table>
+  <thead>
+    <tr><th>Interface</th><th>Method</th><th>Details</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>vLLM connector</td>
+      <td>Drop-in Python adapter</td>
+      <td><code>docs/hydra_kv_connector.py</code> — 50 lines, no server changes required</td>
+    </tr>
+    <tr>
+      <td>REST API</td>
+      <td>PUT/GET /kv · POST /kv/signal</td>
+      <td>Production key via <a href="mailto:peter@kenosian.com">peter@kenosian.com</a></td>
+    </tr>
+    <tr>
+      <td>Audit endpoint</td>
+      <td>GET /audit</td>
+      <td>TTTPS-backed tamper-evident log</td>
+    </tr>
+  </tbody>
+</table>
+
+<footer>
+  <span><a href="https://github.com/helm-protocol/openttt">GitHub</a> · <a href="https://datatracker.ietf.org/doc/draft-helmprotocol-tttps/">IETF Draft</a> · <a href="/products.html">All Products</a></span>
+  <span>Helm Protocol · 2026</span>
+</footer>
+
+</body>
+</html>

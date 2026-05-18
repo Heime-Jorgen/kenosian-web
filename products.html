@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenosian — Product Overview</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'SF Mono', 'Fira Code', monospace; max-width: 900px; margin: 60px auto; padding: 0 24px; color: #1a1a1a; background: #fafafa; line-height: 1.6; }
+h1 { font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #1a1a1a; padding-bottom: 12px; margin-bottom: 6px; }
+h2 { font-size: 1rem; font-weight: 600; margin-top: 40px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #333; }
+.tag { color: #666; font-size: 0.8rem; margin-bottom: 32px; display: block; }
+pre { background: #f0f0f0; padding: 16px; border-radius: 3px; overflow-x: auto; font-size: 0.8rem; margin: 8px 0 16px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 16px; }
+th { background: #1a1a1a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+tr:nth-child(even) td { background: #f5f5f5; }
+.section-note { font-size: 0.8rem; color: #555; margin-bottom: 16px; }
+.audit-badge { display: inline-block; background: #1a1a1a; color: #fff; font-size: 0.7rem; padding: 2px 8px; border-radius: 2px; margin-left: 8px; letter-spacing: 0.05em; }
+footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; color: #888; font-size: 0.78rem; display: flex; justify-content: space-between; }
+a { color: #1a1a1a; }
+nav.breadcrumb { font-size: 0.8rem; color: #888; margin-bottom: 40px; }
+nav.breadcrumb a { color: #555; }
+.metric-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 16px 0 24px; }
+.metric { background: #f0f0f0; padding: 16px; border-radius: 3px; }
+.metric .val { font-size: 1.4rem; font-weight: 700; }
+.metric .lbl { font-size: 0.72rem; color: #666; margin-top: 4px; }
+.product-card { border: 1px solid #e0e0e0; padding: 24px; margin-bottom: 16px; border-radius: 3px; }
+.product-card h2 { margin-top: 0; }
+.product-card .card-tag { font-size: 0.75rem; color: #888; margin-bottom: 12px; display: block; }
+.product-card p { font-size: 0.82rem; color: #444; margin-bottom: 16px; }
+.product-card a.cta { font-size: 0.78rem; color: #1a1a1a; text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<nav class="breadcrumb"><a href="/">kenosian.com</a> · Products</nav>
+
+<h1>Kenosian — Product Overview</h1>
+<span class="tag">B2B · API access by request · peter@kenosian.com</span>
+
+<div class="product-card">
+  <h2><a href="/products/tttps.html">TTTPS — Byzantine Audit API</a></h2>
+  <span class="card-tag">Proof-of-Time · IETF Draft · 13 Attack Types</span>
+  <p>Cryptographic timestamp protocol with multi-source time anchors. Byzantine fault detection across all network attack vectors.</p>
+  <a href="/products/tttps.html" class="cta">→ View product</a>
+</div>
+
+<div class="product-card">
+  <h2><a href="/products/hydra-kv.html">HYDRA-KV — LLM Inference Accelerator</a> <span class="audit-badge">TTTPS AUDIT</span></h2>
+  <span class="card-tag">3.20× compression · 95.6% dedup · QUIC transport</span>
+  <p>KV cache acceleration for PD-disaggregated LLM inference. Every transfer is Byzantine-audited.</p>
+  <a href="/products/hydra-kv.html" class="cta">→ View product</a>
+</div>
+
+<div class="product-card">
+  <h2><a href="/products/hydra-cdn.html">HYDRA-CDN — Edge Delivery</a> <span class="audit-badge">TTTPS AUDIT</span></h2>
+  <span class="card-tag">GapVec5 routing · Erasure coding · 30% loss tolerance</span>
+  <p>Adaptive CDN routing with per-chunk TTTPS audit seal. Byzantine-resistant delivery for high-loss environments.</p>
+  <a href="/products/hydra-cdn.html" class="cta">→ View product</a>
+</div>
+
+<div class="product-card">
+  <h2><a href="/products/hydra-audit.html">HYDRA-AUDIT — Infrastructure Audit</a></h2>
+  <span class="card-tag">13 Byzantine types · Prometheus · JSON-LD · Regulatory ready</span>
+  <p>Byzantine audit trail for distributed systems. TRAI/CERT-In compliance. Grafana dashboard available on request.</p>
+  <a href="/products/hydra-audit.html" class="cta">→ View product</a>
+</div>
+
+<footer>
+  <span>IETF Draft · <a href="https://github.com/helm-protocol/openttt">github.com/helm-protocol/openttt</a></span>
+  <span>peter@kenosian.com · Helm Protocol · 2026</span>
+</footer>
+
+</body>
+</html>

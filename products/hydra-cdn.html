@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYDRA-CDN — Edge Delivery · kenosian.com</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'SF Mono', 'Fira Code', monospace; max-width: 900px; margin: 60px auto; padding: 0 24px; color: #1a1a1a; background: #fafafa; line-height: 1.6; }
+h1 { font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #1a1a1a; padding-bottom: 12px; margin-bottom: 6px; }
+h2 { font-size: 1rem; font-weight: 600; margin-top: 40px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #333; }
+.tag { color: #666; font-size: 0.8rem; margin-bottom: 32px; display: block; }
+pre { background: #f0f0f0; padding: 16px; border-radius: 3px; overflow-x: auto; font-size: 0.8rem; margin: 8px 0 16px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 16px; }
+th { background: #1a1a1a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+tr:nth-child(even) td { background: #f5f5f5; }
+.section-note { font-size: 0.8rem; color: #555; margin-bottom: 16px; }
+.audit-badge { display: inline-block; background: #1a1a1a; color: #fff; font-size: 0.7rem; padding: 2px 8px; border-radius: 2px; margin-left: 8px; letter-spacing: 0.05em; }
+footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; color: #888; font-size: 0.78rem; display: flex; justify-content: space-between; }
+a { color: #1a1a1a; }
+nav.breadcrumb { font-size: 0.8rem; color: #888; margin-bottom: 40px; }
+nav.breadcrumb a { color: #555; }
+.metric-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 16px 0 24px; }
+.metric { background: #f0f0f0; padding: 16px; border-radius: 3px; }
+.metric .val { font-size: 1.4rem; font-weight: 700; }
+.metric .lbl { font-size: 0.72rem; color: #666; margin-top: 4px; }
+.product-card { border: 1px solid #e0e0e0; padding: 24px; margin-bottom: 16px; border-radius: 3px; }
+.product-card h2 { margin-top: 0; }
+blockquote { border-left: 3px solid #1a1a1a; padding-left: 16px; margin: 16px 0; font-size: 0.85rem; color: #444; }
+</style>
+</head>
+<body>
+
+<nav class="breadcrumb"><a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · HYDRA-CDN</nav>
+
+<h1>HYDRA-CDN — Edge Delivery <span class="audit-badge">TTTPS AUDIT</span></h1>
+<span class="tag">Adaptive CDN Routing · Byzantine-Resistant Delivery · Erasure Coding · TTTPS Sealed</span>
+
+<h2>Overview</h2>
+<p class="section-note">Adaptive CDN content delivery with per-chunk Byzantine audit trail.<br>
+Every chunk delivered through Hydra-CDN is sealed with a TTTPS temporal token,
+providing cryptographic proof of delivery time and integrity — queryable by any audit organization.</p>
+
+<h2>Key Capabilities</h2>
+<table>
+<thead><tr><th>Capability</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td>Routing</td><td>GapVec5 real-time ISP/edge path selection</td></tr>
+<tr><td>Integrity</td><td>TTTPS chunk seal — per-chunk tamper-evident audit</td></tr>
+<tr><td>Resilience</td><td>Erasure coding: 30% packet loss → zero retransmit</td></tr>
+<tr><td>Targeting</td><td>ISP density · latency · DPI fingerprint-aware</td></tr>
+<tr><td>Peering</td><td>Equinix Fabric EVPL ready</td></tr>
+<tr><td>P2P</td><td>Erasure recovery across peer nodes</td></tr>
+</tbody>
+</table>
+
+<h2>TTTPS Audit Integration</h2>
+<blockquote>Every content chunk generates a TTTPS seal — cryptographically binding delivery
+to a verifiable timestamp and commitment chain.</blockquote>
+
+<p class="section-note">Audit trail per chunk:</p>
+<pre>{
+  "chunk_hash":    "sha256:a3f9c2...",
+  "ctx_id":        "cdn-pool-sg1",
+  "timestamp_ms":  1748000000000,
+  "attack_type":   null,
+  "signature":     "ed25519:..."
+}</pre>
+
+<p class="section-note">Queryable by audit organizations:</p>
+<pre>curl "https://api.kenosian.com/audit?ctx_id=cdn-pool-sg1&amp;window=86400" \
+  -H "X-API-Key: &lt;your-key&gt;"</pre>
+
+<h2>One-Click Test — Delivery Integrity Check</h2>
+<pre># Check delivery integrity of a chunk
+curl -X POST https://api.kenosian.com/api/demo/pot/generate \
+  -H "Content-Type: application/json" \
+  -d '{"ctx_id":"cdn-demo"}'</pre>
+
+<p class="section-note">Expected: TTTPS seal generated, GPS/BGP/NTP attack detection active</p>
+
+<p class="section-note">Replay attack simulation:</p>
+<pre># Submit same token twice to trigger REPLAY detection
+curl -X POST https://api.kenosian.com/api/demo/pot/verify \
+  -H "Content-Type: application/json" \
+  -d '{"ctx_id":"cdn-demo","token":"&lt;same-token&gt;"}'
+# → {"valid":false,"attack_type":"REPLAY"}</pre>
+
+<h2>Equinix Fabric Integration</h2>
+<table>
+<thead><tr><th>Attribute</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td>ISP peering</td><td>Jio (AS55836), Airtel (AS9498), BSNL (AS9829), Tata (AS6453)</td></tr>
+<tr><td>Latency probing</td><td>GapVec5 probes Equinix SE2/MA1/FR5/LD5 in real-time</td></tr>
+<tr><td>Connectivity</td><td>EVPL connection: 1GbE–400GbE</td></tr>
+<tr><td>GEO Pre-Burst</td><td>Satellite pre-seeding via KTSat (MA1 deployment)</td></tr>
+</tbody>
+</table>
+
+<h2>API Access</h2>
+<p class="section-note">Contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a> for API key provisioning and integration support.</p>
+
+<footer>
+  <span>IETF Draft · <a href="https://github.com/helm-protocol/openttt">github.com/helm-protocol/openttt</a></span>
+  <span>peter@kenosian.com · Helm Protocol · 2026</span>
+</footer>
+
+</body>
+</html>

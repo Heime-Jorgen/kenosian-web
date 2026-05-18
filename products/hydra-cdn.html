@@ -161,6 +161,17 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
 </tbody>
 </table>
 
+<h2>Regulatory Coverage</h2>
+<p class="section-note">HYDRA-CDN's erasure coding and per-chunk TTTPS audit seal satisfy availability and integrity requirements for network service providers.</p>
+<table>
+<thead><tr><th>Regulation</th><th>Requirement</th><th>HYDRA-CDN Coverage</th></tr></thead>
+<tbody>
+<tr><td><strong>NIS2 Art.21</strong><br><span style="font-size:0.8rem;color:#888">EU 2022/2555</span></td><td>Business continuity, availability for essential entities</td><td>Erasure coding tolerates 30% packet loss; GapVec5 adaptive routing for resilient delivery</td></tr>
+<tr><td><strong>TRAI</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Content delivery integrity and availability</td><td>Per-chunk TTTPS audit seal; delivery forensics queryable by content owners</td></tr>
+<tr><td><strong>CERT-In</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Incident reporting with forensic evidence</td><td>Tamper-evident delivery log; cryptographic chunk verification</td></tr>
+</tbody>
+</table>
+
 <h2>API Access</h2>
 <p class="section-note">Contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a> for API key provisioning and integration support.</p>
 

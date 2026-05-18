@@ -339,8 +339,49 @@ tttps_byzantine_ratio               0.021</pre>
   </tbody>
 </table>
 
-<!-- SECTION 7: Compliance -->
-<h2>Compliance &amp; Audit Organizations</h2>
+<!-- SECTION 7: Regulatory Alignment -->
+<h2>Regulatory Alignment</h2>
+<p class="section-note">TTTPS provides cryptographic proof-of-time that satisfies timestamp integrity requirements across financial and infrastructure regulations.</p>
+<table>
+  <thead>
+    <tr><th>Regulation</th><th>Requirement</th><th>TTTPS Coverage</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>MiFID II RTS 25</strong><br><span style="font-size:0.8rem;color:#888">EU 2017/574, Art.2(3)</span></td>
+      <td>±1ms clock synchronization for HFT</td>
+      <td>Multi-source PoT with cryptographic divergence detection</td>
+    </tr>
+    <tr>
+      <td><strong>FINRA Rule 4590</strong><br><span style="font-size:0.8rem;color:#888">CAT NMS Plan, US</span></td>
+      <td>Clock synchronization audit trail</td>
+      <td>Tamper-evident PoT log, queryable per-event</td>
+    </tr>
+    <tr>
+      <td><strong>DORA Art.10</strong><br><span style="font-size:0.8rem;color:#888">EU 2022/2554</span></td>
+      <td>ICT threat detection mechanisms</td>
+      <td>13 Byzantine attack vectors detected and logged in real time</td>
+    </tr>
+    <tr>
+      <td><strong>MAS TRM 2021</strong><br><span style="font-size:0.8rem;color:#888">Section 6.4.1, Singapore</span></td>
+      <td>Financial infrastructure time audit</td>
+      <td>Multi-anchor PoT with GPS + NTP + Roughtime sources</td>
+    </tr>
+    <tr>
+      <td><strong>FCA PS17/14</strong><br><span style="font-size:0.8rem;color:#888">UK MiFID II equivalent</span></td>
+      <td>Clock synchronization, audit trail integrity</td>
+      <td>Ed25519-signed PoT chain, forensically admissible</td>
+    </tr>
+    <tr>
+      <td><strong>TRAI / CERT-In</strong><br><span style="font-size:0.8rem;color:#888">India</span></td>
+      <td>Telecom timestamp integrity, incident reporting</td>
+      <td>PoT format aligned with TRAI audit requirements; CERT-In admissible evidence</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 7b: Compliance Export -->
+<h2>Compliance &amp; Audit Export</h2>
 <p class="section-note">
   TTTPS generates a tamper-evident audit trail suitable for submission to regulatory bodies.
 </p>
@@ -352,14 +393,6 @@ tttps_byzantine_ratio               0.021</pre>
     <tr>
       <td>JSON-LD export</td>
       <td>Structured, machine-readable audit records compatible with standard compliance tooling</td>
-    </tr>
-    <tr>
-      <td>TRAI (India)</td>
-      <td>Compliance-ready audit trail format aligned with TRAI reporting requirements</td>
-    </tr>
-    <tr>
-      <td>CERT-In</td>
-      <td>Incident reporting format compatible with CERT-In submission standards</td>
     </tr>
     <tr>
       <td>Prometheus + Grafana</td>

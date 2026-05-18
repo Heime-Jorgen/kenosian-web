@@ -271,7 +271,38 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
   </tbody>
 </table>
 
-<!-- SECTION 9: API Access -->
+<!-- SECTION 9: Regulatory Coverage -->
+<h2>Regulatory Coverage</h2>
+<p class="section-note">HYDRA-KV's QUIC-encrypted transport and per-chunk TTTPS audit seal satisfy data transfer security requirements across major privacy regulations.</p>
+<table>
+  <thead>
+    <tr><th>Regulation</th><th>Requirement</th><th>HYDRA-KV Coverage</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>GDPR Art.32</strong><br><span style="font-size:0.8rem;color:#888">EU</span></td>
+      <td>Technical measures for secure processing</td>
+      <td>QUIC (TLS 1.3) encrypted KV transfer; per-chunk Ed25519 audit seal</td>
+    </tr>
+    <tr>
+      <td><strong>PIPA 제28조의8</strong><br><span style="font-size:0.8rem;color:#888">Korea</span></td>
+      <td>Encryption during transmission of personal data</td>
+      <td>QUIC end-to-end encryption; TTTPS-sealed transfer log for regulatory inspection</td>
+    </tr>
+    <tr>
+      <td><strong>PDPA</strong><br><span style="font-size:0.8rem;color:#888">Singapore</span></td>
+      <td>Protection of personal data in transfer</td>
+      <td>Encrypted QUIC channel; cryptographic transfer audit trail</td>
+    </tr>
+    <tr>
+      <td><strong>PIPL Art.51</strong><br><span style="font-size:0.8rem;color:#888">China</span></td>
+      <td>Technical measures for personal data protection</td>
+      <td>QUIC encryption + TTTPS audit chain for cross-border transfer documentation</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 10: API Access -->
 <h2>API Access</h2>
 <p class="section-note">
   vLLM connector: <code>docs/hydra_kv_connector.py</code> (50-line drop-in)<br>

@@ -110,14 +110,20 @@ tr:last-child td { border-bottom: none; }
 </tbody>
 </table>
 
-<p class="section-note">Regulatory alignment:</p>
-<ul style="font-size:0.82rem; color:#444; margin-left:20px; margin-bottom:16px; line-height:1.8;">
-  <li><strong>TRAI (India):</strong> timestamp integrity format aligned with TRAI telecom audit requirements.</li>
-  <li><strong>CERT-In:</strong> incident reporting format with cryptographic evidence — admissible audit trail for Indian CERT incident submissions.</li>
-  <li><strong>Equinix SmartView:</strong> audit log format compatible with Equinix SmartView export — no manual reformatting required.</li>
-  <li><strong>JSON-LD:</strong> structured, machine-readable — compatible with any compliance tooling or legal discovery process.</li>
-  <li><strong>Prometheus + Grafana:</strong> live Byzantine fault dashboard — contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a> for access.</li>
-</ul>
+<h3 style="font-size:0.9rem; font-weight:600; margin-top:24px; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em; color:#333;">Regulatory Alignment</h3>
+<table>
+<thead><tr><th>Regulation</th><th>Requirement</th><th>Hydra-Audit Coverage</th></tr></thead>
+<tbody>
+<tr><td><strong>SOC 2 Type II</strong><br><span style="font-size:0.8rem;color:#888">CC7.1 / CC7.2</span></td><td>Security monitoring, incident detection evidence</td><td>Prometheus metrics + Grafana dashboard = auditor-ready continuous evidence</td></tr>
+<tr><td><strong>ISO 27001:2022</strong><br><span style="font-size:0.8rem;color:#888">Controls 8.15, 8.16, 8.17</span></td><td>Logging, monitoring, clock synchronization</td><td>Tamper-evident log with Ed25519 seals; NTP multi-source sync auditable per-event</td></tr>
+<tr><td><strong>PCI DSS v4.0</strong><br><span style="font-size:0.8rem;color:#888">Req.10.3.2 / 10.5.1 / 10.6</span></td><td>Audit log protection, integrity, review</td><td>Cryptographic log integrity; 90-day retention; automated review via Prometheus alerts</td></tr>
+<tr><td><strong>DORA Art.10</strong><br><span style="font-size:0.8rem;color:#888">EU 2022/2554</span></td><td>ICT threat detection mechanisms</td><td>13 Byzantine attack types auto-detected, logged with cryptographic evidence</td></tr>
+<tr><td><strong>GDPR Art.5(2) / Art.32</strong><br><span style="font-size:0.8rem;color:#888">EU</span></td><td>Accountability principle, technical security measures</td><td>Per-operation cryptographic commitment; JSON-LD export for DPA submission</td></tr>
+<tr><td><strong>MiFID II RTS 25</strong><br><span style="font-size:0.8rem;color:#888">EU 2017/574, Art.2(3)</span></td><td>Financial infrastructure audit trail</td><td>PoT-anchored event log; ±1ms clock divergence detectable and logged</td></tr>
+<tr><td><strong>TRAI</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Telecom timestamp integrity</td><td>Format aligned with TRAI audit requirements</td></tr>
+<tr><td><strong>CERT-In</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Cyber incident reporting</td><td>Cryptographic evidence admissible for CERT-In submissions</td></tr>
+</tbody>
+</table>
 
 <h2>Audit Log API</h2>
 <pre># Query audit log (authenticated)

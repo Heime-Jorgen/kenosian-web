@@ -42,7 +42,7 @@ tr:last-child td { border-bottom: none; }
 
 <h1>HYDRA-AUDIT — Infrastructure Audit</h1>
 <span class="tag">Byzantine Fault Detection · Regulatory Compliance · Tamper-Evident Audit Trail</span>
-<p class="killer">Byzantine audit trail for AI companies and regulated infrastructure — training data provenance, copyright defense, and real-time Byzantine detection. Regulator-ready: EU AI Act, SOC 2, MiFID II, TRAI.</p>
+<p class="killer">Byzantine audit trail for AI companies and regulated infrastructure — training data provenance, copyright defense, and real-time Byzantine detection. Regulator-ready: EU AI Act Art.12/53, SOC 2 Type II, DORA, TRAI. MiFID II RTS 25: GEO 타임소스 추가 시 (로드맵).</p>
 
 <h2>Overview</h2>
 <p class="section-note">Distributed infrastructure — whether an LLM inference cluster, a CDN edge network, or a payment system — generates enormous amounts of inter-node traffic that is difficult to audit in real time. A single compromised node can silently tamper with its own logs, forge timestamps, or replay transactions without detection by conventional monitoring.</p>
@@ -149,10 +149,29 @@ tr:last-child td { border-bottom: none; }
 </table>
 <p class="section-note">Regulatory audit submissions reference a continuous chain. Migrating to a different audit system mid-cycle means the prior chain cannot be reproduced — the record breaks. The continuity requirement is enforced by regulators, not by Kenosian.</p>
 
-<div class="demo-box" style="margin-bottom:24px;">
-  <strong>2026 글로벌 규제 집행 타임라인 →</strong>
-  <a href="/products/hydra-audit-global.html" style="margin-left:8px;">국가별 규제 현황 · Equinix 거점 · 5개년 수익 전망</a>
+<div style="border:2px solid #c0392b; border-radius:3px; padding:20px; margin-bottom:24px;">
+  <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:12px;">
+    <span style="font-size:2rem; font-weight:700; color:#c0392b;" id="audit-countdown">D-76</span>
+    <span style="font-size:0.85rem; font-weight:700; color:#c0392b;">EU AI Act 고위험 의무화 — 2026-08-02</span>
+  </div>
+  <p style="font-size:0.82rem; color:#444; margin-bottom:12px;">
+    시장에 법적 수준 AI 감사 도구가 없습니다. MLflow · W&amp;B · DataDog은 Art.12 요건을 충족하지 않습니다.
+    Q1 2026 EU AI Office 이미 €2.5억 벌금 부과.
+  </p>
+  <strong>→ <a href="/products/hydra-audit-global.html">2026 글로벌 규제 집행 타임라인 — 국가별 벌금 규모 · Equinix 거점 · 5개년 수익 전망</a></strong>
 </div>
+<script>
+(function() {
+  var target = new Date('2026-08-02T00:00:00+00:00');
+  function update() {
+    var diff = target - new Date();
+    var el = document.getElementById('audit-countdown');
+    if (el) el.textContent = diff > 0 ? ('D-' + Math.floor(diff / 86400000)) : '집행 개시';
+  }
+  update();
+  setInterval(update, 60000);
+})();
+</script>
 
 <h2>Compliance &amp; Regulatory Delivery</h2>
 <blockquote>Hydra-Audit provides structured audit data in formats accepted by regulatory bodies and compatible with standard compliance tooling.</blockquote>
@@ -176,7 +195,7 @@ tr:last-child td { border-bottom: none; }
 <tr><td><strong>PCI DSS v4.0</strong><br><span style="font-size:0.8rem;color:#888">Req.10.3.2 / 10.5.1 / 10.6</span></td><td>Audit log protection, integrity, review</td><td>Cryptographic log integrity; 90-day retention; automated review via Prometheus alerts</td></tr>
 <tr><td><strong>DORA Art.10</strong><br><span style="font-size:0.8rem;color:#888">EU 2022/2554</span></td><td>ICT threat detection mechanisms</td><td>13 Byzantine attack types auto-detected, logged with cryptographic evidence</td></tr>
 <tr><td><strong>GDPR Art.5(2) / Art.32</strong><br><span style="font-size:0.8rem;color:#888">EU</span></td><td>Accountability principle, technical security measures</td><td>Per-operation cryptographic commitment; JSON-LD export for DPA submission</td></tr>
-<tr><td><strong>MiFID II RTS 25</strong><br><span style="font-size:0.8rem;color:#888">EU 2017/574, Art.2(3)</span></td><td>Financial infrastructure audit trail</td><td>PoT-anchored event log; ±1ms clock divergence detectable and logged</td></tr>
+<tr><td><strong>MiFID II RTS 25</strong><br><span style="font-size:0.8rem;color:#888">EU 2017/574, Art.2(3)</span></td><td>Financial infrastructure audit trail — ±1ms timestamp precision</td><td>🔜 로드맵: GEO 타임소스 추가 시 (KTSat ±10ns) → ±1ms 요건 10× 초과 달성. 현재: Roughtime ±수ms (금융 거래 타임스탬프 요건 미충족)</td></tr>
 <tr><td><strong>EU AI Act Art.53</strong><br><span style="font-size:0.8rem;color:#888">EU 2024/1689</span></td><td>Training data documentation for general-purpose AI models</td><td>PoT-sealed ingestion log per training batch — source, date, scope immutably recorded</td></tr>
 <tr><td><strong>EU AI Act Art.12</strong><br><span style="font-size:0.8rem;color:#888">EU 2024/1689</span></td><td>Log retention for high-risk AI systems</td><td>90-day retention; JSON-LD export ready for competent authority submission</td></tr>
 <tr><td><strong>TRAI</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Telecom timestamp integrity</td><td>Format aligned with TRAI audit requirements</td></tr>
@@ -293,7 +312,7 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
 <tr>
   <td><strong>Enterprise</strong></td>
   <td>Financial infrastructure · Medical AI · High-risk systems</td>
-  <td>MiFID II · SOC 2 Type II · SLA 99.9% · On-premise option · Custom integrations</td>
+  <td>SOC 2 Type II · DORA · SLA 99.9% · On-premise option · Custom integrations · MiFID II RTS 25 (GEO 타임소스 추가 시)</td>
   <td><strong>Contact — <a href="mailto:peter@kenosian.com">peter@kenosian.com</a></strong></td>
 </tr>
 </tbody>

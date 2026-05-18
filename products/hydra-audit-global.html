@@ -42,6 +42,24 @@ tr:last-child td { border-bottom: none; }
 .active-badge { display: inline-block; background: #27ae60; color: #fff; font-size: 0.72rem; padding: 2px 8px; border-radius: 2px; font-weight: 700; letter-spacing: 0.04em; }
 .big-num { font-size: 2rem; font-weight: 700; line-height: 1.1; }
 .enforcement-note { font-size: 0.82rem; color: #c0392b; font-weight: 600; margin-top: 12px; margin-bottom: 8px; border-left: 3px solid #c0392b; padding-left: 10px; }
+.no-solution-box { background: #c0392b; color: #fff; padding: 24px; border-radius: 3px; margin: 16px 0 24px; }
+.no-solution-box h3 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.no-solution-box p { font-size: 0.85rem; line-height: 1.8; color: #fde; }
+.no-solution-box strong { color: #fff; }
+.no-solution-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 16px; }
+.no-solution-item { background: rgba(255,255,255,0.12); padding: 12px; border-radius: 2px; font-size: 0.78rem; line-height: 1.6; }
+.no-solution-item .tool { font-weight: 700; margin-bottom: 4px; color: #fff; }
+.no-solution-item .reason { color: #fcc; }
+.bar-chart { margin: 16px 0 24px; }
+.bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; font-size: 0.8rem; }
+.bar-label { width: 100px; flex-shrink: 0; color: #555; }
+.bar-track { flex: 1; background: #e8e8e8; height: 22px; border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 100%; background: #1a1a1a; border-radius: 2px; display: flex; align-items: center; padding-left: 8px; color: #fff; font-size: 0.72rem; font-weight: 700; white-space: nowrap; min-width: 60px; }
+.bar-fill.high { background: #c0392b; }
+.bar-fill.med { background: #555; }
+.bar-fill.low { background: #888; }
+.countdown-live { font-size: 2.2rem; font-weight: 700; color: #c0392b; line-height: 1; }
+.countdown-sub { font-size: 0.72rem; color: #888; margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -62,7 +80,7 @@ tr:last-child td { border-bottom: none; }
     <div class="lbl">EU AI Office Q1 2026 벌금 누계</div>
   </div>
   <div class="metric">
-    <div class="val">D-76</div>
+    <div class="val countdown-live" id="eu-countdown">D-76</div>
     <div class="lbl">EU AI Act 고위험 의무화 (2026-08-02)</div>
   </div>
   <div class="metric">
@@ -112,7 +130,7 @@ tr:last-child td { border-bottom: none; }
   <td><strong>EU AI Act — 고위험 의무화</strong><br><span style="font-size:0.78rem;color:#888">Art.12 로그 보존 · Art.53 학습데이터 문서화</span></td>
   <td>🇪🇺 EU</td>
   <td>FR5 / AM3 / DB3 / PA3</td>
-  <td><span class="deadline-badge">D-76</span></td>
+  <td><span class="deadline-badge" id="eu-countdown-badge">D-76</span></td>
 </tr>
 </tbody>
 </table>
@@ -164,7 +182,7 @@ tr:last-child td { border-bottom: none; }
 <tr>
   <td><strong>규제 요건 충족</strong></td>
   <td>증거 불인정 가능성</td>
-  <td>EU AI Act / MiFID II / SOC 2 직접 충족</td>
+  <td>EU AI Act Art.12/53 · SOC 2 Type II · DORA 직접 충족</td>
 </tr>
 <tr>
   <td><strong>감사 시</strong></td>
@@ -173,6 +191,33 @@ tr:last-child td { border-bottom: none; }
 </tr>
 </tbody>
 </table>
+
+<!-- Section 3b: No Solution -->
+<div class="no-solution-box">
+  <h3>시장에 법적 수준 AI 감사 도구가 없습니다</h3>
+  <p>
+    2026-08-02부터 EU AI Act Art.12 위반 = <strong>€35M 또는 매출 7%</strong> 벌금.<br>
+    기존 ML 옵저버빌리티 도구는 규제 요건을 충족하지 않습니다.
+  </p>
+  <div class="no-solution-row">
+    <div class="no-solution-item">
+      <div class="tool">MLflow</div>
+      <div class="reason">타임스탬프 무결성 없음 · 단일 클럭 · 법원 제출 불가</div>
+    </div>
+    <div class="no-solution-item">
+      <div class="tool">Weights &amp; Biases</div>
+      <div class="reason">ML 실험 로그 · 암호화 감사 없음 · 규제 요건 미충족</div>
+    </div>
+    <div class="no-solution-item">
+      <div class="tool">DataDog</div>
+      <div class="reason">인프라 모니터링 · 수정 가능 로그 · 법적 증거 불인정</div>
+    </div>
+    <div class="no-solution-item">
+      <div class="tool">자체 구축</div>
+      <div class="reason">Art.12/53 요건 해석 · 법적 검증 불가 · 개발 기간 12개월+</div>
+    </div>
+  </div>
+</div>
 
 <!-- Section 4 -->
 <h2>4 — 국가별 규제 &amp; Equinix 거점</h2>
@@ -248,22 +293,52 @@ tr:last-child td { border-bottom: none; }
 </tbody>
 </table>
 
+<!-- Section 4b: Fine Bar Chart -->
+<h2>국가별 최대 벌금 규모</h2>
+<p class="section-note">2026-08-02 이후 적용되는 AI 규제 최대 과징금 (€ 환산 기준).</p>
+<div class="bar-chart">
+  <div class="bar-row">
+    <span class="bar-label">🇪🇺 EU AI Act</span>
+    <div class="bar-track"><div class="bar-fill high" style="width:100%">€35M / 매출 7%</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">🇨🇦 AIDA</span>
+    <div class="bar-track"><div class="bar-fill med" style="width:49%">€17M (CAD 25M)</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">🇺🇸 CA SB 53</span>
+    <div class="bar-track"><div class="bar-fill med" style="width:26%">€9M ($10M+)</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">🇻🇳 Law 134</span>
+    <div class="bar-track"><div class="bar-fill low" style="width:14%">매출 5%</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">🇸🇬 MAS TRM</span>
+    <div class="bar-track"><div class="bar-fill low" style="width:5%">€700K</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">🇰🇷 AI 기본법</span>
+    <div class="bar-track"><div class="bar-fill low" style="width:3%">3억원</div></div>
+  </div>
+</div>
+
 <!-- Section 5 -->
 <h2>5 — 타임 검증 정밀도</h2>
 
-<pre>시간 검증 방식:
-  Roughtime 3서버 합의:       ±수ms 절대 정밀도 (현재 구현)
-  per-event monotonic 오프셋: 이벤트 간 순서/간격 고해상도 보존
-  MiFID II RTS 25 충족:       ±1ms 요건 달성
+<pre>현재 구현:
+  Roughtime 3-server consensus, ±수ms absolute
+  per-event monotonic precision (이벤트 간 순서·간격 고해상도 보존)
 
-  GPS 앵커 (KTSat ±10ns):     로드맵 — 연결 시 ns 수준 절대 정밀도 달성
-                               현재: Roughtime ±수ms 운용
+규제 요건 충족 현황:
+  EU AI Act Art.12:  "accurate" (정량 기준 없음) → ✅ 충족
+  EU AI Act Art.53:  학습 배치 날짜 수준 기록    → ✅ 완전 충족
+  SOC 2 CC7.1:       실시간 이벤트 감사           → ✅ 충족
+  MiFID II RTS 25:   ±1ms 이내 요건              → 🔜 로드맵
 
-규제 요건 대응:
-  MiFID II RTS 25 Art.2(3):   ±1ms 이내 클럭 편차 탐지 및 기록
-  EU AI Act Art.12:           90일 보존 · JSON-LD 즉시 export
-  EU AI Act Art.53:           학습 배치별 PoT 씰 — 일시/출처/범위 불변 기록
-  SOC 2 Type II CC7.1:        실시간 이벤트 감사 + Prometheus 증거</pre>
+로드맵 — GEO 타임소스 추가 시 (KTSat ±10ns):
+  MiFID II RTS 25 Art.2(3):  ±1ms 요건 10× 초과 달성 (±10ns)
+  금융 거래 타임스탬프 감사   → ns 수준 절대 정밀도</pre>
 
 <!-- Section 6 -->
 <h2>6 — Equinix 파트너십 가치</h2>
@@ -382,5 +457,22 @@ tr:last-child td { border-bottom: none; }
   <span>peter@kenosian.com · Kenosian · 2026</span>
 </footer>
 
+<script>
+(function() {
+  var target = new Date('2026-08-02T00:00:00+00:00');
+  function update() {
+    var now = new Date();
+    var diff = target - now;
+    var days = diff > 0 ? Math.floor(diff / 86400000) : 0;
+    var label = diff > 0 ? ('D-' + days) : '집행 개시';
+    var el1 = document.getElementById('eu-countdown');
+    var el2 = document.getElementById('eu-countdown-badge');
+    if (el1) el1.textContent = label;
+    if (el2) el2.textContent = label;
+  }
+  update();
+  setInterval(update, 60000);
+})();
+</script>
 </body>
 </html>

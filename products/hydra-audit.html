@@ -42,7 +42,7 @@ tr:last-child td { border-bottom: none; }
 
 <h1>HYDRA-AUDIT — Infrastructure Audit</h1>
 <span class="tag">Byzantine Fault Detection · Regulatory Compliance · Tamper-Evident Audit Trail</span>
-<p class="killer">Byzantine audit trail built for regulators — Prometheus, Grafana, and JSON-LD exports ready for TRAI and CERT-In submission.</p>
+<p class="killer">Byzantine audit trail for AI companies and regulated infrastructure — training data provenance, copyright defense, and real-time Byzantine detection. Regulator-ready: EU AI Act, SOC 2, MiFID II, TRAI.</p>
 
 <h2>Overview</h2>
 <p class="section-note">Distributed infrastructure — whether an LLM inference cluster, a CDN edge network, or a payment system — generates enormous amounts of inter-node traffic that is difficult to audit in real time. A single compromised node can silently tamper with its own logs, forge timestamps, or replay transactions without detection by conventional monitoring.</p>
@@ -56,6 +56,34 @@ tr:last-child td { border-bottom: none; }
   <li><strong>Ed25519 sealing:</strong> every event is signed at generation time; post-hoc modification is cryptographically detectable by any verifier without access to the original infrastructure.</li>
   <li><strong>The result:</strong> an audit trail that is verifiable by any party without trusting any single infrastructure component — suitable for adversarial, cross-jurisdiction, and regulatory review contexts.</li>
 </ul>
+
+<h2>AI Training Data Compliance</h2>
+<p class="section-note">AI companies face two converging legal obligations that TTTPS audit chains directly address.</p>
+<table>
+<thead><tr><th>Obligation</th><th>What the law requires</th><th>How TTTPS Audit provides it</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>EU AI Act Art.53</strong><br><span style="font-size:0.8rem;color:#888">General-purpose AI models</span></td>
+  <td>Document training data: sources, dates, scope</td>
+  <td>PoT seal on each training batch ingestion — cryptographic timestamp of what data was used and when</td>
+</tr>
+<tr>
+  <td><strong>EU AI Act Art.12</strong><br><span style="font-size:0.8rem;color:#888">High-risk AI systems</span></td>
+  <td>Log retention for regulatory inspection</td>
+  <td>90-day retention, JSON-LD export — regulator-ready without manual reconstruction</td>
+</tr>
+<tr>
+  <td><strong>Copyright defense</strong><br><span style="font-size:0.8rem;color:#888">NYT vs OpenAI pattern</span></td>
+  <td>Prove what data was trained on, and when</td>
+  <td>PoT chain per training batch — if a dataset was not ingested on a given date, the chain proves it; if it was, the chain proves the scope</td>
+</tr>
+</tbody>
+</table>
+<p class="section-note">
+  Adding TTTPS seals to the training pipeline ingestion step produces an immutable record:
+  "At 2026-03-15T14:23Z, batch <em>X</em> from source <em>Y</em> was ingested."
+  Cryptographically unforgeable, independently verifiable, directly admissible in regulatory and legal proceedings.
+</p>
 
 <h2>How Hydra-Audit Works</h2>
 <ol style="font-size:0.82rem; color:#444; margin-left:20px; margin-bottom:16px; line-height:2;">
@@ -97,6 +125,30 @@ tr:last-child td { border-bottom: none; }
 </tbody>
 </table>
 
+<h2>Audit Chain Continuity</h2>
+<p class="section-note">Once an audit chain is established, it becomes load-bearing compliance infrastructure — not optional middleware.</p>
+<table>
+<thead><tr><th>Timeline</th><th>What accumulates</th><th>Switching cost</th></tr></thead>
+<tbody>
+<tr>
+  <td>Month 1–3</td>
+  <td>Operational audit baseline established</td>
+  <td>Low — early integration phase</td>
+</tr>
+<tr>
+  <td>Month 6</td>
+  <td>EU AI Act submission window opens</td>
+  <td>Chain continuity required — gaps in the record invalidate the submission</td>
+</tr>
+<tr>
+  <td>Month 12+</td>
+  <td>SOC 2 / ISO 27001 annual audit cycle</td>
+  <td>Historical chain required — past records cannot be reconstructed on a new system</td>
+</tr>
+</tbody>
+</table>
+<p class="section-note">Regulatory audit submissions reference a continuous chain. Migrating to a different audit system mid-cycle means the prior chain cannot be reproduced — the record breaks. The continuity requirement is enforced by regulators, not by Kenosian.</p>
+
 <h2>Compliance &amp; Regulatory Delivery</h2>
 <blockquote>Hydra-Audit provides structured audit data in formats accepted by regulatory bodies and compatible with standard compliance tooling.</blockquote>
 
@@ -120,6 +172,8 @@ tr:last-child td { border-bottom: none; }
 <tr><td><strong>DORA Art.10</strong><br><span style="font-size:0.8rem;color:#888">EU 2022/2554</span></td><td>ICT threat detection mechanisms</td><td>13 Byzantine attack types auto-detected, logged with cryptographic evidence</td></tr>
 <tr><td><strong>GDPR Art.5(2) / Art.32</strong><br><span style="font-size:0.8rem;color:#888">EU</span></td><td>Accountability principle, technical security measures</td><td>Per-operation cryptographic commitment; JSON-LD export for DPA submission</td></tr>
 <tr><td><strong>MiFID II RTS 25</strong><br><span style="font-size:0.8rem;color:#888">EU 2017/574, Art.2(3)</span></td><td>Financial infrastructure audit trail</td><td>PoT-anchored event log; ±1ms clock divergence detectable and logged</td></tr>
+<tr><td><strong>EU AI Act Art.53</strong><br><span style="font-size:0.8rem;color:#888">EU 2024/1689</span></td><td>Training data documentation for general-purpose AI models</td><td>PoT-sealed ingestion log per training batch — source, date, scope immutably recorded</td></tr>
+<tr><td><strong>EU AI Act Art.12</strong><br><span style="font-size:0.8rem;color:#888">EU 2024/1689</span></td><td>Log retention for high-risk AI systems</td><td>90-day retention; JSON-LD export ready for competent authority submission</td></tr>
 <tr><td><strong>TRAI</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Telecom timestamp integrity</td><td>Format aligned with TRAI audit requirements</td></tr>
 <tr><td><strong>CERT-In</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Cyber incident reporting</td><td>Cryptographic evidence admissible for CERT-In submissions</td></tr>
 </tbody>
@@ -179,9 +233,51 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
   <span style="font-size:0.8rem;color:#666;">Production key · 90-day audit log retention · Grafana access included</span>
 </div>
 
-<h2>Grafana Dashboard</h2>
-<p class="section-note">Access on request — contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a><br>
-Live Byzantine fault visualization: attack type breakdown, time-series, per-agent metrics.</p>
+<h2>Grafana Dashboard — Regulator-Ready</h2>
+<p class="section-note">Designed to be handed to an auditor without additional preparation.</p>
+<table>
+<thead><tr><th>Audience</th><th>What they see</th><th>Use case</th></tr></thead>
+<tbody>
+<tr>
+  <td>Engineering team</td>
+  <td>Real-time Byzantine event rate, node health, QUIC path quality</td>
+  <td>Ops monitoring — live Prometheus feed, visual</td>
+</tr>
+<tr>
+  <td>Legal / Compliance team</td>
+  <td>Training batch ingestion log, attack-free periods, regulatory event summary</td>
+  <td>EU AI Act audit preparation — no manual log reconstruction</td>
+</tr>
+<tr>
+  <td>C-suite</td>
+  <td>"0 attacks today · 14,792 verified transfers · chain intact"</td>
+  <td>Board-level compliance posture in one number</td>
+</tr>
+<tr>
+  <td>External auditor</td>
+  <td>JSON-LD export — machine-readable, verifiable without Kenosian infrastructure</td>
+  <td>Regulatory submission (EU AI Act, SOC 2, ISO 27001)</td>
+</tr>
+</tbody>
+</table>
+<p class="section-note">Access on request — <a href="mailto:peter@kenosian.com">peter@kenosian.com</a></p>
+
+<h2>Pricing</h2>
+<table>
+<thead><tr><th>Package</th><th>Includes</th><th>Price</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>Hydra-KV + Audit Bundle</strong></td>
+  <td>KV cache compression · CRDT dedup · TTTPS audit trail · Grafana access · 90-day retention</td>
+  <td><strong>$0.03 / GB processed</strong></td>
+</tr>
+<tr>
+  <td><strong>Hydra-Audit Standalone</strong></td>
+  <td>TTTPS audit for any distributed system (training pipeline, API, CDN) · JSON-LD export · Prometheus metrics · Grafana</td>
+  <td>Enterprise pricing — <a href="mailto:peter@kenosian.com">peter@kenosian.com</a></td>
+</tr>
+</tbody>
+</table>
 
 <h2>API Access</h2>
 <p class="section-note">Contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a> for API key provisioning and integration support.</p>

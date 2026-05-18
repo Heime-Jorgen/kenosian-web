@@ -136,7 +136,52 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
   GCP internal measurement. InfiniBand NDR (400Gbps) environment: estimated 40–100× higher throughput.
 </p>
 
-<!-- SECTION 3: Architecture -->
+<!-- SECTION 3: Why No InfiniBand Required -->
+<h2>PD Disaggregation on Standard Ethernet</h2>
+<p class="section-note">
+  Most GPU clusters — including Equinix colocation — run commodity Ethernet.
+  InfiniBand NDR (400 Gbps) requires $50K+ per node in dedicated NICs and switch fabric.
+  Hydra-KV makes PD disaggregation viable without it.
+</p>
+<table>
+  <thead>
+    <tr><th></th><th>IB RDMA approach</th><th>Hydra-KV on Equinix Fabric</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Infrastructure</td>
+      <td>InfiniBand NDR ($50K+/node)</td>
+      <td>Standard Ethernet — commodity</td>
+    </tr>
+    <tr>
+      <td>Raw transfer (10MB)</td>
+      <td>0.64ms</td>
+      <td>95.9ms</td>
+    </tr>
+    <tr>
+      <td>After 95.6% CRDT dedup</td>
+      <td>10MB (full, every request)</td>
+      <td>~440KB (~4ms effective)</td>
+    </tr>
+    <tr>
+      <td>Compression</td>
+      <td>None</td>
+      <td>3.20× lattice</td>
+    </tr>
+    <tr>
+      <td>Works on Equinix Fabric</td>
+      <td>No — requires IB switch fabric</td>
+      <td><strong>Yes — native EVPL</strong></td>
+    </tr>
+  </tbody>
+</table>
+<p class="section-note">
+  In typical API workloads (shared system prompt, similar query patterns), 95.6% of KV blocks are
+  already present on the decode node from prior sessions. Effective transfer per request is under 5%
+  of raw KV size. Equinix Fabric EVPL is sufficient — InfiniBand is not required.
+</p>
+
+<!-- SECTION 4: Architecture -->
 <h2>Architecture</h2>
 <div class="demo-box">
   <ul style="list-style:none;line-height:2;">
@@ -249,27 +294,43 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
   <span style="font-size:0.8rem;color:#666;">Private beta · Integration support included</span>
 </div>
 
-<!-- SECTION 8: Equinix Fabric Integration -->
-<h2>Equinix Fabric Integration</h2>
+<!-- SECTION 8: Equinix Fabric — Native Infrastructure -->
+<h2>Equinix Fabric — Native Infrastructure</h2>
+<p class="section-note">
+  HYDRA-KV operates natively on Equinix Fabric. Each customer deployment establishes
+  a Virtual Connection on Equinix Fabric — Equinix infrastructure is the serving layer,
+  not a transport option.
+</p>
 <table>
   <thead>
-    <tr><th>Capability</th><th>Details</th></tr>
+    <tr><th>VLAN</th><th>Service</th><th>Equinix Fabric</th><th>Status</th></tr>
   </thead>
   <tbody>
     <tr>
-      <td>EVPL connection</td>
-      <td>Ready (1GbE – 400GbE)</td>
+      <td><strong>VLAN 10</strong></td>
+      <td>HYDRA-KV — KV Cache Transfer</td>
+      <td>EVPL point-to-point</td>
+      <td>Ready</td>
     </tr>
     <tr>
-      <td>GapVec5 probing</td>
-      <td>Real-time latency probe across Equinix SE2/MA1 metros</td>
+      <td><strong>VLAN 20</strong></td>
+      <td>HYDRA-CDN — Edge Delivery</td>
+      <td>EVPL multi-point</td>
+      <td>Ready</td>
     </tr>
     <tr>
-      <td>Cross-metro PD</td>
-      <td>Prefill/decode nodes connectable across Equinix metros</td>
+      <td><strong>VLAN 40</strong></td>
+      <td>HYDRA-AUDIT — Compliance Stream</td>
+      <td>EVPL point-to-point</td>
+      <td>Ready</td>
     </tr>
   </tbody>
 </table>
+<p class="section-note">
+  GapVec5 probes Equinix metro latencies in real-time — SE2, MA1, and KR1 — and routes KV
+  transfers across the lowest loss-weighted path. Every customer Virtual Connection generates
+  Equinix Fabric usage. 1GbE – 400GbE EVPL supported.
+</p>
 
 <!-- SECTION 9: Regulatory Coverage -->
 <h2>Regulatory Coverage</h2>
@@ -304,6 +365,10 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
 
 <!-- SECTION 10: API Access -->
 <h2>API Access</h2>
+<p style="margin-bottom:14px;font-size:0.85rem;">
+  <strong>Pricing:</strong> Starting at <strong>$0.03 / GB processed</strong> &nbsp;·&nbsp;
+  Enterprise volume pricing via <a href="mailto:peter@kenosian.com">peter@kenosian.com</a>
+</p>
 <p class="section-note">
   vLLM connector: <code>docs/hydra_kv_connector.py</code> (50-line drop-in)<br>
   Production access: <a href="mailto:peter@kenosian.com">peter@kenosian.com</a>

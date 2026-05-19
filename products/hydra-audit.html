@@ -42,7 +42,7 @@ tr:last-child td { border-bottom: none; }
 
 <h1>HYDRA-AUDIT — Infrastructure Audit</h1>
 <span class="tag">Byzantine Fault Detection · Regulatory Compliance · Tamper-Evident Audit Trail</span>
-<p class="killer">Byzantine audit trail for AI companies and regulated infrastructure — training data provenance, copyright defense, and real-time Byzantine detection. Regulator-ready: EU AI Act Art.12/53, SOC 2 Type II, DORA, TRAI. MiFID II RTS 25: GEO 타임소스 추가 시 (로드맵).</p>
+<p class="killer">The only cryptographic audit solution that satisfies EU AI Act Art.12/53 — training data provenance, tamper-evident log retention, and regulatory-admissible evidence. EU AI Act — August 2026.</p>
 
 <h2>Overview</h2>
 <p class="section-note">Distributed infrastructure — whether an LLM inference cluster, a CDN edge network, or a payment system — generates enormous amounts of inter-node traffic that is difficult to audit in real time. A single compromised node can silently tamper with its own logs, forge timestamps, or replay transactions without detection by conventional monitoring.</p>
@@ -151,27 +151,15 @@ tr:last-child td { border-bottom: none; }
 
 <div style="border:2px solid #c0392b; border-radius:3px; padding:20px; margin-bottom:24px;">
   <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:12px;">
-    <span style="font-size:2rem; font-weight:700; color:#c0392b;" id="audit-countdown">D-76</span>
-    <span style="font-size:0.85rem; font-weight:700; color:#c0392b;">EU AI Act 고위험 의무화 — 2026-08-02</span>
+    <span style="font-size:2rem; font-weight:700; color:#c0392b;">EU AI Act — August 2026</span>
+    <span style="font-size:0.85rem; font-weight:700; color:#c0392b;">EU AI Act — High-Risk Systems Mandatory — August 2026</span>
   </div>
   <p style="font-size:0.82rem; color:#444; margin-bottom:12px;">
-    시장에 법적 수준 AI 감사 도구가 없습니다. MLflow · W&amp;B · DataDog은 Art.12 요건을 충족하지 않습니다.
-    Q1 2026 EU AI Office 이미 €2.5억 벌금 부과.
+    No compliant AI audit solution exists on the market. MLflow · W&amp;B · DataDog do not satisfy Art.12 requirements.
+    EU AI Act enforcement begins August 2026. Maximum penalty: €15M or 3% of global annual turnover per Art.12/53 violation.
   </p>
-  <strong>→ <a href="/products/hydra-audit-global.html">2026 글로벌 규제 집행 타임라인 — 국가별 벌금 규모 · Equinix 거점 · 5개년 수익 전망</a></strong>
+  <strong>→ <a href="/products/hydra-audit-global.html">2026 Global AI Regulatory Enforcement Timeline — jurisdiction-by-jurisdiction breakdown</a></strong>
 </div>
-<script>
-(function() {
-  var target = new Date('2026-08-02T00:00:00+00:00');
-  function update() {
-    var diff = target - new Date();
-    var el = document.getElementById('audit-countdown');
-    if (el) el.textContent = diff > 0 ? ('D-' + Math.floor(diff / 86400000)) : '집행 개시';
-  }
-  update();
-  setInterval(update, 60000);
-})();
-</script>
 
 <h2>Compliance &amp; Regulatory Delivery</h2>
 <blockquote>Hydra-Audit provides structured audit data in formats accepted by regulatory bodies and compatible with standard compliance tooling.</blockquote>
@@ -200,6 +188,10 @@ tr:last-child td { border-bottom: none; }
 <tr><td><strong>EU AI Act Art.12</strong><br><span style="font-size:0.8rem;color:#888">EU 2024/1689</span></td><td>Log retention for high-risk AI systems</td><td>90-day retention; JSON-LD export ready for competent authority submission</td></tr>
 <tr><td><strong>TRAI</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Telecom timestamp integrity</td><td>Format aligned with TRAI audit requirements</td></tr>
 <tr><td><strong>CERT-In</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Cyber incident reporting</td><td>Cryptographic evidence admissible for CERT-In submissions</td></tr>
+<tr><td><strong>FedRAMP Rev.5</strong><br><span style="font-size:0.8rem;color:#888">US Federal Risk and Authorization Management Program</span></td><td>AU-3 / AU-9 — Audit event content, protection of audit information</td><td>Tamper-evident log with AEAD+blake3 Merkle; 90-day retention; FIPS-compatible export</td></tr>
+<tr><td><strong>MAS TRM 2021</strong><br><span style="font-size:0.8rem;color:#888">Singapore Section 6.5</span></td><td>Audit logging for financial system operations</td><td>Per-event PoT-sealed log with cryptographic chain integrity; queryable for MAS examination</td></tr>
+<tr><td><strong>APRA CPG 234</strong><br><span style="font-size:0.8rem;color:#888">Australia Prudential Regulation Authority</span></td><td>Information security audit trail for regulated entities</td><td>Ed25519-signed audit chain; Prometheus dashboard satisfies continuous monitoring guidance</td></tr>
+<tr><td><strong>PIPL Art.51-55</strong><br><span style="font-size:0.8rem;color:#888">China Personal Information Protection Law</span></td><td>Data processing record-keeping, security audits</td><td>Immutable processing log per data subject operation; JSON-LD export for CAC submission</td></tr>
 </tbody>
 </table>
 
@@ -285,6 +277,16 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
 </tbody>
 </table>
 <p class="section-note">Access on request — <a href="mailto:peter@kenosian.com">peter@kenosian.com</a></p>
+
+<div style="border:2px solid #c0392b; border-radius:3px; padding:24px; margin:32px 0; background:#fff8f8;">
+  <p style="font-size:0.92rem; font-weight:700; color:#1a1a1a; line-height:1.8; margin-bottom:16px;">
+    <strong>EU AI Act enforcement begins August 2026. MLflow does not satisfy Art.12. Weights &amp; Biases does not satisfy Art.12. DataDog does not satisfy Art.12. Building it yourself takes 12+ months and still won't survive a legal proceeding.</strong>
+  </p>
+  <p style="font-size:0.85rem; color:#444; line-height:1.8; margin-bottom:16px;">
+    <strong>Hydra-Audit is the only drop-in solution generating cryptographically unforgeable training data records — directly admissible in EU, Korean, and Vietnamese regulatory proceedings, today. Engineering teams adopt Hydra-KV for inference speed. Legal and compliance teams renew Hydra-Audit because the chain is now load-bearing compliance infrastructure — a gap in the record invalidates the regulatory submission.</strong>
+  </p>
+  <strong>→ <a href="/products/hydra-audit-global.html">2026 Global AI Regulatory Enforcement Timeline — jurisdiction-by-jurisdiction breakdown, Equinix branch mapping, enforcement dates</a></strong>
+</div>
 
 <h2>Pricing</h2>
 <p class="section-note">Framework-based coverage — priced against regulatory risk, not event volume. Events are unlimited across all tiers.</p>

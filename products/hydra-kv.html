@@ -289,7 +289,7 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
   "crdt_dedup":          "95.6%"
 }</pre>
 
-<p style="margin-bottom:6px;font-size:0.85rem;"><strong>Engineering team:</strong> 73× transfer reduction — no InfiniBand required.</p>
+<p style="margin-bottom:6px;font-size:0.85rem;"><strong>Engineering team:</strong> 3.20× compression + 95.6% CRDT dedup → combined transfer reduction — no InfiniBand required.</p>
 <p style="margin-bottom:16px;font-size:0.85rem;"><strong>Legal / Compliance team:</strong> EU AI Act Article 53 audit trail included.</p>
 <div class="cta-row">
   <a class="btn-primary" href="mailto:peter@kenosian.com?subject=Hydra-KV%20Early%20Access%20Request">Request Early Access</a>
@@ -390,17 +390,36 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
   </tbody>
 </table>
 
-<!-- SECTION 10: API Access -->
+<!-- SECTION 10: Pricing + API Access -->
+<h2>Pricing</h2>
+<div style="background:#f0f0f0; border-left:3px solid #1a1a1a; padding:14px 18px; margin-bottom:18px; font-size:0.85rem; line-height:1.7;">
+  <strong>Hydra-Audit included free for 30 days</strong> — every KV deployment automatically activates the EU AI Act compliance chain. After 30 days: €100/node/month to retain the chain, or it is permanently deleted.
+</div>
+<table>
+<thead><tr><th>Volume</th><th>Price</th><th>Includes</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>Standard</strong></td>
+  <td><strong>$0.03/GB processed</strong></td>
+  <td>E8 3.2× compression · CRDT 95.6% dedup · QUIC transport · Audit 30-day trial</td>
+</tr>
+<tr>
+  <td><strong>100 TB+/month</strong></td>
+  <td><strong>$0.02/GB processed</strong></td>
+  <td>Volume discount · all Standard features included</td>
+</tr>
+<tr>
+  <td><strong>Enterprise</strong></td>
+  <td><strong>Contact</strong></td>
+  <td>Custom SLA · dedicated onboarding · <a href="mailto:peter@kenosian.com">peter@kenosian.com</a></td>
+</tr>
+</tbody>
+</table>
+<p class="section-note">
+  Annual contract: 2 months free (pay 10, get 12). &nbsp;·&nbsp; Multi-product bundle (2+ products): 20% discount.<br>
+  Standalone Audit (training pipeline · EU AI Act Art.53): <a href="/products/hydra-audit.html">Hydra-Audit →</a>
+</p>
 <h2>API Access</h2>
-<p style="margin-bottom:8px;font-size:0.85rem;">
-  <strong>KV + Audit Bundle:</strong> <strong>$0.03 / GB processed</strong> — Byzantine Audit trail included &nbsp;·&nbsp;
-  Enterprise pricing via <a href="mailto:peter@kenosian.com">peter@kenosian.com</a>
-</p>
-<p style="margin-bottom:14px;font-size:0.85rem;">
-  <strong>Audit Standalone</strong> (training pipeline · EU AI Act Art.53 · copyright defense):
-  from <strong>€6,000/month</strong> &nbsp;·&nbsp;
-  <a href="/products/hydra-audit.html">Hydra-Audit →</a>
-</p>
 <p class="section-note">
   vLLM connector: <code>docs/hydra_kv_connector.py</code> (50-line drop-in)<br>
   Production access: <a href="mailto:peter@kenosian.com">peter@kenosian.com</a>
@@ -428,7 +447,7 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
   </tbody>
 </table>
 
-<div style="border:2px solid #c0392b; border-radius:3px; padding:24px; margin:32px 0; background:#fff8f8;">
+<div style="border:2px solid #1a1a1a; border-radius:3px; padding:24px; margin:32px 0; background:#f8f8f8;">
   <p style="font-size:0.92rem; font-weight:700; color:#1a1a1a; line-height:1.8; margin-bottom:16px;">
     <strong>EU AI Act Art.12 requires high-risk AI systems to generate automatic logs for regulatory inspection. Every prefill-to-decode KV cache transfer in Hydra-KV generates a TTTPS-sealed record: what data moved, between which nodes, at what time — immutably.</strong>
   </p>

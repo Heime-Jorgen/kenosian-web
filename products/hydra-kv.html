@@ -56,7 +56,7 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
 </p>
 <p class="section-note">
   Hydra-KV eliminates this bottleneck by intercepting the outbound KV transfer at the prefill node,
-  applying proprietary lattice compression (3.20× reduction), then checking a CRDT deduplication index
+  applying proprietary lattice compression (≥3.1× reduction, A100 measured 3.20×), then checking a CRDT deduplication index
   to skip any blocks the decode node already holds from previous sessions (95.6% of blocks in typical
   workloads). Only novel, compressed deltas travel over the wire — via QUIC with TLS 1.3.
 </p>
@@ -74,8 +74,8 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
 
 <div class="metric-row">
   <div class="metric">
-    <div class="val">3.20×</div>
-    <div class="lbl">Lattice Compression Ratio</div>
+    <div class="val">≥3.1×</div>
+    <div class="lbl">Lattice Compression Ratio (A100 measured 3.20×)</div>
   </div>
   <div class="metric">
     <div class="val">40.4ms</div>
@@ -102,8 +102,8 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
   <tbody>
     <tr>
       <td>Lattice compression</td>
-      <td>3.20×</td>
-      <td>32MB FP16 → 10MB</td>
+      <td>≥3.1× (A100: 3.20×)</td>
+      <td>32MB FP16 → 10MB, A100 GCP internal</td>
     </tr>
     <tr>
       <td>GPU compression (nvCOMP)</td>
@@ -166,7 +166,7 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
     <tr>
       <td>Compression</td>
       <td>None</td>
-      <td>3.20× lattice</td>
+      <td>≥3.1× lattice (A100: 3.20×)</td>
     </tr>
     <tr>
       <td>Works on Equinix Fabric</td>
@@ -199,7 +199,7 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
 <h2>How It Works — Step by Step</h2>
 <ol class="steps">
   <li><strong>1.</strong> Prefill node processes prompt — generates KV cache tensors.</li>
-  <li><strong>2.</strong> Hydra-KV sidecar intercepts outbound KV transfer, compresses with proprietary lattice algorithm (3.20× reduction).</li>
+  <li><strong>2.</strong> Hydra-KV sidecar intercepts outbound KV transfer, compresses with proprietary lattice algorithm (≥3.1× reduction).</li>
   <li><strong>3.</strong> CRDT deduplication checks if identical blocks were seen before — 95.6% of blocks are already on the decode node.</li>
   <li><strong>4.</strong> GapVec5 probes all decode nodes in real-time, selects optimal path based on 5 network dimensions: ISP density, latency, packet loss, throughput, DPI fingerprint.</li>
   <li><strong>5.</strong> QUIC transport delivers compressed, deduplicated chunks to decode sidecar.</li>
@@ -285,11 +285,11 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
   "cache_hit":           true,
   "optimal_chunk_bytes": 65536,
   "rho":                 0.45,
-  "compression_ratio":   "3.20×",
+  "compression_ratio":   "≥3.1×",
   "crdt_dedup":          "95.6%"
 }</pre>
 
-<p style="margin-bottom:6px;font-size:0.85rem;"><strong>Engineering team:</strong> 3.20× compression + 95.6% CRDT dedup → combined transfer reduction — no InfiniBand required.</p>
+<p style="margin-bottom:6px;font-size:0.85rem;"><strong>Engineering team:</strong> ≥3.1× compression + 95.6% CRDT dedup → combined transfer reduction — no InfiniBand required.</p>
 <p style="margin-bottom:16px;font-size:0.85rem;"><strong>Legal / Compliance team:</strong> EU AI Act Article 53 audit trail included.</p>
 <div class="cta-row">
   <a class="btn-primary" href="mailto:peter@kenosian.com?subject=Hydra-KV%20Early%20Access%20Request">Request Early Access</a>
@@ -401,7 +401,7 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
 <tr>
   <td><strong>Standard</strong></td>
   <td><strong>$0.03/GB processed</strong></td>
-  <td>E8 3.2× compression · CRDT 95.6% dedup · QUIC transport · Audit 30-day trial</td>
+  <td>E8 ≥3.1× compression · CRDT 95.6% dedup · QUIC transport · Audit 30-day trial</td>
 </tr>
 <tr>
   <td><strong>100 TB+/month</strong></td>
@@ -452,7 +452,7 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
     <strong>EU AI Act Art.12 requires high-risk AI systems to generate automatic logs for regulatory inspection. Every prefill-to-decode KV cache transfer in Hydra-KV generates a TTTPS-sealed record: what data moved, between which nodes, at what time — immutably.</strong>
   </p>
   <p style="font-size:0.85rem; color:#444; line-height:1.8; margin-bottom:16px;">
-    <strong>Your inference cluster is Art.12 compliant the moment Hydra-KV is deployed. No reconstruction at audit time. No separate log pipeline. Engineering teams adopt Hydra-KV for 3.20× compression and 95.6% dedup — legal teams keep it because the audit chain is now regulatory infrastructure.</strong>
+    <strong>Your inference cluster is Art.12 compliant the moment Hydra-KV is deployed. No reconstruction at audit time. No separate log pipeline. Engineering teams adopt Hydra-KV for ≥3.1× compression and 95.6% dedup — legal teams keep it because the audit chain is now regulatory infrastructure.</strong>
   </p>
   <strong>→ <a href="/products/hydra-audit-global.html">2026 Global AI Regulatory Enforcement Timeline — jurisdiction-by-jurisdiction breakdown, Equinix branch mapping, enforcement dates</a></strong>
 </div>

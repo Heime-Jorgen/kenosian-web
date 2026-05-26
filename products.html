@@ -26,6 +26,25 @@ nav.breadcrumb a { color: #555; }
 .product-card a.cta { font-size: 0.75rem; color: #fff; background: #1a1a1a; padding: 7px 16px; display: inline-block; text-decoration: none; border-radius: 2px; font-weight: 600; letter-spacing: 0.04em; }
 .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
 .badge { display: inline-block; border: 1px solid #ccc; font-size: 0.68rem; padding: 2px 7px; border-radius: 2px; color: #555; letter-spacing: 0.03em; }
+/* Positioning tagline */
+.positioning-tagline { font-size: 0.82rem; font-weight: 700; color: #1a1a1a; border-left: 3px solid #1a1a1a; padding-left: 12px; margin-bottom: 14px; letter-spacing: 0.02em; }
+/* Stat row */
+.stat-row { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 14px; }
+.stat-item { font-size: 0.78rem; color: #444; }
+.stat-item strong { font-size: 1.05rem; color: #1a1a1a; display: block; font-weight: 700; letter-spacing: -0.01em; }
+/* Callout box */
+.callout-box { border: 2px solid #1a1a1a; padding: 16px 20px; margin-bottom: 14px; background: #f8f8f8; border-radius: 2px; }
+.callout-box p { font-size: 0.82rem; color: #1a1a1a; margin-bottom: 0; }
+.callout-box p + p { margin-top: 8px; }
+/* Churn box */
+.churn-box { border: 1px solid #ccc; padding: 12px 16px; margin-bottom: 14px; background: #fafafa; border-radius: 2px; }
+.churn-box p { font-size: 0.78rem; color: #444; margin-bottom: 0; }
+.churn-box p + p { margin-top: 6px; }
+/* Pricing table mini */
+.pricing-mini { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-bottom: 14px; }
+.pricing-mini th { background: #1a1a1a; color: #fff; padding: 6px 10px; text-align: left; font-weight: 600; }
+.pricing-mini td { padding: 6px 10px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+.pricing-mini tr:last-child td { border-bottom: none; }
 </style>
 </head>
 <body>
@@ -67,10 +86,18 @@ nav.breadcrumb a { color: #555; }
 <h1>Kenosian — Product Overview</h1>
 <span class="tag">B2B · API access by request · peter@kenosian.com</span>
 
+<!-- Zero Incumbents Qualify callout -->
+<div class="callout-box" style="margin-bottom:24px;">
+  <p style="font-weight:700; font-size:0.85rem; margin-bottom:6px;">Zero Incumbents Qualify</p>
+  <p>No existing tool provides cryptographic audit chains compliant with EU AI Act and MiFID II simultaneously. Not MLflow. Not W&amp;B. Not Datadog. Not Hoptroff.</p>
+  <p style="margin-top:8px; font-size:0.78rem; color:#555;">Equinix does not need to source new customers. The mandate falls on existing tenants. TTTPS customers are 50–80× more sticky than standard enterprise SaaS.</p>
+</div>
+
 <!-- TTTPS -->
 <div class="product-card">
   <h2><a href="/products/tttps.html">TTTPS — Byzantine Audit Protocol</a></h2>
   <span class="card-tag">IETF draft-helmprotocol-tttps-03 · 17.3M events/s · 143-byte wire · Ed25519 + blake3</span>
+  <div class="positioning-tagline">Not a software subscription — a legal evidence repository.</div>
   <div class="badge-row">
     <span class="badge">MiFID II</span>
     <span class="badge">EU AI Act Art.12/53</span>
@@ -79,7 +106,18 @@ nav.breadcrumb a { color: #555; }
     <span class="badge">Korea AI Basic Act</span>
     <span class="badge">CoE 37 Jurisdictions</span>
   </div>
-  <p>Cryptographic timestamp protocol with multi-source Roughtime anchors (k≥3). GRG pipeline: G₁(Golomb-Rice) → R(Reed-Solomon) → G₂(Golay 23,12,7) → H(HMAC-SHA256). SealingSwitch Turbo/Full. Byzantine fault detection across all 13 network attack vectors.</p>
+  <div class="stat-row">
+    <div class="stat-item"><strong>17.3M</strong>events/s throughput (GCP CPU)</div>
+    <div class="stat-item"><strong>$360</strong>/customer/mo Equinix VC revenue</div>
+    <div class="stat-item"><strong>7-year</strong>regulatory lock-in chain</div>
+    <div class="stat-item"><strong>&lt;0.1%</strong>churn after 36 months</div>
+  </div>
+  <p>Cryptographic timestamp protocol with multi-source Roughtime anchors (k≥3). GRG pipeline: G₁(Golomb-Rice) → R(Reed-Solomon) → G₂(Golay 23,12,7) → H(HMAC-SHA256). SealingSwitch Turbo/Full. Byzantine fault detection across all 13 network attack vectors. Zero hardware — pure Fabric Virtual Connection.</p>
+  <div class="churn-box">
+    <p><strong>Churn mechanics:</strong> After 36 months of chain accumulation, migration destroys regulatory evidence continuity. &lt;0.1% churn (industry SaaS benchmark: 5–8%). 50–80× stickier.</p>
+    <p style="margin-top:6px;"><strong>Competitor gap:</strong> MLflow, W&amp;B, Datadog, Hoptroff — none satisfy EU AI Act Art.12/53. Hoptroff delivers zero Equinix Fabric Virtual Connection revenue (cross-connect only).</p>
+    <p style="margin-top:6px;"><strong>Pricing:</strong> Compliance €300/mo · MiFID Pro €3,600/mo · Institutional €12,000/mo</p>
+  </div>
   <a href="/products/tttps.html" class="cta">→ View product</a>
 </div>
 
@@ -87,13 +125,25 @@ nav.breadcrumb a { color: #555; }
 <div class="product-card">
   <h2><a href="/products/hydra-kv.html">HYDRA-KV — LLM Inference Accelerator</a> <span class="audit-badge">TTTPS AUDIT</span></h2>
   <span class="card-tag">E8 lattice 3.1496× compression · 93% CRDT dedup (measured) · QUIC 95.9ms/10MB · $0.03/GB</span>
+  <div class="positioning-tagline">93% cross-node transfer reduction — measured on live QUIC.</div>
   <div class="badge-row">
     <span class="badge">EU AI Act Art.12</span>
     <span class="badge">GDPR</span>
     <span class="badge">PIPA</span>
     <span class="badge">Equinix Distributed AI Hub</span>
   </div>
+  <div class="stat-row">
+    <div class="stat-item"><strong>3.1496×</strong>E8 compression (CPU measured, OnceLock)</div>
+    <div class="stat-item"><strong>93%</strong>CRDT prefix dedup</div>
+    <div class="stat-item"><strong>~97%</strong>combined vs raw FP16 KV transfer</div>
+    <div class="stat-item"><strong>95.9ms</strong>cross-node QUIC (GCP) → &lt;1ms target (SVC 100GbE)</div>
+  </div>
   <p>KV cache occupies 87% of GPU memory in production LLM deployments. HYDRA-KV reduces cross-node KV transfer by 93% measured — audited per-token via TTTPS. Target: Groq (Equinix Fabric) · Lambda Labs · CoreWeave.</p>
+  <div class="churn-box">
+    <p><strong>Market:</strong> AI inference $106B (2025) → $255B (2030), CAGR 19.2%. 87% of GPU memory in production LLM is KV cache.</p>
+    <p style="margin-top:6px;"><strong>QUIC path:</strong> 95.9ms/10MB cross-node (GCP CPU) → &lt;1ms target on Equinix SVC 100GbE EVPL. AWS and Azure do not operate Equinix Fabric. This moat is structurally defensible.</p>
+    <p style="margin-top:6px;"><strong>Pricing:</strong> $0.03/GB processed</p>
+  </div>
   <a href="/products/hydra-kv.html" class="cta">→ View product</a>
 </div>
 
@@ -101,6 +151,7 @@ nav.breadcrumb a { color: #555; }
 <div class="product-card">
   <h2><a href="/products/hydra-cdn.html">HYDRA-CDN — Adaptive Edge Delivery</a> <span class="audit-badge">TTTPS AUDIT</span></h2>
   <span class="card-tag">RS(6,10) erasure coding · CGNAT 3-tier · GapVec5 routing · $0.005/GB (Cloudflare: $0.015)</span>
+  <div class="positioning-tagline">99.6% cost reduction vs Akamai — all ISPs covered, no exceptions.</div>
   <div class="badge-row">
     <span class="badge">EU AI Act Art.12</span>
     <span class="badge">EU NIS2</span>
@@ -108,7 +159,18 @@ nav.breadcrumb a { color: #555; }
     <span class="badge">MAS TRM</span>
     <span class="badge">CoE 37 Jurisdictions</span>
   </div>
-  <p>Per-chunk TTTPS seal on every delivery. RS(6,10) recovers from 30% packet loss (≥99.85%, Ladakh VSAT proven). CGNAT 3-tier covers 95%+ of India mobile networks. BGMI 16M DAU: $1.57M/patch → $6.3K.</p>
+  <div class="stat-row">
+    <div class="stat-item"><strong>$1.57M</strong>Akamai/patch → <strong>$6.3K</strong>Hydra-CDN</div>
+    <div class="stat-item"><strong>99.6%</strong>cost reduction</div>
+    <div class="stat-item"><strong>≥99.85%</strong>delivery @ 30% packet loss (RS(6,10))</div>
+    <div class="stat-item"><strong>590M</strong>India gamers · BGMI 16M DAU anchor</div>
+  </div>
+  <p>Per-chunk TTTPS seal on every delivery. RS(6,10) recovers from 30% packet loss (≥99.85%, Monte Carlo 100K). CGNAT 3-tier covers 95%+ of India mobile networks.</p>
+  <div class="churn-box">
+    <p><strong>JioCDN limitation:</strong> JioCDN serves Jio subscribers only — Airtel (400M+ users) excluded. Hydra-CDN covers ALL ISPs with a single integration.</p>
+    <p style="margin-top:6px;"><strong>Patch time:</strong> 130 min (Akamai) → 6 min (Hydra-CDN). Delivery time reduction directly translates to player session recovery and revenue.</p>
+    <p style="margin-top:6px;"><strong>Pricing:</strong> $0.005/GB vs Cloudflare $0.015 (67% cheaper)</p>
+  </div>
   <a href="/products/hydra-cdn.html" class="cta">→ View product</a>
 </div>
 
@@ -116,15 +178,42 @@ nav.breadcrumb a { color: #555; }
 <div class="product-card">
   <h2><a href="/products/hydra-audit.html">HYDRA-AUDIT — Infrastructure Audit Chain</a></h2>
   <span class="card-tag">EU AI Act Art.12/53 · Training data provenance · JSON-LD court-admissible · SOC 2 · ISO 27001</span>
+  <div class="positioning-tagline">The only EU AI Act Art.12/53 cryptographic solution — chain_integrity: true.</div>
   <div class="badge-row">
     <span class="badge">EU AI Act Art.12/53</span>
     <span class="badge">DORA Art.17</span>
     <span class="badge">SOC 2</span>
     <span class="badge">ISO 27001</span>
+    <span class="badge">PCI DSS v4.0</span>
     <span class="badge">MiFID II (GEO roadmap)</span>
   </div>
-  <p>The only solution satisfying EU AI Act Art.12 (event logging), Art.53 (GPAI provenance), and Art.15 (accuracy documentation) with a cryptographic evidence chain. chain_integrity: true — 796/796 events, Redis AOF restart-verified.</p>
+  <div class="stat-row">
+    <div class="stat-item"><strong>796/796</strong>events chain_integrity: true (Redis AOF)</div>
+    <div class="stat-item"><strong>90-day</strong>chain proven (Art.12 audit-ready)</div>
+    <div class="stat-item"><strong>Art.11/12/15/19/53</strong>full EU AI Act coverage</div>
+  </div>
+  <p>The only solution satisfying EU AI Act Art.12 (event logging), Art.53 (GPAI provenance), and Art.15 (accuracy documentation) with a cryptographic evidence chain. chain_integrity: true — 796/796 events, Redis AOF restart-verified. 90-day chain proven, Art.12 audit-ready. SOC2/ISO27001:2022/PCI DSS v4.0 compliant. DORA Art.17 operational.</p>
+  <div class="churn-box">
+    <p><strong>Standalone pricing:</strong> Included with TTTPS subscription or standalone deployment available.</p>
+    <p style="margin-top:6px;"><strong>No substitute:</strong> MLflow, W&amp;B, Datadog, Hoptroff — zero cryptographic chain, zero Art.12/53 compliance. €15M or 3% global turnover penalty applies August 2, 2026.</p>
+  </div>
   <a href="/products/hydra-audit.html" class="cta">→ View product</a>
+</div>
+
+<!-- Pricing Summary -->
+<div style="border:1px solid #e0e0e0; padding:20px 24px; margin-bottom:16px; border-radius:3px;">
+  <h2 style="margin-bottom:12px;">Pricing Summary</h2>
+  <table class="pricing-mini">
+    <tr><th>Product</th><th>Tier / Unit</th><th>Price</th></tr>
+    <tr><td>TTTPS</td><td>Compliance</td><td>€300/mo</td></tr>
+    <tr><td>TTTPS</td><td>MiFID Pro</td><td>€3,600/mo</td></tr>
+    <tr><td>TTTPS</td><td>Institutional</td><td>€12,000/mo</td></tr>
+    <tr><td>HYDRA-KV</td><td>per GB processed</td><td>$0.03/GB</td></tr>
+    <tr><td>HYDRA-CDN</td><td>per GB delivered</td><td>$0.005/GB &nbsp;<span style="color:#888;">(Cloudflare: $0.015)</span></td></tr>
+    <tr><td>HYDRA-AUDIT</td><td>included with TTTPS or standalone</td><td>Contact</td></tr>
+    <tr><td colspan="2" style="color:#888; font-size:0.75rem;">Equinix Fabric Virtual Connection</td><td style="color:#888; font-size:0.75rem;">$360/customer/mo recurring VC revenue</td></tr>
+  </table>
+  <p style="font-size:0.75rem; color:#888;">All products deployed via Equinix Fabric Virtual Connection — zero CAPEX, instant activation. API access by request: peter@kenosian.com</p>
 </div>
 
 <footer>

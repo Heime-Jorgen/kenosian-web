@@ -38,7 +38,7 @@ tr:last-child td { border-bottom: none; }
 </head>
 <body>
 
-<nav class="breadcrumb"><a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · HYDRA-AUDIT</nav>
+<nav class="breadcrumb"><a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · <a href="/business.html">Business</a> · HYDRA-AUDIT</nav>
 
 <h1>HYDRA-AUDIT — Infrastructure Audit</h1>
 <span class="tag">Byzantine Fault Detection · Regulatory Compliance · Tamper-Evident Audit Trail</span>
@@ -63,14 +63,24 @@ tr:last-child td { border-bottom: none; }
 <thead><tr><th>Obligation</th><th>What the law requires</th><th>How TTTPS Audit provides it</th></tr></thead>
 <tbody>
 <tr>
-  <td><strong>EU AI Act Art.53</strong><br><span style="font-size:0.8rem;color:#888">General-purpose AI models</span></td>
-  <td>Document training data: sources, dates, scope</td>
-  <td>PoT seal on each training batch ingestion — cryptographic timestamp of what data was used and when</td>
+  <td><strong>EU AI Act Art.53</strong><br><span style="font-size:0.8rem;color:#888">General-purpose AI models — GPAI provenance</span></td>
+  <td>Document training data: sources, dates, scope. GPAI Code of Practice (Aug 2, 2026).</td>
+  <td>PoT seal on each training batch ingestion — cryptographic timestamp of what data was used and when. JSON-LD court-admissible export. Enforcement: August 2, 2026.</td>
 </tr>
 <tr>
-  <td><strong>EU AI Act Art.12</strong><br><span style="font-size:0.8rem;color:#888">High-risk AI systems</span></td>
-  <td>Log retention for regulatory inspection</td>
-  <td>90-day retention, JSON-LD export — regulator-ready without manual reconstruction</td>
+  <td><strong>EU AI Act Art.12</strong><br><span style="font-size:0.8rem;color:#888">High-risk AI systems — event logging</span></td>
+  <td>Automatic log retention for regulatory inspection</td>
+  <td>90-day retention, JSON-LD court-admissible export — regulator-ready without manual reconstruction. chain_integrity: true (796/796 events, Redis AOF restart-verified).</td>
+</tr>
+<tr>
+  <td><strong>EU AI Act Art.15</strong><br><span style="font-size:0.8rem;color:#888">Accuracy &amp; cybersecurity documentation</span></td>
+  <td>High-risk AI must document accuracy, robustness, cybersecurity throughout lifecycle</td>
+  <td>13 Byzantine attack vectors auto-detected per event; immutable accuracy documentation chain — cryptographic proof of system integrity state at every operation</td>
+</tr>
+<tr>
+  <td><strong>MiFID II 7-year retention</strong><br><span style="font-size:0.8rem;color:#888">EU 2014/65 Art.25</span></td>
+  <td>Financial infrastructure audit records retained 7 years</td>
+  <td>Full tier: 3-year on-platform retention + archival export path. 7-year MiFID II retention chain: $0.03/GB long-term storage (Enterprise tier). Chain continuity enforced — gaps invalidate regulatory submission.</td>
 </tr>
 <tr>
   <td><strong>Copyright defense</strong><br><span style="font-size:0.8rem;color:#888">NYT vs OpenAI pattern</span></td>
@@ -185,7 +195,7 @@ tr:last-child td { border-bottom: none; }
 <tr><td><strong>GDPR Art.5(2) / Art.32</strong><br><span style="font-size:0.8rem;color:#888">EU</span></td><td>Accountability principle, technical security measures</td><td>Per-operation cryptographic commitment; JSON-LD export for DPA submission</td></tr>
 <tr><td><strong>MiFID II RTS 25</strong><br><span style="font-size:0.8rem;color:#888">EU 2017/574, Art.2(3)</span></td><td>Financial infrastructure audit trail — ±1ms timestamp precision</td><td>🔜 로드맵: GEO 타임소스 추가 시 (KTSat ±10ns) → ±1ms 요건 10× 초과 달성. 현재: Roughtime ±수ms (금융 거래 타임스탬프 요건 미충족)</td></tr>
 <tr><td><strong>EU AI Act Art.53</strong><br><span style="font-size:0.8rem;color:#888">EU 2024/1689</span></td><td>Training data documentation for general-purpose AI models</td><td>PoT-sealed ingestion log per training batch — source, date, scope immutably recorded</td></tr>
-<tr><td><strong>EU AI Act Art.12</strong><br><span style="font-size:0.8rem;color:#888">EU 2024/1689</span></td><td>Log retention for high-risk AI systems</td><td>90-day retention; JSON-LD export ready for competent authority submission</td></tr>
+<tr><td><strong>EU AI Act Art.12</strong><br><span style="font-size:0.8rem;color:#888">EU 2024/1689 — Enforcement Aug 2, 2026</span></td><td>Automatic event logging + log retention for high-risk AI systems</td><td>Every event sealed with TTTPS: 90-day retention; JSON-LD court-admissible export; chain_integrity: true — 796/796 events, Redis AOF restart-verified. Enforcement: August 2, 2026 (€15M or 3% turnover).</td></tr>
 <tr><td><strong>TRAI</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Telecom timestamp integrity</td><td>Format aligned with TRAI audit requirements</td></tr>
 <tr><td><strong>CERT-In</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Cyber incident reporting</td><td>Cryptographic evidence admissible for CERT-In submissions</td></tr>
 <tr><td><strong>FedRAMP Rev.5</strong><br><span style="font-size:0.8rem;color:#888">US Federal Risk and Authorization Management Program</span></td><td>AU-3 / AU-9 — Audit event content, protection of audit information</td><td>Tamper-evident log with AEAD+blake3 Merkle; 90-day retention; FIPS-compatible export</td></tr>
@@ -335,7 +345,7 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
 
 <footer>
   <span>IETF Draft · <a href="https://github.com/helm-protocol/openttt">github.com/helm-protocol/openttt</a></span>
-  <span>peter@kenosian.com · Helm Protocol · 2026</span>
+  <span>peter@kenosian.com · <a href="/products.html">Products</a> · <a href="/business.html">Business</a></span>
 </footer>
 
 </body>

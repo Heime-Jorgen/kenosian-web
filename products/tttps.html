@@ -47,12 +47,31 @@ nav.breadcrumb a { color: #555; }
 <body>
 
 <nav class="breadcrumb">
-  <a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · TTTPS
+  <a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · <a href="/business.html">Business</a> · TTTPS
 </nav>
 
 <h1>TTTPS — Byzantine Audit API</h1>
 <span class="tag">Proof-of-Time · Byzantine Fault Detection · IETF Draft · Commercial Audit Tool</span>
-<p class="killer">One proof chain — admissible evidence in 37+ jurisdictions simultaneously. No per-country re-certification. EU AI Act — August 2026.</p>
+<p class="killer">One proof chain — admissible evidence in 37+ jurisdictions simultaneously. No per-country re-certification. EU AI Act Art.12/53 — August 2, 2026.</p>
+
+<div class="metric-row">
+  <div class="metric">
+    <div class="val">17.3M</div>
+    <div class="lbl">events/s (GCP CPU, commit 767d2a0)</div>
+  </div>
+  <div class="metric">
+    <div class="val">143B</div>
+    <div class="lbl">wire format (IETF draft-helmprotocol-tttps-03)</div>
+  </div>
+  <div class="metric">
+    <div class="val">13</div>
+    <div class="lbl">Byzantine attack vectors detected</div>
+  </div>
+  <div class="metric">
+    <div class="val">37+</div>
+    <div class="lbl">jurisdictions — one chain</div>
+  </div>
+</div>
 
 <h2>The Problem</h2>
 <p class="section-note">
@@ -175,16 +194,39 @@ nav.breadcrumb a { color: #555; }
 
 <!-- SECTION 2: GRG Commitment Pipeline -->
 <h2>GRG Commitment Pipeline</h2>
-<p class="section-note">Cryptographic commitment architecture — abstracted for IP protection.</p>
+<p class="section-note">Four-stage cryptographic commitment architecture. Each stage narrows the attack surface.</p>
 <div class="demo-box">
-  Multi-source time anchors → GRG commitment pipeline (abstracted for IP protection) → Ed25519 signature.<br>
-  All manipulation converges to commitment mismatch.
+  Multi-source time anchors → <strong>G₁</strong> (Golomb-Rice entropy coding) → <strong>R</strong> (Reed-Solomon erasure correction) → <strong>G₂</strong> (Golay 23,12,7 FEC) → <strong>H</strong> (HMAC-SHA256) → Ed25519 signature<br><br>
+  Cryptographic primitives: Ed25519 signing · blake3 keyed hash · 143-byte wire format (IETF draft-helmprotocol-tttps-03)<br>
+  All manipulation at any stage converges to commitment mismatch at verify.
 </div>
 <p class="section-note">
-  The pipeline ingests independent time sources — NIST Roughtime, network time (GPS/KTSat: 로드맵) — and computes a layered commitment across entropy, ordering, and integrity dimensions. The result is sealed with an Ed25519 signature over the final chain digest. Any tampering at any stage produces a verifiable mismatch at verification time, regardless of which attack vector is used. The specifics of the commitment pipeline are proprietary.
+  The pipeline ingests independent time sources — NIST Roughtime, network time (GPS/KTSat: 로드맵) — and computes a layered commitment across entropy, ordering, and integrity dimensions. The result is sealed with an Ed25519 signature over the final chain digest. Any tampering at any stage produces a verifiable mismatch at verification time, regardless of which attack vector is used.
 </p>
+
+<h2>SealingSwitch — Turbo / Full</h2>
+<p class="section-note">Adaptive sealing mode based on time-source quality.</p>
+<table>
+  <thead>
+    <tr><th>Mode</th><th>Condition</th><th>Latency</th><th>Use Case</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Turbo</strong></td>
+      <td>PTP sync available (±10µs)</td>
+      <td>Fast path — blake3 keyed root only</td>
+      <td>High-frequency inference, CDN delivery, payment rails</td>
+    </tr>
+    <tr>
+      <td><strong>Full</strong></td>
+      <td>PTP unavailable / clock drift detected</td>
+      <td>Full GRG pipeline</td>
+      <td>Regulatory submission, cross-border compliance, audit export</td>
+    </tr>
+  </tbody>
+</table>
 <p class="section-note">
-  Note: pipeline architecture is abstracted for IP protection. Contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a> for technical deep-dive.
+  Note: internal pipeline architecture proprietary. Contact <a href="mailto:peter@kenosian.com">peter@kenosian.com</a> for technical deep-dive under NDA.
 </p>
 
 <!-- SECTION 3: Real-World Attack Scenarios -->
@@ -490,8 +532,8 @@ tttps_byzantine_ratio               0.021</pre>
 </div>
 
 <footer>
-  <span><a href="https://github.com/helm-protocol/openttt">GitHub</a> · <a href="https://datatracker.ietf.org/doc/draft-helmprotocol-tttps/">IETF Draft</a> · <a href="/products.html">All Products</a></span>
-  <span>Helm Protocol · 2026</span>
+  <span>IETF Draft · <a href="https://github.com/helm-protocol/openttt">github.com/helm-protocol/openttt</a></span>
+  <span>peter@kenosian.com · <a href="/products.html">Products</a> · <a href="/business.html">Business</a></span>
 </footer>
 
 </body>

@@ -37,7 +37,7 @@ blockquote { border-left: 3px solid #1a1a1a; padding-left: 16px; margin: 16px 0;
 </head>
 <body>
 
-<nav class="breadcrumb"><a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · HYDRA-CDN</nav>
+<nav class="breadcrumb"><a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · <a href="/business.html">Business</a> · HYDRA-CDN</nav>
 
 <h1>HYDRA-CDN — Edge Delivery <span class="audit-badge">TTTPS AUDIT</span></h1>
 <span class="tag">Adaptive CDN Routing · Byzantine-Resistant Delivery · Erasure Coding · TTTPS Sealed</span>
@@ -57,7 +57,7 @@ blockquote { border-left: 3px solid #1a1a1a; padding-left: 16px; margin: 16px 0;
 <tbody>
 <tr><td>Routing</td><td>GapVec5 real-time ISP/edge path selection</td></tr>
 <tr><td>Integrity</td><td>TTTPS chunk seal — per-chunk tamper-evident audit</td></tr>
-<tr><td>Resilience</td><td>Erasure coding: 30% packet loss → zero retransmit</td></tr>
+<tr><td>Resilience</td><td>RS(6,10) erasure coding: ≥99.85% recovery at 30% packet loss (Monte Carlo 100K, Ladakh VSAT proven)</td></tr>
 <tr><td>Targeting</td><td>ISP density · latency · DPI fingerprint-aware</td></tr>
 <tr><td>Peering</td><td>Equinix Fabric EVPL ready</td></tr>
 <tr><td>P2P</td><td>Erasure recovery across peer nodes</td></tr>
@@ -133,12 +133,16 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
 <h2>Performance Metrics</h2>
 <div class="metric-row">
   <div class="metric">
-    <div class="val">30%</div>
-    <div class="lbl">Packet loss tolerance — erasure coding reconstructs missing chunks from peer nodes, zero retransmission</div>
+    <div class="val">99.85%</div>
+    <div class="lbl">RS(6,10) recovery rate at 30% packet loss — Monte Carlo 100K trials, Ladakh VSAT proven</div>
   </div>
   <div class="metric">
-    <div class="val">5-dim</div>
-    <div class="lbl">GapVec5 path selection — ISP density, latency, packet loss, throughput, DPI fingerprint</div>
+    <div class="val">95%+</div>
+    <div class="lbl">CGNAT traversal — QUIC hole-punch (30%) + STUN relay (50%) + TURN relay (20%) = 3-tier coverage</div>
+  </div>
+  <div class="metric">
+    <div class="val">$0.005/GB</div>
+    <div class="lbl">vs Cloudflare $0.015/GB — 67% cheaper. Compliance seal included.</div>
   </div>
   <div class="metric">
     <div class="val">13</div>
@@ -149,6 +153,18 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
     <div class="lbl">Equinix Fabric ready — EVPL connections from 1GbE to 400GbE across SE2 / MA1 / FR5 / LD5</div>
   </div>
 </div>
+
+<h2>BGMI Case Study</h2>
+<table>
+<thead><tr><th>Metric</th><th>Akamai (current)</th><th>Hydra-CDN</th></tr></thead>
+<tbody>
+<tr><td>Cost per patch</td><td>$1.57M</td><td>$6.3K</td></tr>
+<tr><td>Delivery time</td><td>130 min</td><td>6 min</td></tr>
+<tr><td>India DAU</td><td colspan="2">BGMI 16M DAU — India 590M gamers</td></tr>
+<tr><td>JioCDN limitation</td><td colspan="2">Jio-only (AS55836) — Airtel (AS9498) excluded. Hydra-CDN covers all ISPs via GapVec5.</td></tr>
+<tr><td>CGNAT traversal</td><td>Not handled</td><td>QUIC hole-punch 30% + STUN 50% + TURN 20% = 95%+ coverage</td></tr>
+</tbody>
+</table>
 
 <h2>Equinix Fabric Integration</h2>
 <table>
@@ -190,7 +206,7 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
 <tr>
   <td><strong>Standard</strong></td>
   <td><strong>$0.005/GB delivered</strong></td>
-  <td>QUIC delivery · RS(4,6) erasure coding · TTTPS per-chunk seal · GapVec5 ISP routing · Audit 30-day trial</td>
+  <td>QUIC delivery · RS(6,10) erasure coding · TTTPS per-chunk seal · GapVec5 ISP routing · Audit 30-day trial</td>
 </tr>
 <tr>
   <td><strong>Compliance</strong></td>
@@ -222,7 +238,7 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
 
 <footer>
   <span>IETF Draft · <a href="https://github.com/helm-protocol/openttt">github.com/helm-protocol/openttt</a></span>
-  <span>peter@kenosian.com · Helm Protocol · 2026</span>
+  <span>peter@kenosian.com · <a href="/products.html">Products</a> · <a href="/business.html">Business</a></span>
 </footer>
 
 </body>

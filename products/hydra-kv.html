@@ -38,12 +38,39 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
 <body>
 
 <nav class="breadcrumb">
-  <a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · HYDRA-KV
+  <a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · <a href="/business.html">Business</a> · HYDRA-KV
 </nav>
 
 <h1>HYDRA-KV — LLM Inference Accelerator <span class="audit-badge">TTTPS AUDIT</span></h1>
 <span class="tag">KV Cache Compression · PD Disaggregation · QUIC Transport · Byzantine-Audited</span>
-<p class="killer">Every LLM inference transfer becomes EU AI Act Art.12 compliant — zero separate audit tooling required. EU AI Act — August 2026.</p>
+<p class="killer">Every LLM inference transfer becomes EU AI Act Art.12 compliant — zero separate audit tooling required. EU AI Act Art.12/53 — August 2, 2026.</p>
+
+<div class="metric-row">
+  <div class="metric">
+    <div class="val">3.1496×</div>
+    <div class="lbl">E8 lattice compression (CPU loopback measured)</div>
+  </div>
+  <div class="metric">
+    <div class="val">93%</div>
+    <div class="lbl">CRDT dedup measured (QUIC live 2026-05-16)</div>
+  </div>
+  <div class="metric">
+    <div class="val">~97%</div>
+    <div class="lbl">Combined CRDT + E8 vs raw FP16 KV</div>
+  </div>
+  <div class="metric">
+    <div class="val">95.9ms</div>
+    <div class="lbl">Cross-node QUIC / 10MB (GCP VM2→A100)</div>
+  </div>
+  <div class="metric">
+    <div class="val">87%</div>
+    <div class="lbl">KV cache of GPU memory in production LLM</div>
+  </div>
+  <div class="metric">
+    <div class="val">$0.03</div>
+    <div class="lbl">per GB processed</div>
+  </div>
+</div>
 
 <!-- SECTION 1: Overview -->
 <h2>Overview</h2>
@@ -458,8 +485,8 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
 </div>
 
 <footer>
-  <span><a href="https://github.com/helm-protocol/openttt">GitHub</a> · <a href="https://datatracker.ietf.org/doc/draft-helmprotocol-tttps/">IETF Draft</a> · <a href="/products.html">All Products</a></span>
-  <span>Helm Protocol · 2026</span>
+  <span>IETF Draft · <a href="https://github.com/helm-protocol/openttt">github.com/helm-protocol/openttt</a></span>
+  <span>peter@kenosian.com · <a href="/products.html">Products</a> · <a href="/business.html">Business</a></span>
 </footer>
 
 </body>

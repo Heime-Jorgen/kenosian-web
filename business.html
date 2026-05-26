@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenosian — Business Overview</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'SF Mono', 'Fira Code', monospace; max-width: 960px; margin: 60px auto; padding: 0 24px; color: #1a1a1a; background: #fafafa; line-height: 1.6; }
+h1 { font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #1a1a1a; padding-bottom: 12px; margin-bottom: 6px; }
+h2 { font-size: 1rem; font-weight: 600; margin-top: 48px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #333; border-bottom: 1px solid #e0e0e0; padding-bottom: 6px; }
+h3 { font-size: 0.88rem; font-weight: 700; margin-top: 24px; margin-bottom: 8px; }
+pre { background: #f0f0f0; padding: 16px; border-radius: 3px; overflow-x: auto; font-size: 0.8rem; margin: 8px 0 16px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 16px; }
+th { background: #1a1a1a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: #f5f5f5; }
+.tag { color: #666; font-size: 0.8rem; margin-bottom: 32px; display: block; }
+.metric-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 16px 0 24px; }
+.metric { background: #f0f0f0; padding: 16px; border-radius: 3px; }
+.metric .val { font-size: 1.6rem; font-weight: 700; }
+.metric .lbl { font-size: 0.72rem; color: #666; margin-top: 4px; }
+.highlight-box { border: 2px solid #1a1a1a; padding: 20px 24px; margin: 24px 0; background: #f8f8f8; border-radius: 3px; }
+.win { color: #1a1a1a; font-weight: 700; }
+.lose { color: #999; }
+footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; color: #888; font-size: 0.78rem; display: flex; justify-content: space-between; }
+a { color: #1a1a1a; }
+nav.breadcrumb { font-size: 0.8rem; color: #888; margin-bottom: 40px; }
+.phase-row { display: grid; grid-template-columns: 80px 1fr 1fr; gap: 12px; margin-bottom: 8px; font-size: 0.82rem; align-items: start; }
+.phase-label { font-weight: 700; background: #1a1a1a; color: #fff; padding: 4px 8px; text-align: center; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 16px 0 24px; }
+.two-col .col { background: #f0f0f0; padding: 20px; border-radius: 3px; }
+.two-col .col h3 { margin-top: 0; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+.two-col .col ul { list-style: none; padding: 0; }
+.two-col .col ul li { font-size: 0.82rem; padding: 4px 0; border-bottom: 1px solid #e0e0e0; }
+.two-col .col ul li:last-child { border-bottom: none; }
+.two-col .col ul li::before { content: "→ "; color: #888; }
+.track-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0 24px; }
+.track-card { border: 1px solid #e0e0e0; padding: 20px; border-radius: 3px; background: #fff; }
+.track-card h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0; margin-bottom: 12px; border-bottom: 2px solid #1a1a1a; padding-bottom: 6px; }
+.track-card p { font-size: 0.78rem; color: #444; line-height: 1.7; margin-bottom: 6px; }
+.track-card .track-label { font-size: 0.7rem; font-weight: 700; color: #888; text-transform: uppercase; }
+.lockstep { font-size: 0.82rem; margin: 16px 0 24px; }
+.lockstep .step { display: grid; grid-template-columns: 120px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid #e0e0e0; }
+.lockstep .step:last-child { border-bottom: none; }
+.lockstep .step .time { font-weight: 700; color: #1a1a1a; }
+.lockstep .step .desc { color: #333; }
+.econ-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0 24px; }
+.econ-item { background: #f0f0f0; padding: 16px; border-radius: 3px; text-align: center; }
+.econ-item .val { font-size: 1.6rem; font-weight: 700; }
+.econ-item .lbl { font-size: 0.72rem; color: #666; margin-top: 4px; }
+.cta-box { border: 2px solid #1a1a1a; padding: 28px 32px; margin: 32px 0; background: #f8f8f8; border-radius: 3px; }
+.cta-box p { font-size: 0.88rem; color: #1a1a1a; margin-bottom: 10px; }
+.cta-box .cta-links { margin-top: 16px; font-size: 0.85rem; font-weight: 700; }
+.cta-box .cta-links a { display: block; margin-bottom: 6px; }
+.ev-box { border: 1px solid #1a1a1a; padding: 16px 20px; background: #f0f0f0; border-radius: 3px; margin: 12px 0; font-size: 0.82rem; }
+.ev-box .ev-title { font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; color: #555; }
+.ev-box .ev-row { padding: 4px 0; }
+.phase-table tr.bold-row td { font-weight: 700; background: #f0f0f0; }
+.chart-legend { display: flex; gap: 24px; font-size: 0.78rem; margin-top: 6px; }
+.chart-legend .leg-item { display: flex; align-items: center; gap: 6px; }
+.chart-legend .leg-dot { width: 16px; height: 2px; }
+.chart-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: #888; margin-top: 4px; padding: 0 40px 0 40px; }
+</style>
+</head>
+<body>
+
+<nav class="breadcrumb"><a href="/">kenosian.com</a> · <a href="/products.html">Products</a> · Business Overview</nav>
+
+<h1>Kenosian — Business Overview</h1>
+<span class="tag">For Equinix Partners · Confidential · peter@kenosian.com</span>
+
+<div class="highlight-box">
+  <p style="font-size:0.88rem; font-weight:700; margin-bottom:8px;">Equinix Strategic Partner · 260+ IBX · 10,000+ Customers · CAPEX-Free Revenue</p>
+  <p style="font-size:0.82rem; color:#333; line-height:1.8;">
+    260+ Equinix data centers. 10,000+ onboarded customers.<br>
+    Every one is a cross-sell target for TTTPS, HYDRA-KV, and HYDRA-AUDIT.<br>
+    No hardware installation. No CAPEX. Revenue activated via Fabric Virtual Connection.
+  </p>
+</div>
+
+<!-- KEY METRICS -->
+<h2>Key Metrics</h2>
+<div class="metric-row">
+  <div class="metric">
+    <div class="val">€0</div>
+    <div class="lbl">CAPEX required</div>
+  </div>
+  <div class="metric">
+    <div class="val">$1,950/mo</div>
+    <div class="lbl">Fixed infra cost</div>
+  </div>
+  <div class="metric">
+    <div class="val">17.3M/s</div>
+    <div class="lbl">TTTPS throughput</div>
+  </div>
+  <div class="metric">
+    <div class="val">D-<span id="biz-countdown">68</span></div>
+    <div class="lbl">EU AI Act enforcement</div>
+  </div>
+  <div class="metric">
+    <div class="val">10,000+</div>
+    <div class="lbl">Equinix customers</div>
+  </div>
+  <div class="metric">
+    <div class="val">95–97%</div>
+    <div class="lbl">Gross margin at scale</div>
+  </div>
+</div>
+
+<!-- WHY EQUINIX × KENOSIAN -->
+<h2>Why Equinix × Kenosian</h2>
+
+<div style="border:1px solid #e0e0e0; padding:16px 20px; margin-bottom:20px; border-radius:3px; background:#f8f8f8;">
+  <p style="font-size:0.78rem; font-weight:700; letter-spacing:0.06em; margin-bottom:10px;">EQUINIX FABRIC — VLAN ARCHITECTURE</p>
+  <table style="margin-bottom:0;">
+    <thead>
+      <tr><th>VLAN</th><th>Product</th><th>Function</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>VLAN 00</td><td>TTTPS</td><td>Cryptographic time anchor (all products)</td><td>✅ LIVE</td></tr>
+      <tr><td>VLAN 10</td><td>HYDRA-KV</td><td>LLM inference acceleration — E8 lattice + CRDT</td><td>✅ LIVE</td></tr>
+      <tr><td>VLAN 20</td><td>HYDRA-CDN</td><td>Edge delivery, India/APAC, RS(6,10)</td><td>Phase 2</td></tr>
+      <tr><td>VLAN 30</td><td>HYDRA-GRID</td><td>Power grid PMU monitoring (Nexans)</td><td>Phase 3</td></tr>
+      <tr><td>VLAN 40</td><td>HYDRA-AUDIT</td><td>AI regulatory audit chain (EU AI Act Art.12/53)</td><td>✅ LIVE</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.75rem; color:#666; margin-top:8px;">Single 1GbE EVPL (.1q) port → 5 VLANs simultaneously · Customer Virtual Connection → Equinix recurring revenue</p>
+</div>
+
+<div style="margin-bottom:20px;">
+  <p style="font-size:0.78rem; font-weight:700; letter-spacing:0.06em; margin-bottom:10px;">VALIDATED PERFORMANCE — Phase 0 (GCP CPU)</p>
+  <table style="margin-bottom:0;">
+    <thead>
+      <tr><th>Metric</th><th>Value</th><th>Condition</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>seal_batch_keyed throughput</td><td>17.3M events/s</td><td>GCP CPU · commit 767d2a0</td></tr>
+      <tr><td>E8 lattice compression</td><td>3.1496× (CPU) / 3.2× (A100)</td><td>OnceLock measured</td></tr>
+      <tr><td>CRDT prefix dedup</td><td>93% measured / 95.6% theoretical</td><td>QUIC live 2026-05-16</td></tr>
+      <tr><td>CRDT + Lattice combined</td><td>~97% effective</td><td>vs raw FP16 KV transfer</td></tr>
+      <tr><td>Cross-node QUIC latency</td><td>95.9ms (GCP) → &lt;1ms (SVC)</td><td>100GbE EVPL Equinix target</td></tr>
+      <tr><td>RS(6,10) India 30% loss</td><td>≥99.85% recovery</td><td>Monte Carlo 100K · Ladakh VSAT</td></tr>
+      <tr><td>chain_integrity (restart)</td><td>true — 796/796 events</td><td>Redis AOF · Art.12 90-day proven</td></tr>
+      <tr><td>k6 load test — KV</td><td>941 req/s, 0% error</td><td>100 VU · p99 &lt;100ms</td></tr>
+      <tr><td>k6 load test — CDN</td><td>922 req/s, 0% error</td><td>100 VU</td></tr>
+      <tr><td>NPE simulation</td><td>22/23 (96%)</td><td>Full stack · Roughtime only gap = GCP firewall</td></tr>
+      <tr><td>Test baseline</td><td>783 PASS / 0 FAIL</td><td>cargo test --workspace · 2026-05-23</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="two-col">
+  <div class="col">
+    <h3>Equinix gets</h3>
+    <ul>
+      <li>Every TTTPS customer = 1 Virtual Connection added</li>
+      <li>Precision Time PTP Enterprise utilized (Equinix service revenue)</li>
+      <li>AI workloads → Fabric traffic → Equinix recurring revenue</li>
+      <li>Distributed AI Hub listing (280+ IBX, GPU cloud connectivity)</li>
+      <li>Fabric Intelligence MCP Server integration opportunity</li>
+      <li>Sales team incentive: VC sales = quota attainment</li>
+    </ul>
+  </div>
+  <div class="col">
+    <h3>Kenosian provides</h3>
+    <ul>
+      <li>Only EU AI Act Art.12/53 cryptographic solution</li>
+      <li>Zero hardware, zero CAPEX — pure Fabric-native</li>
+      <li>17.3M events/s throughput (IETF draft-helmprotocol-tttps-03)</li>
+      <li>7-year regulatory lock-in chain</li>
+      <li>$1,950/mo fixed cost, 95%+ gross margin</li>
+    </ul>
+  </div>
+</div>
+
+<!-- HOPTROFF vs TTTPS -->
+<h2>Hoptroff vs TTTPS &nbsp;·&nbsp; Incumbent timing partner displacement</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Dimension</th>
+      <th>Hoptroff TTaaS</th>
+      <th>TTTPS (Kenosian)</th>
+      <th>Winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Hardware required</td>
+      <td>Physical timing hub per DC</td>
+      <td>None — pure software</td>
+      <td class="win">TTTPS</td>
+    </tr>
+    <tr>
+      <td>Install time</td>
+      <td>4–6 weeks physical</td>
+      <td>Instant via Fabric VC</td>
+      <td class="win">TTTPS</td>
+    </tr>
+    <tr>
+      <td>CAPEX</td>
+      <td>High (customer + vendor)</td>
+      <td>Zero</td>
+      <td class="win">TTTPS</td>
+    </tr>
+    <tr>
+      <td>MiFID II RTS25</td>
+      <td>✅</td>
+      <td>✅ via Equinix PTP ±10µs</td>
+      <td class="lose">Equal</td>
+    </tr>
+    <tr>
+      <td>EU AI Act Art.12/53</td>
+      <td>❌ None</td>
+      <td>✅ Full: Art.11/12/15/19/53</td>
+      <td class="win">TTTPS</td>
+    </tr>
+    <tr>
+      <td>Cryptographic evidence chain</td>
+      <td>❌ Plain logs</td>
+      <td>✅ Ed25519 + blake3</td>
+      <td class="win">TTTPS</td>
+    </tr>
+    <tr>
+      <td>Throughput</td>
+      <td>Est. &lt;1M events/s</td>
+      <td>17.3M events/s (GCP CPU)</td>
+      <td class="win">TTTPS</td>
+    </tr>
+    <tr>
+      <td>Equinix VC revenue contribution</td>
+      <td>❌ Cross-connect only</td>
+      <td>✅ Per customer</td>
+      <td class="win">TTTPS</td>
+    </tr>
+    <tr>
+      <td>7-year regulatory lock-in</td>
+      <td>❌</td>
+      <td>✅ Chain accumulation</td>
+      <td class="win">TTTPS</td>
+    </tr>
+    <tr>
+      <td>Regulatory reporting</td>
+      <td>MiFID II only</td>
+      <td>JSON-LD, all jurisdictions</td>
+      <td class="win">TTTPS</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- THREE MARKET TRACKS -->
+<h2>Three Market Tracks</h2>
+<div class="track-grid">
+  <div class="track-card">
+    <h3>Track 1 — Financial / MiFID II</h3>
+    <p><span class="track-label">Market</span><br>€3.4B/yr AI governance (EU realistic scenario)</p>
+    <p><span class="track-label">Regulation</span><br>MiFID II RTS25 (live) · EU AI Act Art.12/53 (Aug 2026) · DORA Art.17 (live)</p>
+    <p><span class="track-label">Penalty</span><br>€15M or 3% turnover (EU AI Act) · €10M or 2% (DORA)</p>
+    <p><span class="track-label">Equinix Footprint</span><br>EFX — 1,250+ financial services firms</p>
+    <p><span class="track-label">Target PoPs</span><br>LD4, FR5, AM3, NY4, CH1, SK1</p>
+    <p><span class="track-label">Anchor Customers</span><br>Goldman Sachs, Citadel, Two Sigma, Deutsche Bank, Optiver, IMC</p>
+    <p><span class="track-label">Product Fit</span><br>TTTPS + HYDRA-AUDIT</p>
+    <p class="track-label">ROI: EU AI Act max fine €15M → annual audit cost €3,600–€144,000 (Starter→Institutional)</p>
+  </div>
+  <div class="track-card">
+    <h3>Track 2 — AI Inference / LLM</h3>
+    <p><span class="track-label">Market</span><br>AI inference $106B (2025) → $255B (2030), CAGR 19.2%</p>
+    <p><span class="track-label">KV Cache</span><br>87% of GPU memory in production LLM (LLaMA2-7B, batch=8, seq=32K)</p>
+    <p><span class="track-label">Hydra-KV Impact</span><br>93% cross-node transfer reduction (measured, QUIC live)</p>
+    <p><span class="track-label">Equinix Footprint</span><br>Distributed AI Hub · Fabric Intelligence (MCP Server)</p>
+    <p><span class="track-label">Target PoPs</span><br>SV1, NY2, FR5, SL1, SG1</p>
+    <p><span class="track-label">Anchor Customers</span><br>Groq (Equinix Fabric), Lambda Labs, CoreWeave</p>
+    <p><span class="track-label">Product Fit</span><br>HYDRA-KV + HYDRA-AUDIT</p>
+    <p class="track-label">GRG pipeline: G₁(Golomb-Rice) → R(Reed-Solomon) → G₂(Golay) → H(HMAC) &nbsp;·&nbsp; Pricing: $0.03/GB processed</p>
+  </div>
+  <div class="track-card">
+    <h3>Track 3 — Gaming CDN / India APAC</h3>
+    <p><span class="track-label">Market</span><br>India 590M gamers · Cloud gaming $5.9B → $16.7B (2034), CAGR 46%</p>
+    <p><span class="track-label">Problem</span><br>Akamai $1.57M per 2GB patch, 130 min · JioCDN = Jio-internal only (Airtel excluded)</p>
+    <p><span class="track-label">Hydra-CDN</span><br>$6.3K per patch (99.6% saving) · 6 min · All ISP coverage (Jio + Airtel + BSNL)</p>
+    <p><span class="track-label">Equinix Footprint</span><br>MA1 Mumbai direct ISP peering · Jio/Airtel/BSNL</p>
+    <p><span class="track-label">Target PoPs</span><br>MA1, SG1, HK1, TY3</p>
+    <p><span class="track-label">Anchor Customers</span><br>BGMI/Krafton (16M DAU), Garena</p>
+    <p><span class="track-label">Product Fit</span><br>HYDRA-CDN</p>
+    <p class="track-label">Pricing: $0.005/GB &nbsp;·&nbsp; Cloudflare: $0.015 &nbsp;·&nbsp; 67% cheaper &nbsp;·&nbsp; JioCDN = Jio-only (Airtel excluded) → Hydra covers all ISPs</p>
+  </div>
+</div>
+
+<!-- REGULATION TIMELINE -->
+<h2>Regulation Enforcement Timeline</h2>
+<table class="phase-table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Event</th>
+      <th>Penalty</th>
+      <th>Product</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2025-01-17</td>
+      <td>DORA Art.17 — live</td>
+      <td>€10M or 2%</td>
+      <td>HYDRA-AUDIT</td>
+    </tr>
+    <tr>
+      <td>2025-11</td>
+      <td>AWS/Azure/GCP designated DORA CTPP</td>
+      <td>Upstream risk</td>
+      <td>HYDRA-AUDIT</td>
+    </tr>
+    <tr>
+      <td>2026-01-22</td>
+      <td>Korea AI Basic Act — live</td>
+      <td>KRW 300M</td>
+      <td>TTTPS via SL1</td>
+    </tr>
+    <tr>
+      <td>2026-03-01</td>
+      <td>Vietnam Law 134 — live</td>
+      <td>5% revenue</td>
+      <td>TTTPS via SG1</td>
+    </tr>
+    <tr style="font-weight:700; background:#f0f0f0;">
+      <td>2026-08-02</td>
+      <td>EU AI Act Art.12/53 — D-<span id="biz-countdown2">68</span></td>
+      <td>€15M or 3%</td>
+      <td>TTTPS + AUDIT</td>
+    </tr>
+    <tr>
+      <td>2026-08-02</td>
+      <td>GPAI Code of Practice enforcement</td>
+      <td>26 cos. signed</td>
+      <td>TTTPS FR5</td>
+    </tr>
+    <tr>
+      <td>2027</td>
+      <td>MiFID II 7-year retention review</td>
+      <td>Ongoing</td>
+      <td>Full chain</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- LOCK-IN ARCHITECTURE -->
+<h2>7-Year Regulatory Lock-In &nbsp;·&nbsp; Stronger than Salesforce</h2>
+<div class="lockstep">
+  <div class="step">
+    <div class="time">Day 1</div>
+    <div class="desc">Contract. Chain begins. Low switching cost.</div>
+  </div>
+  <div class="step">
+    <div class="time">3 months</div>
+    <div class="desc">90-day chain. First regulatory submission. Medium switching cost.</div>
+  </div>
+  <div class="step">
+    <div class="time">1 year</div>
+    <div class="desc">Art.12 annual report. Audit firm certified. High switching cost.</div>
+  </div>
+  <div class="step">
+    <div class="time">3 years</div>
+    <div class="desc">MiFID II 7-year retention in progress. Very high switching cost.</div>
+  </div>
+  <div class="step">
+    <div class="time">7 years</div>
+    <div class="desc">Complete. Chain IS the compliance evidence.<br>Switching = forfeiting 7 years of legal evidence.</div>
+  </div>
+</div>
+<div class="highlight-box" style="margin-top:0;">
+  <p style="font-size:0.82rem; color:#333;">Once a customer starts the chain, departure means forfeiting their entire regulatory evidence archive. No competitor can replicate 7 years of existing chain.</p>
+</div>
+
+<!-- COST STRUCTURE & MARGIN -->
+<h2>Economics &nbsp;·&nbsp; Fixed cost structure · Customer-count independent</h2>
+<div class="econ-grid">
+  <div class="econ-item">
+    <div class="val">$1,950/mo</div>
+    <div class="lbl">Fixed infra (GCP + PTP + Fabric port)</div>
+  </div>
+  <div class="econ-item">
+    <div class="val">€0</div>
+    <div class="lbl">CAPEX required by customer</div>
+  </div>
+  <div class="econ-item">
+    <div class="val">95–97%</div>
+    <div class="lbl">Gross margin (5+ MiFID Pro customers)</div>
+  </div>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Customer Mix</th>
+      <th>Monthly Revenue</th>
+      <th>Net Margin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3× Compliance + 1× MiFID Pro</td>
+      <td>€7,100</td>
+      <td>72%</td>
+    </tr>
+    <tr>
+      <td>5× Compliance + 3× MiFID Pro</td>
+      <td>€16,500</td>
+      <td>88%</td>
+    </tr>
+    <tr>
+      <td>5× MiFID Pro + 2× Institutional</td>
+      <td>€41,500</td>
+      <td>95%</td>
+    </tr>
+    <tr>
+      <td>3× Institutional + 10× MiFID Pro</td>
+      <td>€71,000</td>
+      <td>97%</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 5-YEAR REVENUE PROJECTION -->
+<h2>5-Year Revenue Projection &nbsp;·&nbsp; Combined: TTTPS + KV + CDN + Audit</h2>
+
+<svg viewBox="0 0 520 130" width="100%" style="display:block; margin:16px 0; background:#f8f8f8; border-radius:3px;">
+  <!-- Grid lines -->
+  <line x1="40" y1="10" x2="40" y2="110" stroke="#e0e0e0" stroke-width="1"/>
+  <line x1="40" y1="30" x2="510" y2="30" stroke="#e0e0e0" stroke-width="0.5"/>
+  <line x1="40" y1="50" x2="510" y2="50" stroke="#e0e0e0" stroke-width="0.5"/>
+  <line x1="40" y1="70" x2="510" y2="70" stroke="#e0e0e0" stroke-width="0.5"/>
+  <line x1="40" y1="90" x2="510" y2="90" stroke="#e0e0e0" stroke-width="0.5"/>
+  <line x1="40" y1="110" x2="510" y2="110" stroke="#e0e0e0" stroke-width="1"/>
+  <!-- Y-axis label -->
+  <text x="6" y="14" font-family="monospace" font-size="8" fill="#888">€5.4M/mo</text>
+  <text x="6" y="94" font-family="monospace" font-size="8" fill="#888">€0</text>
+  <!-- Conservative line (gray) -->
+  <polyline points="40,109 110,108 180,107 260,103 340,95 420,84 500,71"
+    fill="none" stroke="#aaa" stroke-width="2"/>
+  <!-- Co-sell line (black) -->
+  <polyline points="40,109 110,107 180,102 260,88 340,64 420,34 500,10"
+    fill="none" stroke="#1a1a1a" stroke-width="2"/>
+  <!-- Conservative dots -->
+  <circle cx="40" cy="109" r="3" fill="#aaa"/>
+  <circle cx="110" cy="108" r="3" fill="#aaa"/>
+  <circle cx="180" cy="107" r="3" fill="#aaa"/>
+  <circle cx="260" cy="103" r="3" fill="#aaa"/>
+  <circle cx="340" cy="95" r="3" fill="#aaa"/>
+  <circle cx="420" cy="84" r="3" fill="#aaa"/>
+  <circle cx="500" cy="71" r="3" fill="#aaa"/>
+  <!-- Co-sell dots -->
+  <circle cx="40" cy="109" r="3" fill="#1a1a1a"/>
+  <circle cx="110" cy="107" r="3" fill="#1a1a1a"/>
+  <circle cx="180" cy="102" r="3" fill="#1a1a1a"/>
+  <circle cx="260" cy="88" r="3" fill="#1a1a1a"/>
+  <circle cx="340" cy="64" r="3" fill="#1a1a1a"/>
+  <circle cx="420" cy="34" r="3" fill="#1a1a1a"/>
+  <circle cx="500" cy="10" r="3" fill="#1a1a1a"/>
+  <!-- X-axis labels -->
+  <text x="34" y="124" font-family="monospace" font-size="7" fill="#888">Start</text>
+  <text x="104" y="124" font-family="monospace" font-size="7" fill="#888">M+6</text>
+  <text x="171" y="124" font-family="monospace" font-size="7" fill="#888">M+12</text>
+  <text x="251" y="124" font-family="monospace" font-size="7" fill="#888">M+24</text>
+  <text x="331" y="124" font-family="monospace" font-size="7" fill="#888">M+36</text>
+  <text x="411" y="124" font-family="monospace" font-size="7" fill="#888">M+48</text>
+  <text x="491" y="124" font-family="monospace" font-size="7" fill="#888">M+60</text>
+</svg>
+
+<div class="chart-legend">
+  <div class="leg-item"><span class="leg-dot" style="background:#aaa; height:2px; display:inline-block;"></span> Conservative</div>
+  <div class="leg-item"><span class="leg-dot" style="background:#1a1a1a; height:2px; display:inline-block;"></span> Equinix Co-sell</div>
+</div>
+<div style="font-size:0.78rem; color:#666; margin-top:8px;">
+  M+12: €150K/mo → €600K/mo &nbsp;·&nbsp; M+36: €840K/mo → €2,380K/mo &nbsp;·&nbsp; M+60: €2.1M/mo → €5.4M/mo
+</div>
+
+<div class="ev-box" style="margin-top:20px;">
+  <div class="ev-title">3-Year Enterprise Value (5× ARR)</div>
+  <div class="ev-row">Conservative (30 customers): €1.44M ARR → €7.2M</div>
+  <div class="ev-row">Equinix Co-sell (100 customers): €4.8M ARR → €24M</div>
+  <div class="ev-row">With Institutional anchor (3 Inst + 80 Compliance/Pro): €7.78M ARR → €38.9M</div>
+</div>
+
+<!-- PHASE ROADMAP -->
+<h2>Deployment Roadmap</h2>
+<table class="phase-table">
+  <thead>
+    <tr>
+      <th>Phase</th>
+      <th>Timeline</th>
+      <th>Infrastructure</th>
+      <th>Milestone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Phase 0</strong></td>
+      <td>NOW — GCP Live</td>
+      <td>GCP n2-standard-8</td>
+      <td>763 tests PASS. TTTPS 17.3M/s. KV + Audit live.</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 1</strong></td>
+      <td>SVC (Jun 4)</td>
+      <td>Equinix SVC (SL1/SE2)</td>
+      <td>Roughtime 3/3 FULL. p99 &lt;20ms 1000VU. Cross-node QUIC &lt;1ms.</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 2</strong></td>
+      <td>Post-contract (D+7)</td>
+      <td>SL1 Seoul live</td>
+      <td>MA1 Mumbai CDN. FullGRG BER auto-select. India ISP peering.</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 3</strong></td>
+      <td>D+30–90</td>
+      <td>Multi-PoP</td>
+      <td>FR5/SG1/NY2. GPU nvCOMP acceleration. Cross-PoP CRDT.</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 4</strong></td>
+      <td>D+90+</td>
+      <td>Global deployment</td>
+      <td>MiFID II ±10ns via GEO (KTSat). XDP hardware offload.</td>
+    </tr>
+  </tbody>
+</table>
+<p style="font-size:0.75rem; color:#888; margin-bottom:8px;">SE2 (Seattle) — cloud/media on-ramp hub, Phase 1. SL1 (Seoul), SV1/SV5 (Silicon Valley/San Jose) — KV/AI primary target.</p>
+
+<!-- GLOBAL PoP TABLE -->
+<h2>Global Equinix Footprint &nbsp;·&nbsp; Revenue opportunity per PoP</h2>
+<table>
+  <thead>
+    <tr>
+      <th>PoP</th>
+      <th>City</th>
+      <th>Revenue Track</th>
+      <th>Anchor Customers</th>
+      <th>Annual Opportunity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LD4–LD6</td>
+      <td>London (Slough)</td>
+      <td>MiFID II + EU AI Act</td>
+      <td>Goldman, Citadel, Two Sigma, Barclays</td>
+      <td>€4.8M+ ARR</td>
+    </tr>
+    <tr>
+      <td>FR5, FR7</td>
+      <td>Frankfurt</td>
+      <td>EU AI Act GPAI</td>
+      <td>Deutsche Bank, Cohere, Aleph Alpha</td>
+      <td>€2.4M+ ARR</td>
+    </tr>
+    <tr>
+      <td>AM3, AM7</td>
+      <td>Amsterdam</td>
+      <td>MiFID II post-Brexit</td>
+      <td>Optiver, IMC, Flow Traders</td>
+      <td>€2.4M+ ARR</td>
+    </tr>
+    <tr>
+      <td>SK1, SK2</td>
+      <td>Stockholm</td>
+      <td>MiFID II Nordic</td>
+      <td>Nasdaq Nordic HFT, Prop desks</td>
+      <td>€1.2M+ ARR</td>
+    </tr>
+    <tr>
+      <td>NY4, NY2</td>
+      <td>New York</td>
+      <td>CAT NMS + MiFID II</td>
+      <td>JPMorgan, Morgan Stanley</td>
+      <td>€3.6M+ ARR</td>
+    </tr>
+    <tr>
+      <td>CH1, CH4</td>
+      <td>Chicago</td>
+      <td>FINRA CAT</td>
+      <td>CME derivatives HFT</td>
+      <td>€2.4M+ ARR</td>
+    </tr>
+    <tr>
+      <td>SV1, SV5</td>
+      <td>Silicon Valley (San Jose)</td>
+      <td>AI inference</td>
+      <td>Groq, Lambda Labs</td>
+      <td>$3.6M+ ARR</td>
+    </tr>
+    <tr>
+      <td>SL1</td>
+      <td>Seoul</td>
+      <td>Korea AI Basic Act</td>
+      <td>Kakao, NAVER, Samsung SDS</td>
+      <td>€1.8M+ ARR</td>
+    </tr>
+    <tr>
+      <td>SG1, SG3</td>
+      <td>Singapore</td>
+      <td>MAS TRM + Vietnam</td>
+      <td>DBS, Grab</td>
+      <td>$2.4M+ ARR</td>
+    </tr>
+    <tr>
+      <td>MA1</td>
+      <td>Mumbai</td>
+      <td>India CDN</td>
+      <td>BGMI 16M DAU</td>
+      <td>$1.2M+ ARR</td>
+    </tr>
+    <tr>
+      <td>TY3, TY5</td>
+      <td>Tokyo</td>
+      <td>FSA derivatives</td>
+      <td>JPX, Citadel Asia</td>
+      <td>€1.8M+ ARR</td>
+    </tr>
+  </tbody>
+</table>
+<p style="font-size:0.75rem; color:#888; margin-bottom:8px;">ARR estimates based on Tier mix projections. SE2 (Seattle) — cloud/media on-ramp, Phase 2.</p>
+
+<!-- LIVE DEMO -->
+<h2>Live Demo</h2>
+<p style="font-size:0.82rem; color:#444; margin-bottom:16px;">Available on request via kenosian.com · Demonstrating IETF -03 wire format, replay defense, and audit chain integrity:</p>
+<pre style="font-size:0.75rem;"># Step 1: Generate PoT (143-byte IETF -03 wire format)
+curl -X POST https://api.kenosian.com/api/demo/pot/generate \
+  -H "Content-Type: application/json" \
+  -d '{"ctx_id":"equinix-partner-demo"}'
+
+# Step 2: Replay defense → HTTP 409
+curl -X POST https://api.kenosian.com/api/demo/pot/verify \
+  -d '{"ctx_id":"equinix-partner-demo","token":"&lt;above&gt;"}'
+
+# Step 3: Audit chain integrity
+curl https://api.kenosian.com/audit/report \
+  -H "Authorization: Bearer $TOKEN" | python3 -c \
+  "import sys,json; d=json.load(sys.stdin); \
+   print('chain_integrity:', d['chain_integrity'])  # → true
+   print('total_events:', d['total_events'])         # → 796+"</pre>
+
+<!-- CTA -->
+<h2>Get Started</h2>
+<div class="cta-box">
+  <p style="font-weight:700; font-size:0.9rem;">TTTPS is the only cryptographic AI audit solution ready for August 2, 2026 enforcement.</p>
+  <p style="color:#555; font-size:0.82rem;">EU AI Act Art.12/53 · DORA Art.17 · MiFID II · IETF draft-helmprotocol-tttps-03</p>
+  <div class="cta-links">
+    <a href="mailto:peter@kenosian.com">→ peter@kenosian.com</a>
+    <a href="/products.html">→ Products: kenosian.com/products.html</a>
+    <a href="mailto:peter@kenosian.com?subject=Demo Request">→ Live demo available on request</a>
+  </div>
+</div>
+
+<footer>
+  <span>IETF Draft · <a href="https://github.com/helm-protocol/openttt">github.com/helm-protocol/openttt</a></span>
+  <span>© 2026 Kenosian / Helm Protocol · Confidential</span>
+</footer>
+
+<script>
+(function() {
+  var d = Math.ceil((new Date('2026-08-02') - new Date()) / 86400000);
+  var el1 = document.getElementById('biz-countdown');
+  var el2 = document.getElementById('biz-countdown2');
+  if (el1) el1.textContent = d;
+  if (el2) el2.textContent = d;
+})();
+</script>
+
+</body>
+</html>

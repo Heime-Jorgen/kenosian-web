@@ -789,99 +789,203 @@ nav.breadcrumb { font-size: 0.8rem; color: #888; margin-bottom: 40px; }
   <p>Conservative projection at 10% conversion: <strong>$33M/year</strong> incremental VC revenue. At 30% conversion: <strong>$99M/year.</strong></p>
 </div>
 
-<!-- GLOBAL PoP TABLE -->
-<h2>Global Equinix Footprint &nbsp;·&nbsp; Revenue opportunity per PoP</h2>
+<!-- GLOBAL PoP TABLE — Phase 1 Core Financial PoPs -->
+<h2>Global Equinix Footprint &nbsp;·&nbsp; Financial Infrastructure by PoP</h2>
+<p style="font-size:0.82rem; color:#444; margin-bottom:20px;">Kenosian's TTTPS stack delivers MiFID II RTS25-grade timestamp synchronization (±10µs via Equinix Precision Time PTP) and Byzantine-fault-tolerant audit chains across Equinix's financial-density campuses. Cross-connect and campus virtual interconnect are supported on all co-located IBX pairs via Equinix Fabric.</p>
+
+<!-- Americas -->
+<h3 style="font-size:1rem; font-weight:600; color:#1a1a2e; margin:28px 0 10px 0; letter-spacing:0.04em; text-transform:uppercase;">Americas</h3>
 <table>
   <thead>
     <tr>
       <th>PoP</th>
       <th>City</th>
+      <th>Financial Infrastructure</th>
+      <th>Key Clients</th>
       <th>Revenue Track</th>
-      <th>Anchor Customers</th>
       <th>Annual Opportunity</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>LD4–LD6</td>
-      <td>London (Slough)</td>
-      <td>MiFID II + EU AI Act</td>
-      <td>Goldman, Citadel, Two Sigma, Barclays</td>
-      <td>€4.8M+ ARR</td>
-    </tr>
-    <tr>
-      <td>FR5, FR7</td>
-      <td>Frankfurt</td>
-      <td>EU AI Act GPAI</td>
-      <td>Deutsche Bank, Cohere, Aleph Alpha</td>
-      <td>€2.4M+ ARR</td>
-    </tr>
-    <tr>
-      <td>AM3, AM7</td>
-      <td>Amsterdam</td>
-      <td>MiFID II post-Brexit</td>
-      <td>Optiver, IMC, Flow Traders</td>
-      <td>€2.4M+ ARR</td>
-    </tr>
-    <tr>
-      <td>SK1, SK2</td>
-      <td>Stockholm</td>
-      <td>MiFID II Nordic</td>
-      <td>Nasdaq Nordic HFT, Prop desks</td>
-      <td>€1.2M+ ARR</td>
-    </tr>
-    <tr>
-      <td>NY4, NY2</td>
+      <td><strong>NY4, NY2, NY5</strong></td>
       <td>New York</td>
-      <td>CAT NMS + MiFID II</td>
-      <td>JPMorgan, Morgan Stanley</td>
+      <td>NYSE/Nasdaq co-location hub. CME/ICE derivatives latency. CAT NMS mandatory reporting (SEC). DTCC clearing.</td>
+      <td>JPMorgan, Morgan Stanley, Goldman Sachs, Virtu Financial</td>
+      <td>MiFID II + FINRA CAT + EU AI Act</td>
       <td>€3.6M+ ARR</td>
     </tr>
     <tr>
-      <td>CH1, CH4</td>
+      <td><strong>CH1, CH2, CH4</strong></td>
       <td>Chicago</td>
-      <td>FINRA CAT</td>
-      <td>CME derivatives HFT</td>
+      <td>CME Group (world's largest derivatives exchange) primary co-location. CBOE. FIA Tech. Cross-connect to CME matching engine.</td>
+      <td>Citadel Securities, IMC, Jump Trading, DRW, Tower Research</td>
+      <td>FINRA CAT + MiFID II cross-border</td>
       <td>€2.4M+ ARR</td>
     </tr>
     <tr>
-      <td>SV1, SV5</td>
-      <td>Silicon Valley (San Jose)</td>
-      <td>AI inference</td>
-      <td>Groq, Lambda Labs</td>
+      <td><strong>SV1, SV5</strong></td>
+      <td>Silicon Valley</td>
+      <td>AI inference hub. Groq Equinix Fabric confirmed. Lambda Labs / CoreWeave on-ramp. GPU cloud connectivity.</td>
+      <td>Groq, Lambda Labs, CoreWeave, Anthropic</td>
+      <td>EU AI Act GPAI + DORA</td>
       <td>$3.6M+ ARR</td>
     </tr>
     <tr>
-      <td>SL1</td>
-      <td>Seoul</td>
-      <td>Korea AI Basic Act</td>
-      <td>Kakao, NAVER, Samsung SDS</td>
-      <td>€1.8M+ ARR</td>
-    </tr>
-    <tr>
-      <td>SG1, SG3</td>
-      <td>Singapore</td>
-      <td>MAS TRM + Vietnam</td>
-      <td>DBS, Grab</td>
-      <td>$2.4M+ ARR</td>
-    </tr>
-    <tr>
-      <td>MA1</td>
-      <td>Mumbai</td>
-      <td>India CDN</td>
-      <td>BGMI 16M DAU</td>
-      <td>$1.2M+ ARR</td>
-    </tr>
-    <tr>
-      <td>TY3, TY5</td>
-      <td>Tokyo</td>
-      <td>FSA derivatives</td>
-      <td>JPX, Citadel Asia</td>
-      <td>€1.8M+ ARR</td>
+      <td><strong>TR1</strong></td>
+      <td>Toronto</td>
+      <td>TSX (Toronto Stock Exchange) ecosystem. Canadian HFT firms. MiFID II equivalent IIROC rules. Cross-border US/Canada algo trading.</td>
+      <td>RBC Capital, TD Securities, Virtu Canada</td>
+      <td>IIROC + CAT NMS</td>
+      <td>$1.2M+ ARR est.</td>
     </tr>
   </tbody>
 </table>
-<p style="font-size:0.75rem; color:#888; margin-bottom:8px;">ARR estimates based on Tier mix projections. SE2 (Seattle) — cloud/media on-ramp, Phase 2.</p>
+
+<!-- Europe -->
+<h3 style="font-size:1rem; font-weight:600; color:#1a1a2e; margin:28px 0 10px 0; letter-spacing:0.04em; text-transform:uppercase;">Europe — MiFID II Core</h3>
+<table>
+  <thead>
+    <tr>
+      <th>PoP</th>
+      <th>City</th>
+      <th>Financial Infrastructure</th>
+      <th>Key Clients</th>
+      <th>Revenue Track</th>
+      <th>Annual Opportunity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>LD4, LD5, LD6, LD8</strong></td>
+      <td>London (Slough + Docklands)</td>
+      <td>LD4/5/6: Slough campus — derivatives primary (ICE, LME, Cboe Europe). LD8: Docklands — investment bank prop desks, FX brokers, alternative investment. MiFID II highest density globally.</td>
+      <td>Goldman Sachs, Barclays, Two Sigma, Citadel EU, FX brokers</td>
+      <td>MiFID II RTS25 + EU AI Act + DORA</td>
+      <td>€4.8M+ ARR</td>
+    </tr>
+    <tr>
+      <td><strong>FR2, FR5, FR7</strong></td>
+      <td>Frankfurt</td>
+      <td>FR5 (Kleyerstrasse) + FR7 (Gutleutstrasse): Deutsche Börse / Eurex derivatives liquidity providers direct cross-connect. Eurex = Europe's largest derivatives exchange; MiFID II timestamp at 1µs granularity mandatory.</td>
+      <td>Deutsche Bank, Eurex MM, Aleph Alpha, Cohere EU</td>
+      <td>EU AI Act GPAI + MiFID II Eurex + DORA</td>
+      <td>€2.4M+ ARR</td>
+    </tr>
+    <tr>
+      <td><strong>AM3, AM7</strong></td>
+      <td>Amsterdam</td>
+      <td>Post-Brexit redomicile hub. Euronext Amsterdam, Cboe Europe MTF. Flow Traders / Optiver / IMC headquarters. MiFID II enforcement density highest in EU post-Brexit.</td>
+      <td>Optiver, IMC, Flow Traders, Euronext</td>
+      <td>MiFID II RTS25 + EU AI Act</td>
+      <td>€2.4M+ ARR</td>
+    </tr>
+    <tr>
+      <td><strong>SK1, SK2</strong></td>
+      <td>Stockholm</td>
+      <td>Nasdaq Nordic matching engine co-located in SK1/SK2. Nordic HFT: SEB, Nordea algo desks. MiFID II applies to all EU members including Sweden/Denmark.</td>
+      <td>Nasdaq Nordic, SEB Algo, Nordea Markets</td>
+      <td>MiFID II Nordic + EU AI Act</td>
+      <td>€1.2M+ ARR</td>
+    </tr>
+    <tr>
+      <td><strong>ZH4</strong></td>
+      <td>Zurich</td>
+      <td>Swiss Exchange (SIX) co-location. Swiss MiFIR equivalence regime. UBS / Credit Suisse prime brokerage infra. FINMA regulation. Cross-border EU/Swiss algo flow.</td>
+      <td>UBS, Julius Baer, Pictet</td>
+      <td>MiFID II equivalent + FINMA</td>
+      <td>€1.2M+ ARR est.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Asia-Pacific -->
+<h3 style="font-size:1rem; font-weight:600; color:#1a1a2e; margin:28px 0 10px 0; letter-spacing:0.04em; text-transform:uppercase;">Asia-Pacific</h3>
+<table>
+  <thead>
+    <tr>
+      <th>PoP</th>
+      <th>City</th>
+      <th>Financial Infrastructure</th>
+      <th>Key Clients</th>
+      <th>Revenue Track</th>
+      <th>Annual Opportunity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>TY3, TY5</strong></td>
+      <td>Tokyo</td>
+      <td>TY3+TY5 physically adjacent, fiber-linked — one virtual campus. JPX (Japan Exchange Group) derivatives matching engine split across both. FX matching (USD/JPY world's #2 pair). FSA regulation.</td>
+      <td>JPX, Nomura, MUFG, Citadel Asia</td>
+      <td>FSA derivatives + MiFID II cross</td>
+      <td>€1.8M+ ARR</td>
+    </tr>
+    <tr>
+      <td><strong>SG1, SG3</strong></td>
+      <td>Singapore</td>
+      <td>MAS TRM (live). SG1+SG3: SGX derivatives + FX. DBS / Grab / GovTech. ASEAN fintech hub. Vietnam Law 134 via SG1. Southeast Asia AI Act equivalent incoming.</td>
+      <td>DBS, Grab, UOB, Standard Chartered</td>
+      <td>MAS TRM + Vietnam Law 134 + MAS AI</td>
+      <td>$2.4M+ ARR</td>
+    </tr>
+    <tr>
+      <td><strong>HK1, HK2, HK3, HK5</strong></td>
+      <td>Hong Kong</td>
+      <td>HK1/2/3 (Tuen Wan campus) + HK5 (Tseung Kwan O financial data park): one virtual campus. HKEX derivatives feed. Quant funds: low-latency HK/China A-share arbitrage. SFC regulation.</td>
+      <td>HKEX, Citadel HK, Man Group, Millennium</td>
+      <td>SFC + MiFID II passporting</td>
+      <td>$2.4M+ ARR est.</td>
+    </tr>
+    <tr>
+      <td><strong>SL1</strong></td>
+      <td>Seoul</td>
+      <td>Korea AI Basic Act (live 2026-01-22). Korean AI companies mandatory audit. KRX derivatives. Kakao / NAVER / Samsung SDS Equinix tenants.</td>
+      <td>Kakao, NAVER, Samsung SDS, Krafton</td>
+      <td>Korea AI Basic Act + MAS TRM</td>
+      <td>€1.8M+ ARR</td>
+    </tr>
+    <tr>
+      <td><strong>MA1</strong></td>
+      <td>Mumbai</td>
+      <td>India CDN hub. ISP peering: Jio + Airtel + BSNL. BGMI 16M DAU. CERT-In mandatory. SEBI algo trading regulation incoming.</td>
+      <td>BGMI/Krafton, Garena, Reliance Jio</td>
+      <td>India CDN + CERT-In</td>
+      <td>$1.2M+ ARR</td>
+    </tr>
+    <tr>
+      <td><strong>SY1</strong></td>
+      <td>Sydney</td>
+      <td>ASX co-location. APRA financial regulation. Australian HFT firms. MiFID II equivalent ASIC RG265. Cross-timezone Sydney/Tokyo/Singapore corridor.</td>
+      <td>Macquarie, Commonwealth Bank, Optiver APAC</td>
+      <td>ASIC RG265 + APRA</td>
+      <td>$1.2M+ ARR est.</td>
+    </tr>
+  </tbody>
+</table>
+<p style="font-size:0.75rem; color:#888; margin-bottom:8px;">ARR estimates based on Tier mix projections. "est." = new PoP additions; figures based on comparable market sizing. Timestamp synchronization: ±10µs via Equinix Precision Time PTP (GEO/KTSat ±10ns roadmap upon commercial deployment).</p>
+
+<!-- Phase 2: Extended Campus Access -->
+<h3 style="font-size:1rem; font-weight:600; color:#1a1a2e; margin:36px 0 10px 0; letter-spacing:0.04em; text-transform:uppercase;">Phase 2 Extended Campus Access &nbsp;·&nbsp; Upon Commercial Traction</h3>
+<p style="font-size:0.82rem; color:#555; margin-bottom:14px;">Kenosian's Equinix Fabric architecture supports cross-connect and campus virtual interconnect across all co-located IBX pairs. Phase 2 expands to full campus coverage upon commercial traction — zero additional infrastructure required.</p>
+<table>
+  <thead>
+    <tr>
+      <th>PoP</th>
+      <th>Expansion Rationale</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>LD5, LD6</td><td>Slough campus completion — LD4 overflow, derivatives overflow</td></tr>
+    <tr><td>FR2</td><td>Original Frankfurt hub, legacy cross-connects</td></tr>
+    <tr><td>HK2, HK3, HK5</td><td>Full HKEX virtual campus coverage</td></tr>
+    <tr><td>CH2, CH4</td><td>CME campus expansion — CH1 overflow, CBOE co-location</td></tr>
+    <tr><td>NY5</td><td>Secondary NY campus — Goldman/JPMorgan overflow</td></tr>
+    <tr><td>TR1</td><td>Toronto — TSX + IIROC expansion</td></tr>
+    <tr><td>AM7</td><td>Amsterdam campus completion</td></tr>
+    <tr><td>ZH4</td><td>Zurich SIX expansion</td></tr>
+  </tbody>
+</table>
 
 <!-- LIVE DEMO -->
 <h2>Live Demo</h2>

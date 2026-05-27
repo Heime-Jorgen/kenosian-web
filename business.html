@@ -110,6 +110,33 @@ nav.breadcrumb { font-size: 0.8rem; color: #888; margin-bottom: 40px; }
   </p>
 </div>
 
+<!-- EU AI Act Countdown -->
+<div style="border:2px solid #1a1a1a; border-radius:3px; padding:16px 20px; margin-bottom:24px; background:#f8f8f8;">
+  <p style="font-size:0.88rem; font-weight:700; color:#1a1a1a; margin-bottom:6px;">EU AI Act — August 2, 2026 &nbsp;·&nbsp; <span id="biz-aiact-countdown" style="font-weight:700;">D-??</span></p>
+  <p style="font-size:0.82rem; color:#1a1a1a; font-weight:600;">The only cryptographic AI audit solution compliant with EU AI Act Art.12/53 — training data provenance, tamper-evident audit chain, and regulatory-admissible evidence.</p>
+  <p style="font-size:0.78rem; color:#444; margin-top:8px;">→ <a href="/products/hydra-audit-global.html" style="color:#1a1a1a; font-weight:600;">2026 Global AI Regulatory Enforcement Timeline — jurisdiction-by-jurisdiction breakdown</a></p>
+  <p style="font-size:0.75rem; color:#666; margin-top:4px;">€15M or 3% turnover penalty &nbsp;·&nbsp; No existing tool — MLflow, W&amp;B, Datadog, Hoptroff — provides this.</p>
+</div>
+<script>
+(function(){
+  function tickBizAiAct() {
+    var deadline = new Date('2026-08-02T00:00:00Z');
+    var diff = deadline - new Date();
+    var el = document.getElementById('biz-aiact-countdown');
+    if (!el) return;
+    if (diff < 0) { el.textContent = 'D-0'; return; }
+    var d = Math.floor(diff / 864e5);
+    var h = Math.floor((diff % 864e5) / 36e5);
+    var m = Math.floor((diff % 36e5) / 6e4);
+    var s = Math.floor((diff % 6e4) / 1e3);
+    var p = function(n){ return String(n).padStart(2,'0'); };
+    el.textContent = 'D-' + d + ' · ' + p(h) + ':' + p(m) + ':' + p(s);
+  }
+  tickBizAiAct();
+  setInterval(tickBizAiAct, 1000);
+})();
+</script>
+
 <!-- KEY METRICS -->
 <h2>Key Metrics — Equinix Incremental Revenue</h2>
 <div class="vc-metric-row">
@@ -567,6 +594,71 @@ nav.breadcrumb { font-size: 0.8rem; color: #888; margin-bottom: 40px; }
       <td>MiFID II 7-year retention review</td>
       <td>Ongoing</td>
       <td>Full chain</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- REGULATORY ALIGNMENT -->
+<h2>Regulatory Alignment — Proof-of-Time Across Financial &amp; AI Regulations</h2>
+<p style="font-size:0.85rem; color:#444; margin-bottom:16px;">TTTPS provides cryptographic proof-of-time that satisfies timestamp integrity requirements across financial, AI, and infrastructure regulations. HYDRA-AUDIT provides the event chain and provenance layer for AI system compliance.</p>
+<table>
+  <thead>
+    <tr><th>Regulation</th><th>Requirement</th><th>Coverage</th><th>Product</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>EU AI Act Art.12/53</strong><br><span style="font-size:0.8rem;color:#888">EU 2024/1689</span></td>
+      <td>AI event logging, GPAI training data provenance, tamper-evident audit chain</td>
+      <td>Cryptographic event chain · chain_integrity: true · JSON-LD court-admissible</td>
+      <td>HYDRA-AUDIT</td>
+    </tr>
+    <tr>
+      <td><strong>MiFID II RTS 25</strong><br><span style="font-size:0.8rem;color:#888">EU 2017/574, Art.2(3)</span></td>
+      <td>±1ms clock synchronization for HFT; ±100µs for trading venue gateways</td>
+      <td>Multi-source PoT via Equinix PTP (±1µs, live) · cryptographic divergence detection</td>
+      <td>TTTPS</td>
+    </tr>
+    <tr>
+      <td><strong>DORA Art.17</strong><br><span style="font-size:0.8rem;color:#888">EU 2022/2554</span></td>
+      <td>ICT incident reporting, audit log integrity, operational resilience</td>
+      <td>13 Byzantine attack vectors detected and logged · 7-year immutable chain</td>
+      <td>HYDRA-AUDIT · TTTPS</td>
+    </tr>
+    <tr>
+      <td><strong>FINRA Rule 4590</strong><br><span style="font-size:0.8rem;color:#888">CAT NMS Plan, US</span></td>
+      <td>Clock synchronization audit trail for order routing</td>
+      <td>Tamper-evident PoT log, queryable per-event · Prometheus alert integration</td>
+      <td>TTTPS</td>
+    </tr>
+    <tr>
+      <td><strong>MAS TRM 2021</strong><br><span style="font-size:0.8rem;color:#888">Section 6.4.1, Singapore</span></td>
+      <td>Financial infrastructure time audit and integrity</td>
+      <td>Multi-anchor PoT · Equinix PTP (±1µs); GEO/KTSat ±10ns — roadmap</td>
+      <td>TTTPS</td>
+    </tr>
+    <tr>
+      <td><strong>FCA PS17/14 &amp; MAR 7A</strong><br><span style="font-size:0.8rem;color:#888">UK MiFID II equivalent</span></td>
+      <td>Clock synchronization, audit trail integrity for trading venues</td>
+      <td>Ed25519-signed PoT chain · forensically admissible in FCA proceedings</td>
+      <td>TTTPS</td>
+    </tr>
+    <tr>
+      <td><strong>SEC Rule 17a-3</strong><br><span style="font-size:0.8rem;color:#888">US Securities and Exchange Commission</span></td>
+      <td>Records of orders, confirmations, and audit trail integrity</td>
+      <td>Tamper-evident PoT per transaction · Byzantine detection alert</td>
+      <td>TTTPS</td>
+    </tr>
+    <tr>
+      <td><strong>Korea AI Basic Act</strong><br><span style="font-size:0.8rem;color:#888">Live 2026-01-22, SL1</span></td>
+      <td>High-impact AI system logging and accountability records</td>
+      <td>Cryptographic event chain · JSON-LD provenance · Equinix SL1 deployment</td>
+      <td>HYDRA-AUDIT</td>
+    </tr>
+    <tr>
+      <td><strong>TRAI / CERT-In</strong><br><span style="font-size:0.8rem;color:#888">India, MA1</span></td>
+      <td>Telecom timestamp integrity, incident reporting</td>
+      <td>PoT format aligned with TRAI requirements · CERT-In admissible evidence</td>
+      <td>TTTPS</td>
     </tr>
   </tbody>
 </table>

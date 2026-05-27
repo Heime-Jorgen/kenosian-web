@@ -80,7 +80,7 @@ nav.breadcrumb a { color: #555; }
   Traditional systems detect this only after the fact — or not at all.
 </p>
 <p class="section-note">
-  TTTPS solves this at the protocol level. Every attestation is anchored to <strong>multiple independent time sources simultaneously</strong> — NIST Roughtime and network time (GPS/KTSat: 로드맵) — and bound into a cryptographic commitment chain.
+  TTTPS solves this at the protocol level. Every attestation is anchored to <strong>multiple independent time sources simultaneously</strong> — NIST Roughtime and network time; GPS and Equinix PTP (±1µs, live); GEO/KTSat ±10ns — roadmap — and bound into a cryptographic commitment chain.
   Any single-source manipulation is immediately detectable because the other sources disagree.
   The commitment chain also makes replay attacks detectable: the same token submitted twice produces a verifiable collision.
 </p>
@@ -91,7 +91,7 @@ nav.breadcrumb a { color: #555; }
   Most distributed systems rely on a single trusted clock or timestamp server. If that clock is wrong — due to drift — or compromised — via NTP injection or GPS spoofing — the entire audit trail is corrupted. Every downstream record that depends on that timestamp is now unreliable, and the attack is undetectable from inside the system.
 </p>
 <p class="section-note">
-  TTTPS solves this by anchoring every token to multiple independent time sources simultaneously — NIST Roughtime and network time (GPS/KTSat: 로드맵) — and creating a cryptographic commitment chain across all of them. Any single-source manipulation is detected because the other sources disagree. The multi-source divergence is logged with the specific attack type so the audit trail remains intact even under active attack.
+  TTTPS solves this by anchoring every token to multiple independent time sources simultaneously — NIST Roughtime and network time; GPS and Equinix PTP (±1µs, live); GEO/KTSat ±10ns — roadmap — and creating a cryptographic commitment chain across all of them. Any single-source manipulation is detected because the other sources disagree. The multi-source divergence is logged with the specific attack type so the audit trail remains intact even under active attack.
 </p>
 <p class="section-note">
   The commitment chain also makes replay attacks detectable: the same token submitted twice produces a chain collision on the second verify. The system does not need to trust the submitter or the network — it only needs the commitment to be internally consistent.
@@ -201,7 +201,7 @@ nav.breadcrumb a { color: #555; }
   All manipulation at any stage converges to commitment mismatch at verify.
 </div>
 <p class="section-note">
-  The pipeline ingests independent time sources — NIST Roughtime, network time (GPS/KTSat: 로드맵) — and computes a layered commitment across entropy, ordering, and integrity dimensions. The result is sealed with an Ed25519 signature over the final chain digest. Any tampering at any stage produces a verifiable mismatch at verification time, regardless of which attack vector is used.
+  The pipeline ingests independent time sources — NIST Roughtime, network time; GPS and Equinix PTP (±1µs, live); GEO/KTSat ±10ns — roadmap — and computes a layered commitment across entropy, ordering, and integrity dimensions. The result is sealed with an Ed25519 signature over the final chain digest. Any tampering at any stage produces a verifiable mismatch at verification time, regardless of which attack vector is used.
 </p>
 
 <h2>SealingSwitch — Turbo / Full</h2>
@@ -407,7 +407,7 @@ tttps_byzantine_ratio               0.021</pre>
     <tr>
       <td><strong>MAS TRM 2021</strong><br><span style="font-size:0.8rem;color:#888">Section 6.4.1, Singapore</span></td>
       <td>Financial infrastructure time audit</td>
-      <td>Multi-anchor PoT with NTP + Roughtime sources (GPS/KTSat: 로드맵)</td>
+      <td>Multi-anchor PoT with NTP + Roughtime and Equinix PTP (±1µs, live); GEO/KTSat ±10ns — roadmap</td>
     </tr>
     <tr>
       <td><strong>FCA PS17/14</strong><br><span style="font-size:0.8rem;color:#888">UK MiFID II equivalent</span></td>
@@ -481,7 +481,7 @@ tttps_byzantine_ratio               0.021</pre>
 <tbody>
 <tr>
   <td><strong>Standard</strong></td>
-  <td><strong>$500/month</strong> (50M tokens included)<br>$0.0001/token overage</td>
+  <td><strong>$300/month</strong> (50M tokens included)<br>$0.0001/token overage</td>
   <td>Full Byzantine detection · 90-day audit log · Prometheus · JSON-LD export</td>
 </tr>
 <tr>

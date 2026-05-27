@@ -181,7 +181,7 @@ tr:last-child td { border-bottom: none; }
 <tr>
   <td><strong>Timestamp source</strong></td>
   <td>Single system clock</td>
-  <td>Roughtime k≥3 consensus (±ms) · KTSat GEO ±10ns (roadmap)</td>
+  <td>Roughtime k≥3 consensus (±ms) · Equinix PTP ±1µs (live) · GEO/KTSat ±10ns (roadmap)</td>
 </tr>
 <tr>
   <td><strong>Mutability</strong></td>
@@ -367,9 +367,9 @@ tr:last-child td { border-bottom: none; }
 </tr>
 <tr>
   <td>🇨🇦 Canada</td>
-  <td><strong>AIDA (폐기됨)</strong><br><span style="font-size:0.78rem;color:#888">Artificial Intelligence and Data Act — 2023년 폐기. 차기 AI 규제 입법 대기 중 (Bill C-27 후속)</span></td>
-  <td>Risk mitigation, transparency, record-keeping, incident reporting for high-impact AI — 차기 입법 시 적용 예정</td>
-  <td>미확정 (차기 입법 대기)</td>
+  <td><strong>AIDA (repealed)</strong><br><span style="font-size:0.78rem;color:#888">Artificial Intelligence and Data Act — repealed 2023. Successor legislation pending (post-Bill C-27)</span></td>
+  <td>Risk mitigation, transparency, record-keeping, incident reporting for high-impact AI — applicable upon successor legislation</td>
+  <td>TBD (pending successor legislation)</td>
   <td>TR1/TR2 (Toronto), VA1 (Vancouver)</td>
   <td>Cohere Canada, Google Canada AI</td>
 </tr>
@@ -385,8 +385,8 @@ tr:last-child td { border-bottom: none; }
     <div class="bar-track"><div class="bar-fill high" style="width:100%">€15M / 3% turnover</div></div>
   </div>
   <div class="bar-row">
-    <span class="bar-label">🇨🇦 (입법대기)</span>
-    <div class="bar-track"><div class="bar-fill med" style="width:49%">미확정 (AIDA 폐기)</div></div>
+    <span class="bar-label">🇨🇦 (pending)</span>
+    <div class="bar-track"><div class="bar-fill med" style="width:49%">TBD (AIDA repealed)</div></div>
   </div>
   <div class="bar-row">
     <span class="bar-label">🇺🇸 CA SB 53</span>
@@ -422,7 +422,7 @@ tr:last-child td { border-bottom: none; }
 <tr>
   <td><strong>Art.9</strong><br><span style="font-size:0.78rem;color:#888">Risk Management System</span></td>
   <td>Providers of high-risk AI must establish and maintain a risk management system throughout the AI system lifecycle</td>
-  <td>🔜 로드맵: Equinix DPU 배포 시 — hardware-level telemetry enables continuous risk measurement and automated anomaly flagging across the AI system lifecycle, providing the instrumentation layer for Art.9 risk management systems</td>
+  <td>🔜 Roadmap: Upon Equinix DPU deployment — hardware-level telemetry enables continuous risk measurement and automated anomaly flagging across the AI system lifecycle, providing the instrumentation layer for Art.9 risk management systems</td>
 </tr>
 <tr>
   <td><strong>Art.11</strong><br><span style="font-size:0.78rem;color:#888">Technical Documentation</span></td>
@@ -462,7 +462,7 @@ tr:last-child td { border-bottom: none; }
 <tr>
   <td><strong>Art.72</strong><br><span style="font-size:0.78rem;color:#888">Post-Market Monitoring</span></td>
   <td>Providers of high-risk AI must establish post-market monitoring systems tracking AI behavior after deployment</td>
-  <td>Hydra-Audit continuous Byzantine audit stream enables post-deployment monitoring of AI system behavior — anomaly detection and REPLAY/FORGE/ORDERING event logging included. 🔜 로드맵: Equinix DPU 배포 시 hardware-level telemetry integration provides full Art.72 post-market monitoring instrumentation at the infrastructure layer</td>
+  <td>Hydra-Audit continuous Byzantine audit stream enables post-deployment monitoring of AI system behavior — anomaly detection and REPLAY/FORGE/ORDERING event logging included. 🔜 Roadmap: Upon Equinix DPU deployment, hardware-level telemetry integration provides full Art.72 post-market monitoring instrumentation at the infrastructure layer</td>
 </tr>
 </tbody>
 </table>
@@ -480,7 +480,7 @@ Regulatory requirement status:
   SOC 2 CC7.1:       real-time event audit                   → ✅ satisfied
   MiFID II RTS 25:   ±1ms requirement                        → 🔜 Roadmap
 
-Roadmap — with GEO time source (KTSat ±10ns):
+Roadmap — beyond Equinix PTP, with GEO/KTSat ±10ns:
   MiFID II RTS 25 Art.2(3):  ±1ms requirement exceeded by 10× (±10ns)
   Financial transaction timestamp audit → ns-level absolute precision</pre>
 

@@ -390,9 +390,9 @@ tttps_byzantine_ratio               0.021</pre>
   </thead>
   <tbody>
     <tr>
-      <td><strong>MiFID II RTS 25</strong><br><span style="font-size:0.8rem;color:#888">EU 2017/574, Art.2(3)</span></td>
-      <td>±1ms clock synchronization for HFT</td>
-      <td>Multi-source PoT with cryptographic divergence detection</td>
+      <td><strong>MiFIR Art.22c RTS</strong><br><span style="font-size:0.8rem;color:#888">EU MiFIR, Art.22c (in force 2 Mar 2026 — replaces RTS 25)</span></td>
+      <td>±1ms clock synchronization for HFT; ±100µs for systematic internalisers and trading venues</td>
+      <td>Multi-source PoT via Equinix PTP (±1µs, live) · cryptographic divergence detection · ESMA-compliant</td>
     </tr>
     <tr>
       <td><strong>FINRA Rule 4590</strong><br><span style="font-size:0.8rem;color:#888">CAT NMS Plan, US</span></td>
@@ -405,7 +405,7 @@ tttps_byzantine_ratio               0.021</pre>
       <td>13 Byzantine attack vectors detected and logged in real time</td>
     </tr>
     <tr>
-      <td><strong>MAS TRM 2021</strong><br><span style="font-size:0.8rem;color:#888">Section 6.4.1, Singapore</span></td>
+      <td><strong>MAS TRM 2021 + AIRG 2025</strong><br><span style="font-size:0.8rem;color:#888">Section 6.4.1 + AI Risk Mgmt Guidelines, Singapore</span></td>
       <td>Financial infrastructure time audit</td>
       <td>Multi-anchor PoT with NTP + Roughtime and Equinix PTP (±1µs, live); GEO/KTSat ±10ns — roadmap</td>
     </tr>

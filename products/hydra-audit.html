@@ -193,13 +193,13 @@ tr:last-child td { border-bottom: none; }
 <tr><td><strong>PCI DSS v4.0</strong><br><span style="font-size:0.8rem;color:#888">Req.10.3.2 / 10.5.1 / 10.6</span></td><td>Audit log protection, integrity, review</td><td>Cryptographic log integrity; 90-day retention; automated review via Prometheus alerts</td></tr>
 <tr><td><strong>DORA Art.10</strong><br><span style="font-size:0.8rem;color:#888">EU 2022/2554</span></td><td>ICT threat detection mechanisms</td><td>13 Byzantine attack types auto-detected, logged with cryptographic evidence</td></tr>
 <tr><td><strong>GDPR Art.5(2) / Art.32</strong><br><span style="font-size:0.8rem;color:#888">EU</span></td><td>Accountability principle, technical security measures</td><td>Per-operation cryptographic commitment; JSON-LD export for DPA submission</td></tr>
-<tr><td><strong>MiFID II RTS 25</strong><br><span style="font-size:0.8rem;color:#888">EU 2017/574, Art.2(3)</span></td><td>Financial infrastructure audit trail — ±1ms timestamp precision</td><td>🔜 Roadmap: with GEO time source added (KTSat ±10ns) → ±1ms requirement exceeded 10×. Current: Roughtime ±few ms (financial transaction timestamp requirement not yet met)</td></tr>
+<tr><td><strong>MiFIR Art.22c RTS</strong><br><span style="font-size:0.8rem;color:#888">EU MiFIR, Art.22c (in force 2 Mar 2026 — replaces RTS 25)</span></td><td>Financial infrastructure audit trail — ±1ms clock synchronization for HFT</td><td>Equinix PTP ±1µs (live) — exceeds ±1ms requirement 1000×; GEO/KTSat ±10ns — roadmap</td></tr>
 <tr><td><strong>EU AI Act Art.53</strong><br><span style="font-size:0.8rem;color:#888">EU 2024/1689</span></td><td>Training data documentation for general-purpose AI models</td><td>PoT-sealed ingestion log per training batch — source, date, scope immutably recorded</td></tr>
 <tr><td><strong>EU AI Act Art.12</strong><br><span style="font-size:0.8rem;color:#888">EU 2024/1689 — Enforcement Aug 2, 2026</span></td><td>Automatic event logging + log retention for high-risk AI systems</td><td>Every event sealed with TTTPS: 90-day retention; JSON-LD court-admissible export; chain_integrity: true — 796/796 events, Redis AOF restart-verified. Enforcement: August 2, 2026 (€15M or 3% turnover).</td></tr>
 <tr><td><strong>TRAI</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Telecom timestamp integrity</td><td>Format aligned with TRAI audit requirements</td></tr>
 <tr><td><strong>CERT-In</strong><br><span style="font-size:0.8rem;color:#888">India</span></td><td>Cyber incident reporting</td><td>Cryptographic evidence admissible for CERT-In submissions</td></tr>
 <tr><td><strong>FedRAMP Rev.5</strong><br><span style="font-size:0.8rem;color:#888">US Federal Risk and Authorization Management Program</span></td><td>AU-3 / AU-9 — Audit event content, protection of audit information</td><td>Tamper-evident log with AEAD+blake3 Merkle; 90-day retention; FIPS-compatible export</td></tr>
-<tr><td><strong>MAS TRM 2021</strong><br><span style="font-size:0.8rem;color:#888">Singapore Section 6.5</span></td><td>Audit logging for financial system operations</td><td>Per-event PoT-sealed log with cryptographic chain integrity; queryable for MAS examination</td></tr>
+<tr><td><strong>MAS TRM 2021 + AIRG 2025</strong><br><span style="font-size:0.8rem;color:#888">Section 6.5 + AI Risk Mgmt Guidelines, Singapore</span></td><td>Audit logging for financial system operations</td><td>Per-event PoT-sealed log with cryptographic chain integrity; queryable for MAS examination</td></tr>
 <tr><td><strong>APRA CPG 234</strong><br><span style="font-size:0.8rem;color:#888">Australia Prudential Regulation Authority</span></td><td>Information security audit trail for regulated entities</td><td>Ed25519-signed audit chain; Prometheus dashboard satisfies continuous monitoring guidance</td></tr>
 <tr><td><strong>PIPL Art.51-55</strong><br><span style="font-size:0.8rem;color:#888">China Personal Information Protection Law</span></td><td>Data processing record-keeping, security audits</td><td>Immutable processing log per data subject operation; JSON-LD export for CAC submission</td></tr>
 </tbody>
@@ -328,7 +328,7 @@ curl -X POST https://api.kenosian.com/api/demo/pot/verify \
 <tr>
   <td><strong>Enterprise</strong></td>
   <td>Financial infrastructure · Medical AI · High-risk systems</td>
-  <td>SOC 2 Type II · DORA · SLA 99.9% · On-premise option · Custom integrations · MiFID II RTS 25 (with GEO time source added)</td>
+  <td>SOC 2 Type II · DORA · SLA 99.9% · On-premise option · Custom integrations · MiFIR Art.22c RTS (Equinix PTP ±1µs, live)</td>
   <td><strong>Contact — <a href="mailto:peter@kenosian.com">peter@kenosian.com</a></strong></td>
 </tr>
 </tbody>

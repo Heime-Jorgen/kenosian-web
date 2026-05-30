@@ -102,6 +102,37 @@ nav.breadcrumb a { color: #555; }
   </table>
   <p class="section-note">Every tier anchors workflow steps to an external server — physically separate from Claude's context window. After compression, agents call pot_query(eventId) for O(1) exact step recall. Overage (Team): $0.01 per 1,000 calls beyond 10M/month. Enterprise includes MiFIR Art.22c-compliant tamper-evident TTTPS chain.</p>
 
+  <div style="margin-top:32px;">
+  <h2 style="font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:16px;">Why OpenTTT — Not Letta or Mem0</h2>
+  <table style="width:100%; border-collapse:collapse; font-size:0.82rem; margin-bottom:12px;">
+    <tr style="background:#1a1a1a; color:#fff;">
+      <th style="padding:8px 12px; text-align:left;">Tool</th>
+      <th style="padding:8px 12px; text-align:left;">Memory model</th>
+      <th style="padding:8px 12px; text-align:left;">Hot-path cost</th>
+      <th style="padding:8px 12px; text-align:left;">Recall type</th>
+    </tr>
+    <tr style="border-bottom:1px solid #e0e0e0;">
+      <td style="padding:8px 12px;">Letta / Mem0</td>
+      <td style="padding:8px 12px;">Semantic RAG</td>
+      <td style="padding:8px 12px; color:#c0392b;">embedding + vector search per op</td>
+      <td style="padding:8px 12px;">Fuzzy similarity</td>
+    </tr>
+    <tr style="border-bottom:1px solid #e0e0e0;">
+      <td style="padding:8px 12px;">LangGraph / LangMem</td>
+      <td style="padding:8px 12px;">Graph state + semantic</td>
+      <td style="padding:8px 12px; color:#c0392b;">checkpoint I/O + embeddings</td>
+      <td style="padding:8px 12px;">Semantic + graph</td>
+    </tr>
+    <tr style="background:#f8f8f8; font-weight:600;">
+      <td style="padding:8px 12px;">OpenTTT / ttt-mcp</td>
+      <td style="padding:8px 12px;">Cryptographic event log</td>
+      <td style="padding:8px 12px; color:#1a6b1a;">sign + hash + write — 0 embedding calls</td>
+      <td style="padding:8px 12px;">O(1) exact hash lookup</td>
+    </tr>
+  </table>
+  <p style="font-size:0.8rem; color:#555;">OpenTTT stamps only the steps worth checkpointing — not every query, not every token. At scale, eliminating the embedding layer is a structural cost advantage, not a feature trade-off. For fuzzy semantic search, pair with a vector DB. For deterministic state recovery that survives context compaction: OpenTTT.</p>
+</div>
+
   <div style="margin-top:16px; padding:12px 16px; border:1px solid #e0e0e0; border-radius:3px; background:#f9f9f9;">
     <p style="font-size:0.82rem; margin-bottom:12px;"><strong>Get started — subscribe instantly:</strong></p>
     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px;">

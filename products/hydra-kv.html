@@ -48,7 +48,7 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
 <div class="metric-row">
   <div class="metric">
     <div class="val">3.1496×</div>
-    <div class="lbl">E8 lattice compression (CPU loopback measured)</div>
+    <div class="lbl">lattice compression (CPU loopback measured)</div>
   </div>
   <div class="metric">
     <div class="val">93%</div>
@@ -420,25 +420,31 @@ ol.steps li { padding: 6px 0; font-size: 0.82rem; line-height: 1.6; }
 <!-- SECTION 10: Pricing + API Access -->
 <h2>Pricing</h2>
 <div style="background:#f0f0f0; border-left:3px solid #1a1a1a; padding:14px 18px; margin-bottom:18px; font-size:0.85rem; line-height:1.7;">
-  <strong>Hydra-Audit included free for 30 days</strong> — every KV deployment automatically activates the EU AI Act compliance chain. After 30 days: €100/node/month to retain the chain, or it is permanently deleted.
+  <strong>Hydra-Audit included free for 30 days</strong> — every KV deployment automatically activates the EU AI Act compliance chain. After 30 days: continue with Audit addon or purchase standalone.
 </div>
 <table>
-<thead><tr><th>Volume</th><th>Price</th><th>Includes</th></tr></thead>
+<thead><tr><th>Package</th><th>Price</th><th>Includes</th></tr></thead>
 <tbody>
 <tr>
-  <td><strong>Standard</strong></td>
-  <td><strong>$0.03/GB processed</strong></td>
-  <td>E8 ≥3.1× compression · CRDT 95.6% dedup · QUIC transport · Audit 30-day trial</td>
+  <td><strong>Enterprise KV</strong></td>
+  <td><strong>€12,000/month</strong></td>
+  <td>Unlimited events · E8 ≥3.1× compression · CRDT 95.6% dedup · QUIC transport · Byzantine detection · 90-day retention · Prometheus · JSON-LD export</td>
 </tr>
 <tr>
-  <td><strong>100 TB+/month</strong></td>
-  <td><strong>$0.02/GB processed</strong></td>
-  <td>Volume discount · all Standard features included</td>
-</tr>
-<tr>
-  <td><strong>Enterprise</strong></td>
+  <td><strong>GB Overage</strong></td>
   <td><strong>Contact</strong></td>
-  <td>Custom SLA · dedicated onboarding · <a href="mailto:peter@kenosian.com">peter@kenosian.com</a></td>
+  <td>Volume above contracted baseline · <a href="mailto:peter@kenosian.com">peter@kenosian.com</a></td>
+</tr>
+</tbody>
+</table>
+<h2>CDN Pricing</h2>
+<table>
+<thead><tr><th>Usage</th><th>Price</th><th>Includes</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>CDN Transfer</strong></td>
+  <td><strong>$0.005/GB</strong></td>
+  <td>E8-compressed delivery · QUIC transport · Hydra-KV cache integration · global edge</td>
 </tr>
 </tbody>
 </table>

@@ -49,20 +49,20 @@ nav.breadcrumb a { color: #555; }
 
 <h1>Hydra-MCP — Cryptographic Memory Protocol <span class="audit-badge">IETF-TRACK</span></h1>
 <span class="tag">AI Agent Memory · Tamper-Proof Timestamps · Long-Horizon Amnesia Zero · OpenTTT MCP Server</span>
-<p class="killer">AI Agent 메모리에 변조불가 타임스탬프를 봉인한다. 컨텍스트 압축 후에도 100% 복구 — 암호학적으로 검증 가능한 유일한 IETF-track 구현.</p>
+<p class="killer">Seal tamper-evident timestamps into AI Agent memory. 100% recovery after context compaction — the only IETF-track implementation with cryptographic verification.</p>
 
 <div class="metric-row">
   <div class="metric">
     <div class="val">100%</div>
-    <div class="lbl">Long-Horizon Amnesia Zero 복구율 (서버 재시작 후 100/100)</div>
+    <div class="lbl">Long-Horizon Amnesia Zero recovery rate (100/100 after server restart)</div>
   </div>
   <div class="metric">
     <div class="val">1,000</div>
-    <div class="lbl">causal chain 검증 완료 (chain_broken=False)</div>
+    <div class="lbl">causal chain verified (chain_broken=False)</div>
   </div>
   <div class="metric">
     <div class="val">2,056</div>
-    <div class="lbl">req/s pot_generate (500VU, p99 671ms, 에러 0%)</div>
+    <div class="lbl">req/s pot_generate (500VU, p99 671ms, error 0%)</div>
   </div>
   <div class="metric">
     <div class="val">2,589</div>
@@ -81,34 +81,34 @@ nav.breadcrumb a { color: #555; }
 <!-- SECTION 1: What It Is -->
 <h2>What It Is</h2>
 <p class="section-note">
-  AI Agent는 컨텍스트 압축(context compaction)이 발생할 때마다 이전 작업을 잊는다.
-  Letta, LangGraph, Mem0 등 기존 메모리 솔루션은 vector embedding에 의존하기 때문에
-  fuzzy recall만 가능하고, 세션 재시작 후 결정적 상태 복구를 보장하지 못한다.
+  AI Agents forget previous work every time context compaction occurs.
+  Existing memory solutions such as Letta, LangGraph, and Mem0 rely on vector embeddings,
+  which allow only fuzzy recall and cannot guarantee deterministic state recovery after a server restart.
 </p>
 <p class="section-note">
-  Hydra-MCP(OpenTTT)는 이 문제를 다른 레이어에서 해결한다.
-  모든 이벤트에 TTTPS temporal proof(PoT)를 봉인하고, causal chain으로 연결하여
-  SHA-3 해시 기반 O(1) exact lookup을 가능하게 한다.
-  서버 재시작 후에도 Redis DAG에서 전체 이벤트 체인을 재건한다 — 암호학적으로 검증 가능하게.
+  Hydra-MCP (OpenTTT) solves this at a different layer.
+  It seals every event with a TTTPS temporal proof (PoT) and links them via a causal chain,
+  enabling O(1) exact lookup based on SHA-3 hashes.
+  After a server restart, the entire event chain is rebuilt from the Redis DAG — cryptographically verified.
 </p>
 
 <!-- SECTION 2: Key Differentiators -->
-<h2>핵심 차별점</h2>
+<h2>Key Differentiators</h2>
 <div class="demo-box">
   <ul style="list-style:none;line-height:2.2;">
-    <li>· <strong>OpenTTT MCP 서버</strong> — Claude / GPT / Cursor에서 <code>npx @helm-protocol/openttt-mcp</code> 즉시 실행</li>
-    <li>· <strong>8개 MCP 툴</strong> — pot_generate · pot_query · pot_checkpoint · pot_verify · pot_status · pot_graph · pot_chain · pot_evict</li>
-    <li>· <strong>Long-Horizon Amnesia Zero</strong> — 1,000개 causal chain 검증, 서버 재시작 후 복구율 100%</li>
-    <li>· <strong>SHA-3 기반 O(1) exact recall</strong> — embedding cost 없음. vector DB 없음. 퍼지 검색 없음.</li>
-    <li>· <strong>IETF-track 표준</strong> — TTTPS (draft-helmprotocol-tttps-03) 기반. 유일한 구현체.</li>
-    <li>· <strong>오프라인 동작 가능</strong> — Roughtime 서버 없이 local-clock 폴백 자동 전환</li>
-    <li>· <strong>signing_key 영속</strong> — pub_key 변화 없이 세션 재시작 후에도 이벤트 복구 무영향</li>
+    <li>· <strong>OpenTTT MCP Server</strong> — instant launch from Claude / GPT / Cursor via <code>npx @helm-protocol/openttt-mcp</code></li>
+    <li>· <strong>8 MCP Tools</strong> — pot_generate · pot_query · pot_checkpoint · pot_verify · pot_status · pot_graph · pot_chain · pot_evict</li>
+    <li>· <strong>Long-Horizon Amnesia Zero</strong> — 1,000 causal chains verified, 100% recovery rate after server restart</li>
+    <li>· <strong>SHA-3-based O(1) exact recall</strong> — zero embedding cost. No vector DB. No fuzzy search.</li>
+    <li>· <strong>IETF-track standard</strong> — based on TTTPS (draft-helmprotocol-tttps-03). The only implementation.</li>
+    <li>· <strong>Offline operation</strong> — automatic fallback to local-clock without a Roughtime server</li>
+    <li>· <strong>Persistent signing_key</strong> — event recovery unaffected by server restart; pub_key remains unchanged</li>
   </ul>
 </div>
 
 <!-- SECTION 3: 8 MCP Tools -->
-<h2>MCP Tools (8개)</h2>
-<p class="section-note">Claude Code, GPT-4o, Cursor — 모든 MCP 호환 클라이언트에서 즉시 사용.</p>
+<h2>MCP Tools (8)</h2>
+<p class="section-note">Claude Code, GPT-4o, Cursor — works instantly with any MCP-compatible client.</p>
 <table>
   <thead>
     <tr><th>Tool</th><th>Description</th><th>Latency</th></tr>
@@ -116,42 +116,42 @@ nav.breadcrumb a { color: #555; }
   <tbody>
     <tr>
       <td><code>pot_generate</code></td>
-      <td>새 이벤트에 TTTPS temporal proof 봉인</td>
+      <td>Seal a new event with a TTTPS temporal proof</td>
       <td>p99 671ms (500VU)</td>
     </tr>
     <tr>
       <td><code>pot_query</code></td>
-      <td>SHA-3 exact hash로 이벤트 O(1) 조회</td>
+      <td>O(1) event lookup via SHA-3 exact hash</td>
       <td>p99 372ms (1000VU)</td>
     </tr>
     <tr>
       <td><code>pot_checkpoint</code></td>
-      <td>현재 체인 상태를 체크포인트로 봉인 (240 epochs)</td>
+      <td>Seal the current chain state as a checkpoint (240 epochs)</td>
       <td>&lt;50ms</td>
     </tr>
     <tr>
       <td><code>pot_verify</code></td>
-      <td>이벤트 무결성 검증 — 변조 탐지</td>
+      <td>Verify event integrity — tamper detection</td>
       <td>&lt;10ms</td>
     </tr>
     <tr>
       <td><code>pot_status</code></td>
-      <td>현재 chain 상태, epoch, 연결된 이벤트 수 조회</td>
+      <td>Query current chain state, epoch, and connected event count</td>
       <td>&lt;5ms</td>
     </tr>
     <tr>
       <td><code>pot_graph</code></td>
-      <td>causal chain DAG 조회 (역방향 인덱스 O(1))</td>
+      <td>Query causal chain DAG (reverse index O(1))</td>
       <td>&lt;20ms</td>
     </tr>
     <tr>
       <td><code>pot_chain</code></td>
-      <td>이벤트 ID를 causal chain으로 연결</td>
+      <td>Link event IDs into a causal chain</td>
       <td>&lt;15ms</td>
     </tr>
     <tr>
       <td><code>pot_evict</code></td>
-      <td>오래된 이벤트 안전 제거 (evictedEventIds 추적)</td>
+      <td>Safely remove stale events (evictedEventIds tracked)</td>
       <td>&lt;10ms</td>
     </tr>
   </tbody>
@@ -159,24 +159,24 @@ nav.breadcrumb a { color: #555; }
 
 <!-- SECTION 4: Long-Horizon Amnesia Zero -->
 <h2>Long-Horizon Amnesia Zero — Verification Results</h2>
-<p class="section-note">측정 조건: GCP CPU · Redis DAG 재건 · 서버 재시작(in-memory 초기화) 후 복구 검증.</p>
+<p class="section-note">Measured on: GCP CPU · Redis DAG rebuild · recovery verified after server restart (in-memory reset).</p>
 
 <div class="metric-row">
   <div class="metric">
     <div class="val">100/100</div>
-    <div class="lbl">서버 재시작 후 이벤트 복구율</div>
+    <div class="lbl">Event recovery rate after server restart</div>
   </div>
   <div class="metric">
     <div class="val">1,000</div>
-    <div class="lbl">causal chain 연속 검증 (chain_broken=False)</div>
+    <div class="lbl">Consecutive causal chain verifications (chain_broken=False)</div>
   </div>
   <div class="metric">
     <div class="val">2⁻²⁵⁶</div>
-    <div class="lbl">SHA-3 해시 충돌 확률 — exact lookup 기반</div>
+    <div class="lbl">SHA-3 hash collision probability — exact lookup basis</div>
   </div>
   <div class="metric">
-    <div class="val">+5개</div>
-    <div class="lbl">체크포인트 추가 (240×N epochs)</div>
+    <div class="val">+5</div>
+    <div class="lbl">Checkpoints added (240×N epochs)</div>
   </div>
 </div>
 
@@ -186,49 +186,49 @@ nav.breadcrumb a { color: #555; }
   </thead>
   <tbody>
     <tr>
-      <td>서버 재시작 후 이벤트 복구</td>
+      <td>Event recovery after server restart</td>
       <td>100/100 PASS</td>
-      <td>Redis AOF + DAG 재건 (in-memory 초기화 포함)</td>
+      <td>Redis AOF + DAG rebuild (including in-memory reset)</td>
     </tr>
     <tr>
-      <td>1,000개 causal chain 연속성</td>
+      <td>1,000 consecutive causal chain continuity</td>
       <td>chain_broken=False</td>
-      <td>순차 pot_generate × 1,000 후 pot_graph 검증</td>
+      <td>pot_generate × 1,000 sequential, then pot_graph verification</td>
     </tr>
     <tr>
-      <td>컨텍스트 압축(compaction) 후 복구</td>
+      <td>Recovery after context compaction</td>
       <td>100% deterministic</td>
-      <td>SHA-3 exact hash → Redis DAG 재조회</td>
+      <td>SHA-3 exact hash → Redis DAG re-query</td>
     </tr>
     <tr>
-      <td>pot_generate 고부하 (500VU)</td>
-      <td>2,056 req/s · 에러 0%</td>
+      <td>pot_generate high load (500VU)</td>
+      <td>2,056 req/s · error 0%</td>
       <td>max 6.55s, p99 671ms</td>
     </tr>
     <tr>
-      <td>pot_query 고부하 (1000VU)</td>
-      <td>2,589 req/s · 에러 0%</td>
+      <td>pot_query high load (1000VU)</td>
+      <td>2,589 req/s · error 0%</td>
       <td>p99 372ms, max 578ms</td>
     </tr>
   </tbody>
 </table>
 
 <!-- SECTION 5: Comparison Table -->
-<h2>AI Agent Memory — 경쟁사 비교</h2>
-<p class="section-note">컨텍스트 압축(context compaction) 후 결정적 상태 복구 기준.</p>
+<h2>AI Agent Memory — Competitor Comparison</h2>
+<p class="section-note">Benchmark: deterministic state recovery after context compaction.</p>
 
 <div style="overflow-x:auto;">
 <table>
   <thead>
     <tr>
       <th>Tool</th>
-      <th style="text-align:center;">컨텍스트<br>압축 생존</th>
-      <th style="text-align:center;">Embedding<br>비용</th>
-      <th style="text-align:center;">Recall<br>방식</th>
-      <th style="text-align:center;">2분<br>설치</th>
-      <th style="text-align:center;">암호학적<br>검증</th>
-      <th style="text-align:center;">IETF<br>표준</th>
-      <th style="text-align:center;">오프라인<br>동작</th>
+      <th style="text-align:center;">Context<br>Compaction<br>Survival</th>
+      <th style="text-align:center;">Embedding<br>Cost</th>
+      <th style="text-align:center;">Recall<br>Method</th>
+      <th style="text-align:center;">2-min<br>Install</th>
+      <th style="text-align:center;">Cryptographic<br>Verification</th>
+      <th style="text-align:center;">IETF<br>Standard</th>
+      <th style="text-align:center;">Offline<br>Operation</th>
     </tr>
   </thead>
   <tbody>
@@ -275,32 +275,32 @@ nav.breadcrumb a { color: #555; }
   </tbody>
 </table>
 </div>
-<p style="font-size:0.75rem; color:#888; margin-top:6px;">Fuzzy semantic recall이 필요하면 OpenTTT와 vector DB를 병행 사용. 결정적 상태 복구(deterministic state recovery)가 필요하면: OpenTTT가 유일한 IETF-track 구현체다.</p>
+<p style="font-size:0.75rem; color:#888; margin-top:6px;">If fuzzy semantic recall is needed, use OpenTTT alongside a vector DB. For deterministic state recovery, OpenTTT is the only IETF-track implementation.</p>
 
 <!-- SECTION 6: Architecture -->
 <h2>Architecture</h2>
 <div class="demo-box">
   <ul style="list-style:none;line-height:2.2;">
-    <li>· <strong>Temporal Proof (PoT)</strong> — Roughtime multi-source (k≥3) 또는 local-clock 폴백으로 이벤트 타임스탬프 봉인</li>
-    <li>· <strong>SHA-3 causal chain</strong> — 각 이벤트의 해시가 다음 이벤트의 parent로 연결됨. O(1) exact lookup.</li>
-    <li>· <strong>Redis DAG 영속성</strong> — AOF 모드로 서버 재시작 후 전체 체인 재건 가능</li>
-    <li>· <strong>Rollup 체크포인트</strong> — 240 epochs 마다 자동 체크포인트. 오래된 이벤트 압축.</li>
-    <li>· <strong>MCP 인터페이스</strong> — Model Context Protocol 표준. 어떤 AI 클라이언트에서도 동작.</li>
-    <li>· <strong>mode:local</strong> — 네트워크 없이 완전 오프라인 동작. Roughtime 서버 불필요.</li>
+    <li>· <strong>Temporal Proof (PoT)</strong> — Seal event timestamps via Roughtime multi-source (k≥3) or automatic local-clock fallback</li>
+    <li>· <strong>SHA-3 causal chain</strong> — Each event's hash is linked as the parent of the next event. O(1) exact lookup.</li>
+    <li>· <strong>Redis DAG persistence</strong> — AOF mode enables full chain rebuild after server restart</li>
+    <li>· <strong>Rollup checkpoint</strong> — Automatic checkpoint every 240 epochs. Compresses stale events.</li>
+    <li>· <strong>MCP interface</strong> — Model Context Protocol standard. Works with any AI client.</li>
+    <li>· <strong>mode:local</strong> — Fully offline operation without network. No Roughtime server required.</li>
   </ul>
 </div>
 
 <!-- SECTION 7: Install -->
-<h2>설치 — 2분</h2>
-<p class="section-note">서버 설치 불필요. npx 한 줄로 즉시 실행.</p>
+<h2>Installation — 2 Minutes</h2>
+<p class="section-note">No server installation required. Run instantly with a single npx command.</p>
 
-<pre># npm / npx 직접 실행
+<pre># Run directly via npm / npx
 npx @helm-protocol/openttt-mcp
 
-# Claude Code에서
+# In Claude Code
 /mcp add openttt-mcp
 
-# 또는 Claude Desktop settings.json
+# Or via Claude Desktop settings.json
 {
   "mcpServers": {
     "openttt-mcp": {
@@ -310,19 +310,19 @@ npx @helm-protocol/openttt-mcp
   }
 }</pre>
 
-<p class="section-note" style="margin-top:8px;">설치 후 Claude/GPT에서 바로 사용:</p>
-<pre># 이벤트 생성
+<p class="section-note" style="margin-top:8px;">After installation, use immediately in Claude/GPT:</p>
+<pre># Generate an event
 pot_generate({ "content": "architecture decision: QUIC transport confirmed", "context": "session-001" })
 
-# O(1) exact 조회
+# O(1) exact lookup
 pot_query({ "event_id": "sha3-abc123..." })
 
-# 세션 체크포인트 봉인
+# Seal a session checkpoint
 pot_checkpoint({ "label": "v0.3.0-release" })</pre>
 
 <!-- SECTION 8: One-Click Test -->
 <h2>One-Click Test — Live API</h2>
-<p class="section-note">서버 설치 없이 REST API로 즉시 테스트 가능.</p>
+<p class="section-note">Test instantly via REST API — no server installation required.</p>
 
 <pre>curl -X POST https://api.kenosian.com/mcp/pot_generate \
   -H "Content-Type: application/json" \
@@ -339,19 +339,19 @@ pot_checkpoint({ "label": "v0.3.0-release" })</pre>
 
 <!-- SECTION 9: CTA -->
 <div class="cta-row">
-  <a class="btn-primary" href="https://www.npmjs.com/package/@helm-protocol/openttt-mcp" target="_blank">→ npm 패키지</a>
-  <a class="cta-link" href="/products/tttps.html">→ TTTPS 프로토콜</a>
-  <a class="cta-link" href="mailto:peter@kenosian.com?subject=Hydra-MCP%20Early%20Access">→ Early Access 문의</a>
+  <a class="btn-primary" href="https://www.npmjs.com/package/@helm-protocol/openttt-mcp" target="_blank">→ npm package</a>
+  <a class="cta-link" href="/products/tttps.html">→ TTTPS Protocol</a>
+  <a class="cta-link" href="mailto:peter@kenosian.com?subject=Hydra-MCP%20Early%20Access">→ Early Access Inquiry</a>
 </div>
 
 <div style="border:2px solid #1a1a1a; border-radius:3px; padding:24px; margin:32px 0; background:#f8f8f8;">
   <p style="font-size:0.92rem; font-weight:700; color:#1a1a1a; line-height:1.8; margin-bottom:12px;">
-    Long-Horizon Amnesia Zero: 1,000개 causal chain 검증 + 서버 재시작 후 100% 복구.
+    Long-Horizon Amnesia Zero: 1,000 causal chains verified + 100% recovery after server restart.
   </p>
   <p style="font-size:0.85rem; color:#444; line-height:1.8;">
-    Letta, LangGraph, Mem0 — 모두 컨텍스트 압축 후 이전 작업을 잊는다.
-    OpenTTT는 SHA-3 causal chain을 Redis에 영속시켜 컨텍스트 압축 = 수면이 되도록 설계됐다.
-    깨어나면 체인 그대로 복구된다. 암호학적으로.
+    Letta, LangGraph, Mem0 — all forget previous work after context compaction.
+    OpenTTT persists the SHA-3 causal chain in Redis so that context compaction becomes sleep.
+    On wake, the chain is restored intact. Cryptographically.
   </p>
   <p style="font-size:0.82rem; color:#666; margin-top:12px;">
     → <strong><a href="https://github.com/helm-protocol/openttt" style="color:#1a1a1a;">github.com/helm-protocol/openttt</a></strong>
